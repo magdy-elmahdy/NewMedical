@@ -1,0 +1,26 @@
+.fa-download{
+    transition: 0.2s;
+  }
+.fa-upload{
+  transition: 0.2s;
+
+}
+.fa-download:hover{
+    background-color:green!important;
+    color:#FFF!important;
+    cursor: pointer;
+}
+.fa-upload:hover{
+  background-color:green!important;
+  color:#FFF!important;
+  cursor: pointer;
+}
+.fa-cloud-arrow-up{
+cursor: pointer;
+}
+.modal{
+  --bs-modal-width: 75%;
+}
+h2 span{
+  font-family: 'El Messiri', sans-serif!important;
+}

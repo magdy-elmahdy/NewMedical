@@ -1,0 +1,158 @@
+<div id="AddBeds">
+    <div class="container-fluid">
+        <div class="outerBorder shadow_5 mt-5">
+                <!--------------------- بيانات الأسره ------------------>
+                <h2 class="PageTitle shadow_5 ">Add Family</h2> 
+                <form [formGroup]="Form">
+                    <div class="row mt-5">
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline" color="accent" class="w-100 mt-1">
+                                <mat-label>Name</mat-label>
+                                <input formControlName="name" type="text" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field class="w-100 mt-1" appearance="outline">
+                                <mat-label>Relationship</mat-label>
+                                <mat-select [(value)]="relationVal">
+                                    <mat-option *ngFor="let item of RelationShips" value="{{item.value}}">{{item.value}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline" color="accent" class="w-100 mt-1">
+                                <mat-label>Nationality</mat-label>
+                                <input formControlName="nationality" type="text" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field  class="w-100 mt-1" appearance="outline" color="warn">
+                                <mat-label>D.O.B</mat-label>
+                                <input formControlName="dateOfBirth" matInput  [matDatepicker]="picker1">
+                                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field class="w-100 mt-1" appearance="outline">
+                                <mat-label>Gender</mat-label>
+                                <mat-select [(value)]="genderVal">
+                                    <mat-option *ngFor="let item of GenderArr" value="{{item.id}}">{{item.value}}</mat-option>
+                                    <!-- <mat-option value="0">Male</mat-option>
+                                    <mat-option value="1">Female</mat-option> -->
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline" color="accent" class="w-100 mt-1">
+                                <mat-label>Height</mat-label>
+                                <input formControlName="height" type="number" max="200" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline" color="accent" class="w-100 mt-1">
+                                <mat-label>Weight</mat-label>
+                                <input formControlName="weight" max="200" type="number" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field class="w-100" appearance="outline">
+                                <mat-label>Smoker?</mat-label>
+                                <mat-select [(value)]="smokingVal">
+                                    <mat-option value="false">No</mat-option>
+                                    <mat-option value="true">Yes</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline" color="accent" class="w-100">
+                                <mat-label>Job</mat-label>
+                                <input formControlName="job" type="text" matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline" color="accent" class="w-100">
+                                <mat-label>Blood type</mat-label>
+                                <input formControlName="bloodType" type="text" matInput>
+                                <!-- <mat-select [(value)]="bloodTypeVal">
+                                    <mat-option value="O">O</mat-option>
+                                    <mat-option value="O-">O-</mat-option>
+                                    <mat-option value="A">A</mat-option>
+                                </mat-select> -->
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline" color="accent" class="w-100">
+                                <mat-label>Notes</mat-label>
+                                <input formControlName="notes" type="text" matInput>
+                            </mat-form-field>
+
+                        </div>
+                        <div class="col-md-1">
+                            <button [disabled]="Form.status=='INVALID'||relationVal==null||genderVal==null||smokingVal==null" color="primary" (click)="view()" class="btn btn-success px-4 py-2 w-100"
+                            mat-raised-button>Add</button>
+                        </div>
+                    </div>
+                </form>
+
+                <table *ngIf="this.arr.length>0"  class="table table-striped text-center">
+                    <thead>
+                            <th>Name</th>
+                            <th>Relation</th>
+                            <th>Nationality</th>
+                            <th >D_O_B</th>
+                            <th>Gender</th>
+                            <th>Height</th>
+                            <th>Weight</th>
+                            <th>Occupation</th>
+                            <th>Smoking</th>
+                            <th>Blood Type</th>
+                            <th>Notes</th>
+                            <th></th>
+                    </thead>
+                    <tbody>
+                            <tr *ngFor="let item of arr;let index = index">
+                                <td>{{item?.name}}</td>
+                                <td>{{item?.relationship}}</td>
+                                <td>{{item?.nationality}}</td>
+                                <td >{{item?.dateOfBirth|date:'shortDate'}}</td>
+                                <td>{{item?.gender}}</td>
+                                <td>{{item?.height}}</td>
+                                <td>{{item?.weight}}</td>
+                                <td>{{item?.job}}</td>
+                                <td>{{item?.smoker}}</td>
+                                <td>{{item?.bloodType}}</td>
+                                <td>{{item?.notes}}</td>
+                                <td><button color="accent" (click)="remove(index)" class="btn btn-danger"mat-raised-button>Remove</button></td>
+                            </tr>
+                        </tbody>
+                </table>
+                <hr>
+                <h2 class="fs-4"><span class="text-muted">Is there anyone in the family who is not insured</span> ?</h2>
+                <mat-radio-group (change)="getNotInsuredPersonsStatus($event.value)">
+                    <div class="row mt-3">
+                        <div class="col-md-6 col-sm-12">
+                            <mat-radio-button value="true" name="notInsuredPerson" color="warn"></mat-radio-button>
+                            <label>Yes</label>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <mat-radio-button value="false" name="notInsuredPerson" color="warn"></mat-radio-button>
+                            <label>No</label>
+                        </div>
+                    </div>
+                </mat-radio-group>
+                <div class="row mt-2" id="notInsuredPersons" style="display: none;">
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" class="w-100" color="accent">
+                            <mat-label>Detials</mat-label>
+                            <textarea [(ngModel)]="anyFamilyNonInsured" matInput></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button [disabled]="this.arr.length<1" (click)="SubmitAddFamily()" color="warn"  class="btn btn-success px-4 py-2" mat-raised-button>Submit</button>
+                </div>
+                
+        </div>
+    </div>
+</div>

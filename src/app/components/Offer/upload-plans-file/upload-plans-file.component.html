@@ -1,0 +1,190 @@
+<div id="upload-plans-file">
+    <div class="container-fluid">
+
+        <div class="d-flex justify-content-between mx-4 pt-3">
+                <div class="d-flex">
+                    <p class="font_Coloered3 text-center my-3">{{'Shared.Add'|translate}} {{'Offer.Plan'|translate}}</p>
+                    <button (click)="this._location.back()" mat-stroked-button color="primary" class="mt-3 mx-2">Back</button>
+                </div>
+                <button data-bs-toggle="modal" data-bs-target="#ViewPlans" mat-raised-button color="primary" class="mt-3">{{'Offer.CurrentPlans'|translate}}</button>
+        </div>
+        <div class="outerBorder shadow_5">
+            <!-- <h2 class="fs-4"><span class="text-muted">{{'Shared.AddOnlyExcelFile'|translate}}</span> </h2> -->
+            <!-- File Upload -->
+            <div class="row">
+                <div class="col-md-8 d-flex align-items-center">
+                    <div>
+                        <div *ngIf="this.AllOfferPlans.length!=0" >
+                            <p class="fs-5">Current plans Are 
+                                <span *ngFor="let item of this.AllOfferPlans" class="mx-1 text-danger fs-4 fw-bold">{{item.planName}}</span>
+                            </p>
+                        </div>
+                        <form [formGroup]="PlanForm">
+                            <div class="row">
+                                <div class="col-md-7 my-2">
+                                    <table class="table table-striped table-bordered text-center mt-2" style="border-radius: 20px;">
+                                        <tbody class="align-middle">
+                                            <tr>
+                                                <th class="w-30 py-3">Upload Plans File</th>
+                                                <td class="w-60 py-3">
+                                                    <i (click)="fileInput.click()" class="fa-solid fa-cloud-arrow-up fs-2 px-2 py-2" style="color:#3F51B5;border-radius: 5px;"></i>
+                                                    <input accept=" .pdf" hidden (change)="uploadFile($event)" #fileInput type="file">
+                                                    <span class="file-name">{{selectedFile?.name}}</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-md-3">
+                                    <!-- <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.PlanName'|translate}}</mat-label>
+                                        <input formControlName="PlanName" type="text" matInput>
+                                    </mat-form-field> -->
+
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.PlanName'|translate}}</mat-label>
+                                        <mat-select formControlName="PlanName">
+                                            <mat-option value="A">A</mat-option>
+                                            <mat-option value="B">B</mat-option>
+                                            <mat-option value="C">C</mat-option>
+                                            <mat-option value="D">D</mat-option>
+                                            <mat-option value="E">E</mat-option>
+                                            <mat-option value="F">F</mat-option>
+                                            <mat-option value="G">G</mat-option>
+                                            <mat-option value="H">H</mat-option>
+                                            <mat-option value="I">I</mat-option>
+                                            <mat-option value="J">J</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.NetPremium'|translate}}</mat-label>
+                                        <input formControlName="NetPremium" (keyup)="getNetPre()" type="number" matInput>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.AnnualMaxLimit'|translate}}</mat-label>
+                                        <input formControlName="AnnualMaxLimit" (keyup)="getAnnualMax()" type="number" matInput>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-end">
+                                    <button [disabled]="this.PlanForm.status=='INVALID'" (click)="view()" mat-raised-button color="accent" class="mt-2">{{'Shared.Add'|translate}}</button>
+                                </div>
+                            </div>
+                            <!-- <div class="row ">
+                                <div class="col-md-6">
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.PlanName'|translate}}</mat-label>
+                                        <input formControlName="PlanName" type="text" matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.NetPremium'|translate}}</mat-label>
+                                        <input formControlName="NetPremium" type="number" matInput>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.AnnualMaxLimit'|translate}}</mat-label>
+                                        <input formControlName="AnnualMaxLimit" type="number" matInput>
+                                    </mat-form-field>
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <i (click)="fileInput.click()" class="fa-solid fa-cloud-arrow-up fs-2 px-2 py-2" style="color:#3F51B5;border-radius: 5px;"></i>
+                                            <input accept=".xlsx , .pdf" hidden (change)="uploadFile($event)" #fileInput type="file">
+                                            <span class="file-name">{{selectedFile?.name}}</span>
+                                        </div>
+                                        <button [disabled]="this.PlanForm.status=='INVALID'||selectedFile==''" (click)="view()" mat-raised-button color="accent" class="mt-2">{{'Shared.Add'|translate}}</button>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </form>
+                        <!-- Table Of Plans -->
+                        <table *ngIf="this.arrTest.length>0"  class="table table-striped text-center">
+                            <thead>
+                                <th>{{'Offer.PlanName'|translate}}</th>
+                                <th>{{'Offer.NetPremium'|translate}}</th>
+                                <th>{{'Offer.AnnualMaxLimit'|translate}}</th>
+                                <th class="remove"></th>
+                            </thead>
+                            <tbody>
+                                    <tr *ngFor="let item of arrTest;let index = index">
+                                        <td>{{item.PlanName}}</td>
+                                        <td>{{item.NetPremium}}</td>
+                                        <td>{{item.AnnualMaxLimit}}</td>
+                                        <td class="remove"><button color="warn" (click)="remove(index,item.PlanName)" mat-raised-button>{{'Shared.Remove'|translate}}</button></td>
+                                    </tr>
+                            </tbody>
+                            <!-- <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>All Fees</th>
+                                
+                                <th><button  mat-raised-button color="primary" class="w-50 mt-3"> <span >Save <i class="fa-regular fa-floppy-disk"></i></span></button></th>
+                                </tr>
+                            </tfoot> -->
+                        </table>
+                    </div>
+                </div>
+                
+
+                <div class="col-md-4">
+                    <img src="../../../../assets/imgs/upload2.svg" class="w-100">
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button [disabled]="this.arrTest.length==0||this.isClickedDocumnet||this.selectedFile==''" (click)="SavePlans()" class="w-25 my-2" mat-raised-button color="primary"><span *ngIf="this.isClickedDocumnet">Uploading <i class="fa-solid fa-spinner fa-spin"></i></span><span *ngIf="!this.isClickedDocumnet">{{'Shared.Submit'|translate}} <i class="fa-solid fa-floppy-disk"></i></span></button>
+                    <button style="display: none;" id="proceesButton" class="w-25 my-2" routerLink="/UploadGroupFile/{{this.OfferId}}"  mat-raised-button color="accent">{{'Shared.Next'|translate}}</button>
+                </div>
+            </div>
+            <!-- Table Of All Currently Plans Of The Policy -->
+        </div>
+    </div>
+    <!--------------------------------------- Current Entered Plans Modal --------------------------->
+    <div class="modal fade" id="ViewPlans" tabindex="-1" aria-labelledby="networkCoding" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="networkCoding">Current Entered Plans</h1>
+                </div>
+
+                <div class="container my-5">
+                    <!-- Header -->
+                    <!-- <div class="d-flex justify-content-between mx-4 pt-3">
+                        <p class="font_Coloered3 text-center my-3">Plans </p>
+                        <button routerLink="/UploadPlansFile/{{this.OfferId}}" mat-raised-button color="primary" class="mt-3">Add New</button>
+                    </div> -->
+                    <!-- Body -->
+                    <div class="outerItem outerBorder shadow_5" style="overflow: auto;">
+                        <table class="table table-striped text-center">
+                            <thead class="tableHead">
+                                <th>{{'Offer.PlanName'|translate}}</th>
+                                <th>{{'Offer.AnnualMaxLimit'|translate}}</th>
+                                <th>{{'Offer.NetPremium'|translate}}</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of AllOfferPlans">
+                                    <td class="align-middle py-3">{{item.planName}}</td>
+                                    <td class="align-middle py-3">{{item.annualMaxLimit}}</td>
+                                    <td class="align-middle py-3">{{item.netPremium}}</td>  
+                                </tr>
+                            </tbody>
+            
+                        </table>
+                        <div id="loading" *ngIf="loading">
+                            <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer py-3">
+                    <button type="button" mat-raised-button
+                        data-bs-dismiss="modal"><th>{{'Shared.Close'|translate}}</th></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

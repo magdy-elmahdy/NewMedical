@@ -1,0 +1,331 @@
+<div id="AllPolices" class="my-1">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between mx-5">
+            <p class="font_Coloered3 text-center my-4">{{'SideBar.AllOffers'|translate}}</p>
+            <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;" [(ngModel)]='term'  placeholder="{{'Shared.SearchHere'|translate}}" />
+      </div>
+      <div class="outerBorder outerItem shadow_5" style="overflow: auto;">
+        
+            <table class="table table-striped text-center table-responsive">
+                <thead class="tableHead">
+                    <th class="py-2">{{'Offer.OfferCode'|translate}}</th>
+                    <th class="py-2">{{'Offer.CustomerName'|translate}}</th>
+                    <th class="py-2">{{'Offer.BusinessType'|translate}}</th>
+                    <th class="py-2">{{'Offer.InsuranceClass'|translate}}</th>
+                    <th class="py-2">{{'Offer.OfferDate'|translate}}</th>
+                    <th class="py-2">{{'Offer.TpaName'|translate}}</th>
+                    <th class="py-2">{{'Offer.NetPremium'|translate}}</th>
+                    <th class="py-2">{{'Offer.PolicySource'|translate}}</th>
+                    <th class="py-2">{{'Offer.Broker'|translate}}</th>
+                    <th class="py-2" *ngIf="this.permissions.includes('Permissions.Offers.ConvertOfferToPolicy')">{{'Offer.PolicyCovert'|translate}}</th>
+                    <th class="py-2" style="min-width: 10rem;">{{'Shared.Settings'|translate}}</th>
+                </thead>
+                <tbody>
+                    
+                    <tr *ngFor="let offer of AllOffers|search:term|paginate:{
+                        itemsPerPage:tableSize,
+                        currentPage:page,
+                        totalItems:count}; let i=index">
+                        <td class="align-middle">{{offer.code}}</td>
+                        <td class="align-middle">{{offer.customerName}}</td>
+                        <td class="align-middle">{{offer.businessType}}</td>
+                        <td class="align-middle">{{offer.insuranceClass}}</td>
+                        <td class="align-middle">{{offer.offerDate | date:'shortDate'}}</td>
+                        <td class="align-middle">{{offer.tpaName}}</td>
+                        <td class="align-middle">{{offer.netPremium}}</td>
+                        <td class="align-middle">{{offer.policySource}}</td>
+                        <td class="align-middle"><span *ngIf="offer.brokerName==null">_</span>{{offer.brokerName}}</td>
+                        <td class="align-middle" *ngIf="this.permissions.includes('Permissions.Offers.ConvertOfferToPolicy')">
+                            <button [disabled]="offer.convertedToPolicy ==true" mat-raised-button routerLink="/ConvertToPolicy/{{offer.id}}">{{'Offer.PolicyCovert'|translate}}</button>
+                        </td>
+    
+                        <td class="align-middle">
+                            <i *ngIf="this.permissions.includes('Permissions.Offers.Update')" (click)="getOfferDetailsToEdit(offer)" data-bs-toggle="modal" data-bs-target="#editOffer" class="fa-solid fa-pencil fs-5 px-2 py-2 mx-1" style="color:#3F51B5;"></i>
+                            <i routerLink="/OfferVersions/{{offer.id}}" class="fa-solid fa-layer-group fs-5 px-2 py-2"></i>
+                            <i *ngIf="this.permissions.includes('Permissions.Offers.View')" routerLink="/OfferDetails/{{offer.id}}" class="fa-regular fa-eye text-success fs-5 px-2 py-2"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+       
+        <!-- Pagination -->
+        <div class="d-flex justify-content-end mt-4">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+            <select style="border: solid 2px #4758B8;" (change)="onTableSizeChange($event)" class="tableSize rounded-pill px-1">
+              <option *ngFor=" let size of tableSizes">{{size}}</option>
+            </select>
+        </div>
+        <!-- Loading -->
+        <div id="loading" *ngIf="loading">
+            <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+        </div>
+      </div>
+    </div>
+    
+
+
+
+
+
+    <!--------------------------------------- Edit Offer Modal --------------------------->
+    <div class="modal fade" id="editOffer" tabindex="-1" aria-labelledby="editOffer" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editOffer">{{'Shared.Edit'|translate}} {{'Offer.Offer'|translate}}</h1>
+                </div>
+                    <!-- Body -->
+                <div class="container my-5">
+                    <form [formGroup]="PricingIndivualForm">
+                        <div class="outerBorder shadow_5">
+                            <mat-horizontal-stepper linear #stepper>
+                            <!--------------------------- Offer ----------------------->
+                        <mat-step label="{{'Offer.Offer'|translate}}"
+                            [completed]="this.PricingIndivualForm.get('BrokerId')?.status=='VALID'">
+                            <div class="row my-5">
+                                <!-- col 1 -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Shared.CompanyName'|translate}}</mat-label>
+                                        <input type="text" readonly value="Misr Takaful Insurance" matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100">
+                                        <mat-label><span class="text-danger mx-1">*</span>{{'Offer.BusinessType'|translate}}</mat-label>
+                                        <mat-select formControlName="BusinessType">
+                                            <mat-option *ngFor="let type of BusinessTypes" [value]="type.id">{{type.value}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.Insured'|translate}}</mat-label>
+                                        <input type="text" readonly value="{{this.OfferDetails?.customerName}}" matInput>
+                                    </mat-form-field>
+                                    
+                                    <mat-form-field class="w-100">
+                                        <mat-label><span class="text-danger mx-1">*</span>{{'Offer.TpaName'|translate}}</mat-label>
+                                        <mat-select formControlName="TpaId">
+                                            <mat-option *ngFor="let tpa of listOfTpa" [value]="tpa.id">{{tpa.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    
+                                </div>
+                                <!-- col 2 -->
+                                <div class="col-md-6">
+                                    
+
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.InsuranceClass'|translate}}</mat-label>
+                                        <mat-select formControlName="InsuranceClass" #team >
+                                            <mat-option *ngFor="let type of InsuranceClasses" [value]="type.id">{{type.value}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <!-- <div class="mb-3">
+                                        <label class="text-muted">Offer Date</label>
+                                        <input formControlName="OfferDate" type="date" class="form-control">
+                                    </div> -->
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.Offer'|translate}} {{'Shared.Date'|translate}}</mat-label>
+                                        <input formControlName="OfferDate" matInput [matDatepicker]="picker">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="w-100">
+                                        <mat-label>{{'Offer.PolicySource'|translate}}</mat-label>
+                                        <mat-select formControlName="PolicySource" #item (selectionChange)="getSourceVal(item.value)">
+                                            <mat-option [value]="0">Direct</mat-option>
+                                            <mat-option [value]="1">Indirect</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field style="display: none;" class="w-100" id="BrokerFiled">
+                                        <mat-label >{{'Offer.Broker'|translate}}</mat-label>
+                                        <mat-select formControlName="BrokerId">
+                                            <mat-option *ngFor="let type of brokerCustomers" [value]="type.id">{{type.name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <hr style="width:80%; margin:auto;border-top:1px solid;color:#000" class="my-4">
+                            <div class="d-flex justify-content-end">
+                                <button id="close" class="mx-1" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+                                <button color="warn" mat-raised-button matStepperNext>{{'Shared.Next'|translate}}</button>
+                            </div>
+                                </mat-step>
+                            <!---------------------------- Plans -------------------->
+                            <mat-step label="{{'Offer.Plans'|translate}}">
+                                <!--  -->
+                                <button (click)="showNewPlan()" mat-stroked-button color="warn" class="my-2">{{'Shared.AddNew'|translate}}</button>
+                                <div style="display: none;" id="AddPlan">
+                                    <form [formGroup]="PlanForm">
+
+                                        <div class="row ">
+                                            <div class="col-md-6">
+                                                <table class="table table-striped table-bordered text-center mt-2" style="border-radius: 20px;">
+                                                    <tbody class="align-middle">
+                                                        <tr>
+                                                            <th class="w-30 py-3">Upload Plans File</th>
+                                                            <td class="w-60 py-3">
+                                                                <i (click)="fileInput.click()" class="fa-solid fa-cloud-arrow-up fs-2 px-2 py-2" style="color:#3F51B5;border-radius: 5px;"></i>
+                                                                <input accept=".xlsx , .pdf" hidden (change)="uploadPlanFile($event)" #fileInput type="file">
+                                                                <span class="file-name">{{selectedPlanFile?.name}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <mat-form-field class="w-100" >
+                                                            <mat-label>{{'Offer.PlanName'|translate}}</mat-label>
+                                                            <mat-select formControlName="PlanName">
+                                                                <mat-option value="A">A</mat-option>
+                                                                <mat-option value="B">B</mat-option>
+                                                                <mat-option value="C">C</mat-option>
+                                                                <mat-option value="D">D</mat-option>
+                                                                <mat-option value="E">E</mat-option>
+                                                                <mat-option value="F">F</mat-option>
+                                                                <mat-option value="G">G</mat-option>
+                                                                <mat-option value="H">H</mat-option>
+                                                                <mat-option value="I">I</mat-option>
+                                                                <mat-option value="J">J</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <mat-form-field class="w-100">
+                                                            <mat-label>{{'Offer.NetPremium'|translate}}</mat-label>
+                                                            <input formControlName="NetPremium" type="number" matInput>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <mat-form-field class="w-100">
+                                                            <mat-label>{{'Offer.AnnualMaxLimit'|translate}}</mat-label>
+                                                            <input formControlName="AnnualMaxLimit" type="number" matInput>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <button [disabled]="this.PlanForm.status=='INVALID'" (click)="view()" mat-raised-button color="accent" class="mt-2">{{'Shared.Add'|translate}}</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </form>
+                                </div>
+                                <div *ngIf="this.OfferPlans?.length==0"  class="alert alert-info w-75 my-5 m-auto text-center"><strong>{{'Offer.NoPlansYet'|translate}}</strong></div>
+                                <div style="max-height:19rem;overflow: auto;" >
+                                    <table *ngIf="this.OfferPlans.length>0" class="table table-striped text-center">
+                                        <thead>
+                                                <th>{{'Offer.PlanName'|translate}}</th>
+                                                <th>{{'Offer.NetPremium'|translate}}</th>
+                                                <th>{{'Offer.AnnualMaxLimit'|translate}}</th>
+                                                <th></th>
+                                        </thead>
+                                        <tbody>
+                                                <tr *ngFor="let plan of this.OfferPlans;let index = index">
+                                                    <td>{{plan.planName}}</td>
+                                                    <td>{{plan.netPremium}}</td>
+                                                    <td>{{plan.annualMaxLimit}}</td>
+                                                    <td><button color="warn" (click)="remove(index,plan.id,plan.planName)" mat-raised-button>{{'Shared.Remove'|translate}}</button></td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--  -->
+                                <hr style="width:80%; margin:auto;border-top:1px solid;color:#000" class="my-4">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                      <button color="accent"  mat-raised-button matStepperPrevious >{{'Shared.Previous'|translate}}</button>
+                                    </div>
+                                    <div>
+                                      <button color="warn"  mat-raised-button matStepperNext >{{'Shared.Next'|translate}}</button>
+                                    </div>
+                                </div>
+                            </mat-step>
+                            <!----------------------------- Group ------------------------->
+                            <mat-step label="{{'Offer.Group'|translate}}">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <table class="table table-striped table-bordered text-center">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="w-30 align-middle fs-6">{{'Shared.downloadTemplete'|translate}}</th>
+                                                    <td class="w-60 align-middle">
+                                                        <div class="Download mt-2">
+                                                            <i (click)="getTempleteFile()" class="text-success fa-solid fa-download fs-3 px-2 py-1 mt-3" style="border-radius: 7px;"></i>
+                                                            <!-- <i  class="text-success fa-solid fa-spinner fa-spin fs-3 px-2 py-2 mt-2"></i> -->
+                                                        </div>  
+                                                    </td>
+                                                </tr>
+                            
+                                                <tr>
+                                                    <th class="w-30  align-middle fs-6">{{'Shared.Upload'|translate}} {{'Shared.Group'|translate}}</th>
+                                                    <td class="w-60  align-middle">
+                                                        <div>
+                                                            <i (click)="fileGroupInput.click()" class="fa-solid fa-cloud-arrow-up fs-2 px-2 py-2" style="color:#3F51B5;border-radius: 5px;cursor: pointer;"></i>
+                                                            <input accept=".xlsx" hidden (change)="uploadGroupFile($event)" #fileGroupInput type="file">
+                                                            <span class="file-name">{{selectedGroupFile?.name}}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="d-flex justify-content-end">
+                                            <button *ngIf="this.OfferGroup?.length>0" mat-stroked-button color="warn" class="my-2"(click)=showCurrentGroup()>{{"Offer.CurrerntGroup"|translate}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="this.OfferGroup?.length==0"  class="alert alert-info w-75 my-5 m-auto text-center"><strong>{{'Offer.NoCustomerGroupYet'|translate}}</strong></div>
+                                <div *ngIf="this.OfferGroup?.length>0" style="display:none; max-height:19rem;overflow: auto;" id="currentGroup">
+                                    <table class="table table-striped text-center">
+                                        <thead>
+                                            <th>{{'addCustomer.Name'|translate}}</th>
+                                            <th>{{'addCustomer.Sex'|translate}}</th>
+                                            <th>{{'Offer.GroupRel'|translate}}</th>
+                                            <th>{{'addCustomer.D.O.B'|translate}}</th>
+                                            <th>{{'Shared.Age'|translate}}</th>
+                                            <th>{{'addCustomer.Notes'|translate}}</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let group of this.OfferGroup;">
+                                                <td>{{group.name}}</td>
+                                                <td>{{group.gender}}</td>
+                                                <td>{{group.groupRel}}</td>
+                                                <td>{{group.dateOfBirth|date:'yyyy-MM-dd'}}</td>
+                                                <td>{{group.age}}</td>
+                                                <td>{{group.notes}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+
+                                <hr style="width:80%; margin:auto;border-top:1px solid;color:#000" class="my-4">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                      <button color="accent" mat-raised-button matStepperPrevious>{{'Shared.Previous'|translate}}</button>
+                                    </div>
+                                    <div>
+                                      
+                                      <button (click)="SaveUpdate()" [disabled]="this.isClicked" color="primary" mat-raised-button matStepperNext ><span *ngIf="this.isClicked">{{'Shared.Waiting'|translate}}</span><span *ngIf="!this.isClicked">{{'Shared.Submit'|translate}}</span></button>
+                                    </div>
+                                </div>
+                            </mat-step>
+                            </mat-horizontal-stepper>
+                            
+                            <div id="loading" *ngIf="loadingDetails">
+                                <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+                            </div>
+                       </div> 
+                    </form>
+                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

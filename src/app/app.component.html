@@ -1,0 +1,28 @@
+<!--Loader Div Starts-->
+  <!-- <div class="loaderContent h-100" *ngIf="loader">
+    <div class="spinner-grow text-primary" style="width: 5rem; height: 5rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div> -->
+  <!-- <div class="loaderContent h-100" *ngIf="loader">
+    <img src="../assets/imgs/81.gif" class="w-25" alt="">
+  </div> -->
+<!--Loader Div Ends-->
+
+<div [dir]="'dir'| translate">
+    <app-navbar (SideStatus)="handleSideBar()"></app-navbar>
+        <!-- SideBar -->
+  <mat-sidenav-container [dir]="'dir'| translate">
+    <mat-sidenav [(opened)]="opened" mode="side">
+      <app-sidebar></app-sidebar>
+      
+      
+    </mat-sidenav>
+    <mat-sidenav-content>
+      
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
+</div>

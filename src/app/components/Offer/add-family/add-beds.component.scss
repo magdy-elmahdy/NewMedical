@@ -1,0 +1,19 @@
+table tr td{
+    vertical-align: middle!important;
+}
+
+.outerBorder{
+    position: relative;
+}
+.PageTitle{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    padding: 0.8rem 1.5rem ;
+    background-color: #FFF;
+    border-radius: 0.8rem!important;
+    color: #4758B8;
+    font-size: 1.4rem;
+    // font-weight: 500;
+}

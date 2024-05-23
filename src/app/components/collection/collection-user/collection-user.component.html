@@ -1,0 +1,142 @@
+<div id="CollectionUser" class="my-1">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between mx-5 pt-3">
+            <p class="font_Coloered3 text-center my-2">{{'Collections.Collections'|translate}}</p>
+
+        </div>
+      <div class="outerBorder outerItem shadow_5 py-3">
+        <!-------------------- Search Policy ------------------->
+        <p class="text-muted fs-5 fw-bold py-2">{{'Shared.SearchHere'|translate}} :</p>
+        <form [formGroup]="SearchForm">
+            <div class="row">
+                <div class="col-md-4">
+                    <mat-form-field class="w-100">
+                        <mat-label>{{'Policy.policyNumber'|translate}}</mat-label>
+                        <input formControlName="Code" type="text" matInput>
+                        <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.6);"><i class="fa-solid fa-hashtag"></i></mat-icon>
+                    </mat-form-field>
+    
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="w-100" id="bokerField">
+                        <mat-label>{{'Offer.Broker'|translate}}</mat-label>
+                        <mat-select  [(value)]="BrokerIdVal">
+                            <mat-option value="">{{'Shared.Null'|translate}}</mat-option>
+                            <mat-option *ngFor="let type of brokerCustomers" [value]="type.id">{{type.name}}</mat-option>
+                        </mat-select>
+                        <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.6);"><i class="fa-solid fa-people-arrows"></i></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="w-100">
+                        <mat-label>{{'Offer.Insured'|translate}}</mat-label>
+                        <input formControlName="Insured" type="Text" matInput>
+                        <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.6);"><i class="fa-solid fa-user"></i></mat-icon>
+                    </mat-form-field>
+                    
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="w-100">
+                        <mat-label>{{'Policy.From'|translate}}</mat-label>
+                        <input formControlName="From" matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="w-100">
+                        <mat-label>{{'Policy.To'|translate}}</mat-label>
+                        <input formControlName="To" matInput [matDatepicker]="picker2">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Search Now -->
+                    <div class="d-flex justify-content-end">
+                        <button [disabled]="this.isClicked" (click)="Search()" mat-raised-button color="primary" class="w-75 py-2"><span *ngIf="this.isClicked"><i class="fa-4 fa-solid fa-fan fa-spin"></i></span> <span *ngIf="!this.isClicked">{{'Shared.Search'|translate}} <i class="fa-solid fa-magnifying-glass"></i></span></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-------------------- Search results------------------->
+
+        <div style="overflow: auto;" id="SearchResults"> 
+            <hr class="my-4" style="width: 80%;margin: auto;">
+            <p class="text-muted fs-5 fw-bold py-2">{{'Shared.Searchresults'|translate}} <i class="fa-solid fa-square-poll-vertical"></i></p>
+            <table class="table text-center table-responsive table-hover">
+                <thead class="tableHead">
+                    <th class="py-2">{{'Collections.PolicyCode'|translate}}</th>
+                    <th class="py-2">{{'Shared.Type'|translate}}</th>
+                    <th class="py-2">{{'Offer.CustomerName'|translate}}</th>
+                    <th class="py-2">{{'Collections.Broker'|translate}}</th>
+                    <th class="py-2">{{'Collections.remainder'|translate}}</th>
+                    <th class="py-2">{{'Collections.TotalPaid'|translate}}</th>
+                    <th class="py-2">{{'Collections.Totaldue'|translate}}</th>
+                    <th class="py-2">{{'Collections.installmentDue'|translate}}</th>
+                    <th class="py-2">{{'Collections.DueDate'|translate}}</th>
+                    <th class="py-2">{{'Collections.Select'|translate}}</th>
+                </thead>
+                <tbody>
+                    
+                    <tr *ngFor="let Policy of AllCollections;let index= index">
+                        <td class="align-middle">{{Policy.code}}</td>
+                        <td class="align-middle">{{Policy.collectionType}}</td>
+                        <td class="align-middle">{{Policy.insured}}</td>
+                        <td class="align-middle">{{Policy.brokerName}} <span *ngIf="Policy.brokerName==''||Policy.brokerName==null">_</span></td>
+                        <td class="align-middle">{{Policy.remainder}}</td>
+                        <td class="align-middle">
+                            <mat-form-field style="margin-bottom:-1.6em;">
+                                <input #inputMoney type="number" (keyup)="checkIfAxceeded($event.target,index,LaterDate,checkBtn)" [max]="Policy.premium" value="{{Policy.premium}}"  matInput>
+                                <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.6);"><i class="fa-solid fa-coins"></i></mat-icon>
+                            </mat-form-field>
+                            <!-- باقي -->
+                            <div id="Remain{{index}}" style="display: none;">
+                                <label class="text-muted">تاريخ سـداد الباقي</label>
+                                <input (change)="getLaterDate(checkBtn)" type="date" #LaterDate class="form-control">
+                            </div>
+                        </td>
+                        <td class="align-middle">{{Policy.grossPremium}}</td>
+                        <td class="align-middle">{{Policy.premium}}</td>
+                        <td class="align-middle">{{Policy.paymentDate|date:'dd-MM-YYYY'}}</td>
+                        <td class="align-middle">
+                            <section class="example-section">
+                                <mat-checkbox #checkBtn (change)="getCheckedValues(Policy.id,$event.checked,inputMoney,LaterDate,Policy.policyId,Policy.collectionType)" class="example-margin"></mat-checkbox>
+                            </section>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- total Money-->
+            <div class="row">
+                <div class="col-md-4">
+                    <table class="table table-striped table-bordered text-center mt-2">
+                        <tbody>
+                            <tr>
+                                <th class="w-30 py-2">Total Money</th>
+                                <td class="w-60 py-2">{{this.TotalMony}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-2">
+                    <div style="display: none;" id="UploadFile">
+                        <i (click)="fileGroupInput.click()" class="fa-solid fa-cloud-arrow-up fs-2 px-2 py-2" style="color:#3F51B5;border-radius: 5px;cursor: pointer;"></i>
+                        <input accept=".xlsx" hidden (change)="uploadPaymnetFile($event)" #fileGroupInput type="file">
+                        <span class="file-name">{{selectedFile?.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <button [disabled]="this.ArrTest.length==0" mat-raised-button color="primary" (click)="AddPortfolio()" class="w-25">{{'Shared.Save'|translate}} <i class="fa-regular fa-floppy-disk"></i></button>
+            <!-- Loading -->
+            <div id="loading" *ngIf="isClicked">
+                <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+            </div>
+        </div>
+
+      </div>
+    </div>
+
+</div>

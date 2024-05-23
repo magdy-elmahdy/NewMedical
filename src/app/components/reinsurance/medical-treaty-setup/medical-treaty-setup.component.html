@@ -1,0 +1,179 @@
+<div id="medical-treaty-setup">
+    <div class="container">
+        <div class="d-flex justify-content-between mx-5">
+            <p class="font_Coloered3 text-center mt-4">Medical Treaty Setup</p>
+        </div>
+        <div class="outerBorder shadow_5 mt-3">
+            <form [formGroup]="Form">
+                <div class="row">
+                    <!--Col 1 -->
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label><span class="text-danger mx-1">*</span>{{'Offer.BusinessType'|translate}}</mat-label>
+                            <mat-select formControlName="businessType">
+                                <mat-option *ngFor="let type of BusinessTypes" value="{{type.id}}">{{type.value}}</mat-option>
+                            </mat-select> 
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <mat-label>{{'Policy.UY'|translate}}</mat-label>
+                            <input formControlName="underWritingYear" type="number" matInput>
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <mat-label>Retantion</mat-label>
+                            <input formControlName="retantion" type="number" matInput>
+                        </mat-form-field>
+                    </div>
+                    <!-- Col 2 -->
+                    <div class="col-md-6">
+                        <mat-form-field class="w-100" >
+                            <mat-label>{{'Offer.InsuranceClass'|translate}}</mat-label>
+                            <mat-select formControlName="insuranceClass">
+                                <mat-option *ngFor="let type of InsuranceClasses" [value]="type.id">{{type.value}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div class="row">
+                            <div class="col-6">
+                                <mat-form-field  class="w-100">
+                                    <mat-label>{{'Policy.From'|translate}}</mat-label>
+                                    <input formControlName="from" matInput [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6">
+                                <mat-form-field class="w-100">
+                                    <mat-label>{{'Policy.To'|translate}}</mat-label>
+                                    <input formControlName="to" matInput  [matDatepicker]="picker1">
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            
+                        </div>
+                        <mat-form-field class="w-100">
+                            <mat-label>Additional Retantion</mat-label>
+                            <input formControlName="additionalRetantion" type="number" matInput>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Append Model -->
+                    <div class="px-4">
+                        <div class="assignBorder">
+                            <div class="d-flex justify-content-between mt-2 mx-4">
+                                <h2 class="text-muted">Share<span class="text-danger mx-1">*</span></h2>
+                                <button mat-stroked-button (click)="View()" [disabled]="this.AppendForm.status=='INVALID'" color="primary">Add <span><i class="fa-solid fa-circle-plus"></i></span></button>
+                            </div>
+                            <hr style=" height: 2px!important;background-color:rgba(0, 0, 0, 0.10);">
+                            <form [formGroup]="AppendForm">
+                                <div class="row px-2">
+                                    <div class="col-6">
+                                        <mat-form-field class="w-100">
+                                            <mat-label>{{'Shared.CompanyName'|translate}}</mat-label>
+                                            <mat-select formControlName="reInsuranceCompanyId">
+                                                <mat-option *ngFor="let item of AllReInsurCompanies" [value]="item.id">{{item.name}}</mat-option>
+                                            </mat-select>
+                                            <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-building"></i></mat-icon>
+                                        </mat-form-field>
+                                        <mat-form-field class="w-100" style="margin-top: -0.7em;">
+                                            <mat-label>Broker</mat-label>
+                                            <mat-select (selectionChange)="getSelectedBroker(brokerShare)" formControlName="reInsuranceBrokerId">
+                                                <mat-option value="">Null</mat-option>
+                                                <mat-option *ngFor="let item of AllReInsurBrokers" [value]="item.id">{{item.name}}</mat-option>
+                                            </mat-select>
+                                            <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-people-arrows"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-6">
+                                        <mat-form-field class="w-100">
+                                            <mat-label>Share</mat-label>
+                                            <input formControlName="reInsuranceCompanyPct" type="number" matInput>
+                                            <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-percent"></i></mat-icon>
+                                        </mat-form-field>
+                                        <mat-form-field class="w-100" style="margin-top: -0.7em;">
+                                            <mat-label>Share</mat-label>
+                                            <input #brokerShare  formControlName="reInsuranceBrokerPct" type="number" matInput>
+                                            <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-percent"></i></mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- Table -->
+                        <table *ngIf="this.arrTest.length>0"  class="table table-striped text-center">
+                            <thead>
+                                <th>Company</th>
+                                <th>Broker</th>
+                                <th>CompanyShare</th>
+                                <th>BrokerShare</th>
+                                <th ></th>
+                            </thead>
+                            <tbody>
+                                    <tr *ngFor="let item of arrTest;let index = index" style="vertical-align: middle;">
+                                        <td>{{item.company}}</td>
+                                        <td>{{item.broker}}</td>
+                                        <td>{{item.reInsuranceCompanyPct}}</td>
+                                        <td>{{item.reInsuranceBrokerPct}}</td>
+                                        <td ><button color="warn" (click)="remove(index)" mat-raised-button>{{'Shared.Remove'|translate}}</button></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    <!-- Final Col 1 -->
+                    <div class="col-md-6 mt-3">
+                        <mat-form-field class="w-100">
+                            <mat-label>Treaty Commision</mat-label>
+                            <input formControlName="treatyCommission" type="number" matInput>
+                            <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-briefcase-medical"></i></mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="w-100" style="margin-top: -1em;">
+                            <mat-label>Mangment expenses</mat-label>
+                            <input formControlName="managmentExpenses" type="number" matInput>
+                            <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-vr-cardboard"></i></mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="w-100" style="margin-top: -1em;">
+                            <mat-label>Premium Reserve</mat-label>
+                            <input formControlName="premiumReserve" type="number" matInput>
+                            <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-coins"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <!-- Final Col 2 -->
+                    <div class="col-md-6 mt-3">
+                        <mat-form-field class="w-100">
+                            <mat-label>Profit Commision</mat-label>
+                            <input formControlName="profitCommission" type="number" matInput>
+                            <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-sack-dollar"></i></mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="w-100" style="margin-top: -1em;">
+                            <mat-label>Premium cap</mat-label>
+                            <input formControlName="premiumCap" type="number" matInput>
+                            <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-hand-holding-dollar"></i></mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="w-100" style="margin-top: -1em;">
+                            <mat-label>Cash Call</mat-label>
+                            <input formControlName="cashCall" type="number" matInput>
+                            <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-money-bills"></i></mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button id="Save" (click)="SubmitReInsurTreatySetup()" [disabled]="this.Form.status=='INVALID'||this.isClicked||this.arrTest.length==0" mat-raised-button color="primary" class="w-25 mt-3" >
+                        <span *ngIf="!this.isClicked">Save <i class="fa-solid fa-floppy-disk"></i></span>
+                        <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-spin"></i></span>
+                    </button>
+                    <button style="display: none;" id="New" (click)="new()" mat-raised-button color="accent" class="w-25 mt-3" >
+                        New Medical Treaty ?
+                    </button>
+                    <table id="TreatySetup" style="display: none;" class="table table-striped table-bordered text-center mt-3 w-50">
+                        <tbody>
+                            <tr >
+                                <th class="w-30">Treaty Setup Name</th>
+                                <td class="w-60 text-danger">{{this.treatySetupName}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

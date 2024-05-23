@@ -1,0 +1,286 @@
+<div class="examBox">
+    <div class="examhead text-center"><h2>Title</h2></div>
+    <div class="quizBox">
+        <form [formGroup]="AnswerExamForm">
+            <!-- 1 -->
+        <h2 class="fs-4">1- <span class="text-muted">Heart disease and arteries</span> ?</h2>
+        <mat-radio-group formControlName="1">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button  value="0" name="heart" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="heart" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        <hr class="my-3">
+        <!-- 2 -->
+        <h2 class="fs-4">2- <span class="text-muted">Gastrointestinal diseases except cancer</span> ?</h2>
+        <mat-radio-group formControlName="2">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="Gastrointestinal" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="Gastrointestinal" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        <hr class="my-3">
+        <!-- 3 -->
+        <h2 class="fs-4">3- <span class="text-muted">Diseases of the kidneys and urinary tract, except for cancer</span> ?</h2>
+        <mat-radio-group formControlName="3">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="kidneys" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="kidneys" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        
+        <hr class="my-3">
+        <!-- 4 -->
+        <h2 class="fs-4">4- <span class="text-muted">Orthopedic diseases except for cancer or transplanted limbs</span> ?</h2>
+        <mat-radio-group formControlName="4">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="Orthopedic" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="Orthopedic" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        <hr class="my-3">
+        <!-- 5 -->
+        <h2 class="fs-4">5- <span class="text-muted">Diseases of the nervous system, except cancer</span> ?</h2>
+        <mat-radio-group formControlName="5">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="nervous" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="nervous" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        <hr class="my-3">
+        <!-- 6 -->
+        <h2 class="fs-4">6- <span class="text-muted">Diabetes and endocrine diseases, except cancer</span> ?</h2>
+        <mat-radio-group formControlName="6">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="Diabetes" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="Diabetes" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        <hr class="my-3">
+
+        <!-- 7 -->
+        <h2 class="fs-4">7- <span class="text-muted">Diseases of the ear, nose and throat, except  cancer</span> ?</h2>
+        <mat-radio-group formControlName="7">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="earThroat" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="earThroat" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        
+        <hr class="my-3">
+
+        <!-- 8 -->
+        <h2 class="fs-4">8- <span class="text-muted">Blood diseases except cancer</span> ?</h2>
+        <mat-radio-group formControlName="8">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="nervous" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="nervous" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        
+        <hr class="my-3">
+
+        <!-- 9 -->
+        <h2 class="fs-4">9- <span class="text-muted">أورام( أورام خبيثه وأمراض الدم)</span> ?</h2>
+        <mat-radio-group formControlName="9">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="أورام" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="أورام" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        
+        <hr class="my-3">
+
+        <!-- 10 -->
+        <h2 class="fs-4">10 - <span class="text-muted">أمراض الجهاز التنفسي ما عدا السرطان</span> ?</h2>
+        <mat-radio-group formControlName="10">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="التنفسي" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="التنفسي" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        
+        <hr class="my-3">
+
+        <!-- 11 -->
+        <h2 class="fs-4">11- <span class="text-muted"> امراض منتقله جنسيا</span> ?</h2>
+        <mat-radio-group formControlName="11">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="جنسيا" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="جنسيا" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        
+        <hr class="my-3">
+
+        <!-- 12 -->
+        <h2 class="fs-4">12- <span class="text-muted"> أمراض أخري وحوادث أو عمليات أو فحوص أو مناظير </span> ?</h2>
+        <mat-radio-group formControlName="12">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="0" name="وحوادث" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button value="1" name="وحوادث" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        
+        <hr class="my-3">
+
+        <!-- 13 -->
+        <h2 class="fs-4">13 - <span class="text-muted">هل تتناول أي دواء أو تتابع أي علاج</span> ?</h2>
+        <mat-radio-group formControlName="13">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button (change)="getTreatments($event.value)"(change)="inCaseDisease()" value="0" name="تتناول" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button (change)="getTreatments($event.value)"(change)="inCaseDisease()" value="1" name="تتناول" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+
+        <hr class="my-3">
+
+        <!-- 14 -->
+        <h2 class="fs-4">14 - <span class="text-muted">Diseases and birth defects</span> ?</h2>
+        <mat-radio-group formControlName="14">
+            <div class="row mt-3" >
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button (change)="getBirthDefects($event.value)"(change)="inCaseDisease()"  value="0" name="birthDefects" color="warn"></mat-radio-button>
+                    <label>Yes</label>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <mat-radio-button (change)="getBirthDefects($event.value)"(change)="inCaseDisease()"   value="1" name="birthDefects" color="warn"></mat-radio-button>
+                    <label>No</label>
+                </div>
+            </div>
+        </mat-radio-group>
+        </form>
+        <hr class="my-3">
+        <!-- In Case Yes -->
+        <div style="display: none;" id="existedDisease" class="row">
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="outline" color="accent">
+                    <mat-label>Name</mat-label>
+                    <input type="text" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="outline" color="accent">
+                    <mat-label>disease number</mat-label>
+                    <input type="number" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="outline" color="accent">
+                    <mat-label>Diagnosis</mat-label>
+                    <input type="number" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="outline" color="accent">
+                    <mat-label>Treatment</mat-label>
+                    <input type="text" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="outline" color="accent">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="picker10">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker10"></mat-datepicker-toggle>
+                    <mat-datepicker #picker10></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field class="w-100" appearance="outline" color="accent">
+                    <mat-label>Doctor/Hospital Name</mat-label>
+                    <input type="text" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="w-100" appearance="outline" color="accent">
+                    <mat-label>Notes</mat-label>
+                    <input type="text" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <button mat-raised-button color="warn" class="w-100" >Save</button>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button [disabled]="this.AnswerExamForm.status=='INVALID'" (click)="submitQuestions()" color="primary" mat-raised-button  class="btn btn-danger" >Submit</button>
+        </div>
+    </div>
+</div>

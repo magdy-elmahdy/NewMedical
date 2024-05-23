@@ -1,0 +1,70 @@
+<div id="AllPolices" class="my-1">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between mx-5">
+            <p class="font_Coloered3 text-center my-4">{{'Policy.AllPolices'|translate}}</p>
+            <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;" [(ngModel)]='term' placeholder="{{'Shared.SearchHere'|translate}}" />
+        </div>
+      <div class="outerBorder outerItem shadow_5" style="overflow: auto;">
+        
+            <table class="table text-center table-responsive">
+                <thead class="tableHead">
+                    <th class="py-2">{{'PolicyCalculatins.Code'|translate}}</th>
+                    <th class="py-2">{{'Offer.CustomerName'|translate}}</th>
+                    <th class="py-2">{{'Offer.BusinessType'|translate}}</th>
+                    <th class="py-2">{{'Offer.InsuranceClass'|translate}}</th>
+                    <th class="py-2">{{'Offer.TpaName'|translate}}</th>
+                    <th class="py-2">{{'Offer.NetPremium'|translate}}</th>
+                    <th class="py-2">{{'Offer.PolicySource'|translate}}</th>
+                    <th class="py-2">{{'Offer.Broker'|translate}}</th>
+                    <th *ngIf="this.permissions.includes('Permissions.Policies.View')" class="py-2"></th>
+                    <th *ngIf="this.permissions.includes('Permissions.Policies.Renewal')" ></th>
+                    <th *ngIf="this.permissions.includes('Permissions.Policies.Update')" class="py-2"></th>
+                </thead>
+                <tbody>
+                    
+                    <tr [class.customSuccess]="Policy.code!=null&&Policy.code!=''&&Policy.isActive" [class.customDanger]="Policy.code==''||Policy.code==null||!Policy.isActive" 
+                    *ngFor="let Policy of AllPolices|search:term|paginate:{ 
+                        itemsPerPage:tableSize,
+                        currentPage:page,
+                        totalItems:count}; let i=index">
+                        <td class="align-middle">{{Policy.code}}</td>
+                        <td class="align-middle">{{Policy.insuredName}}</td>
+                        <td class="align-middle">{{Policy.businessType}}</td>
+                        <td class="align-middle">{{Policy.insuranceClass}}</td>
+                        <td class="align-middle">{{Policy.tpaName}}</td>
+                        <td class="align-middle">{{Policy.netPremium}}</td>
+                        <td class="align-middle">{{Policy.policySource}}</td>
+                        <td class="align-middle"><span *ngIf="Policy.brokerName==null">_</span>{{Policy.brokerName}}</td>
+                        <td *ngIf="this.permissions.includes('Permissions.Policies.View')">
+                            <div class="d-flex">
+                                <i routerLink="/PolicyCalculations/{{Policy.id}}"  class="fa-solid fa-calculator text-success fs-5 px-3 py-2"></i>
+                                <i routerLink="/PolicyDetails/{{Policy.id}}" class="fa-regular fa-eye text-success fs-5 px-3 py-2"></i>
+                            </div>
+                        </td>
+                        <td *ngIf="this.permissions.includes('Permissions.Policies.Renewal')" class="align-middle">
+                            <button  [disabled]="!Policy.isActive" routerLink="/ReNewPolicy/{{Policy.id}}" mat-raised-button >{{'Policy.renewPolicy'|translate}}</button>
+                        </td>
+                        <td class="align-middle" *ngIf="this.permissions.includes('Permissions.Policies.Update')">
+                            <button [disabled]="!Policy.isActive" routerLink="/groupNetPremium/{{Policy.id}}" mat-raised-button> {{'Shared.Update'|translate}}</button>
+                        </td>
+                    </tr>
+                </tbody>
+    
+            </table>
+       
+        <!-- Pagination -->
+        <div class="d-flex justify-content-end mt-4">
+            <pagination-controls previousLabel="{{'Shared.Previous'|translate}}" nextLabel="{{'Shared.Next'|translate}}" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+            <select style="border: solid 2px #4758B8;" (change)="onTableSizeChange($event)" class="tableSize rounded-pill px-1">
+              <option *ngFor=" let size of tableSizes">{{size}}</option>
+            </select>
+        </div>
+        <!-- Loading -->
+        <div id="loading" *ngIf="loading">
+            <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+        </div>
+      </div>
+    </div>
+    
+</div>

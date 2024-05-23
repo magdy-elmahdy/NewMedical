@@ -1,0 +1,240 @@
+<div class="AllBranches my-3">
+    <div class="container">        
+        <div class="d-flex justify-content-between mx-5">
+            <div class="d-flex align-items-center">
+                <p class="font_Coloered3 text-center my-4 mx-3">{{'Admin.Banks'|translate}}</p>
+                <button *ngIf="this.permissions.includes('Permissions.Banks.Create')" data-bs-toggle="modal" data-bs-target="#Add" (click)="WhenModalOpen()" mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
+            </div>
+            <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;" [(ngModel)]='term' placeholder="{{'Shared.SearchHere'|translate}}" />
+        </div>
+        <div class="outerBorder outerItem shadow_5 table-responsive" style="overflow: auto;">
+            
+            <table class="table table-striped text-center">
+                <thead class="tableHead">
+                    <th class="py-2">{{'PolicyCalculatins.Code'|translate}} </th>
+                    <th class="py-2">{{'addCustomer.Name'|translate}}</th>
+                    <th class="py-2">{{'addCustomer.AccountNo'|translate}}</th>
+                    <th class="py-2">{{'addCustomer.IBan'|translate}}</th>
+                    <th class="py-2">{{'addCustomer.SwiftCode'|translate}}</th>
+
+                    <th *ngIf="this.permissions.includes('Permissions.Banks.Delete') ||this.permissions.includes('Permissions.Banks.Update')"></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let Bank of AllBanks|search:term|paginate:{
+                        itemsPerPage:tableSize,
+                        currentPage:page,
+                        totalItems:count}; let i=index">
+                        <td class="align-middle">{{Bank.bankCode}}</td>
+                        <td class="align-middle">{{Bank.bankName}}</td>
+                        <td class="align-middle">
+                            {{Bank.bankAccount}}
+                            <!-- <i (click)="getBankAccounts(Bank.bankAccounts)" data-bs-toggle="modal" data-bs-target="#PortofoilDetails" class="fa-regular fa-eye text-success fs-5 px-3 py-2"></i> -->
+                        </td>
+                        <td class="align-middle">{{Bank.iBan}}</td>
+                        <td class="align-middle">{{Bank.swiftCode}}</td>
+                        
+                        <td>
+                            <i (click)="getBankDetails(Bank)" data-bs-toggle="modal" data-bs-target="#Edit" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;" *ngIf="this.permissions.includes('Permissions.Banks.Update')"></i>
+                            <i (click)="getIdToDelete(Bank.bankId)" data-bs-toggle="modal" data-bs-target="#delete" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081" *ngIf="this.permissions.includes('Permissions.Banks.Delete')"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end mt-4">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+                <select (change)="onTableSizeChange($event)" class="tableSize rounded-pill px-1">
+                  <option *ngFor=" let size of tableSizes">{{size}}</option>
+                </select>
+            </div>
+            <div id="loading" *ngIf="loading">
+                <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+            </div>
+        </div>
+
+    </div>
+</div>
+  <!--------------------------------------- Add Bank --------------------------->
+  <div class="modal fade" id="Add" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="edit">{{'Admin.AddBank'|translate}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+       <div class="container_custom">
+        <form [formGroup]="AddBankForm" class="my-5">
+            <mat-form-field class="w-100">
+                <mat-label>{{'PolicyCalculatins.Code'|translate}}</mat-label>
+                <input formControlName="bankCode" type="number" matInput>
+            </mat-form-field>
+            <mat-form-field class="w-100">
+                <mat-label> {{'addCustomer.Name'|translate}}</mat-label>
+                <input formControlName="bankName" type="text" matInput>
+            </mat-form-field>
+            
+            <div class="d-flex align-items-center">
+                <mat-form-field class="w-100">
+                    <mat-label>{{'addCustomer.AccountNo'|translate}}</mat-label>
+                    <input formControlName="bankAccount" type="number" matInput>
+                </mat-form-field>
+            </div>
+            
+            <div class="d-flex align-items-center">
+                <mat-form-field class="w-100">
+                    <mat-label> {{'addCustomer.IBan'|translate}}</mat-label>
+                    <input formControlName="iBan" type="text" matInput>
+                </mat-form-field>
+            </div>
+            <div class="d-flex align-items-center">
+                <mat-form-field class="w-100">
+                    <mat-label>{{'addCustomer.SwiftCode'|translate}}</mat-label>
+                    <input formControlName="swiftCode" type="text" matInput>
+                </mat-form-field>
+            </div>
+
+            <!-- <div class="d-flex align-items-center">
+                <mat-form-field class="w-75">
+                    <mat-label> Account Number</mat-label>
+                    <input [(ngModel)]="accountNumber" [ngModelOptions]="{standalone: true}" type="text" matInput>
+                </mat-form-field>
+                <button (click)="view()" [disabled]="this.accountNumber==''" class=" mx-2" mat-raised-button color="accent">Add</button>
+            </div> -->
+            <!-- <table *ngIf="this.arrTest.length>0"  class="table table-striped text-center">
+                <thead>
+                    <th>{{'Offer.PlanName'|translate}}</th>
+                    <th class="remove"></th>
+                </thead>
+                <tbody>
+                        <tr *ngFor="let item of arrTest;let index = index">
+                            <td>{{item}}</td>
+                            <td class="remove"><button color="warn" (click)="remove(index)" mat-raised-button>{{'Shared.Remove'|translate}}</button></td>
+                        </tr>
+                </tbody>
+
+            </table> -->
+ 
+
+            
+
+            <div class="modal-footer">
+              <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+              <button [disabled]="this.AddBankForm.status=='INVALID'||this.isClicked" type="button" mat-raised-button color="primary"(click)="AddBank()">{{'Shared.Save'|translate}}</button>
+            </div>
+        </form>
+       </div>
+        
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------- Edit Bank --------------------------->
+  <div class="modal fade" id="Edit" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="edit">{{'Admin.EditBank'|translate}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="container_custom">
+            <form [formGroup]="AddBankForm" class="my-5">
+                <mat-form-field class="w-100">
+                    <mat-label>{{'PolicyCalculatins.Code'|translate}}</mat-label>
+                    <input formControlName="bankCode" type="number" matInput>
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-label>{{'addCustomer.Name'|translate}}</mat-label>
+                    <input formControlName="bankName" type="text" matInput>
+                </mat-form-field>
+                
+                <div class="d-flex align-items-center">
+                    <mat-form-field class="w-100">
+                        <mat-label>{{'addCustomer.AccountNo'|translate}}</mat-label>
+                        <input formControlName="bankAccount" type="number" matInput>
+                    </mat-form-field>
+                </div>
+                
+                <div class="d-flex align-items-center">
+                    <mat-form-field class="w-100">
+                        <mat-label> {{'addCustomer.IBan'|translate}}</mat-label>
+                        <input formControlName="iBan" type="text" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="d-flex align-items-center">
+                    <mat-form-field class="w-100">
+                        <mat-label>{{'addCustomer.SwiftCode'|translate}}</mat-label>
+                        <input formControlName="swiftCode" type="text" matInput>
+                    </mat-form-field>
+                </div>
+     
+    
+                
+    
+                <div class="modal-footer">
+                  <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+                  <button [disabled]="this.AddBankForm.status=='INVALID'||this.isClicked" type="button" mat-raised-button color="primary"(click)="SubmitEditBank()">{{'Shared.Save'|translate}}</button>
+                </div>
+            </form>
+           </div>
+        
+      </div>
+    </div>
+  </div>
+
+                          <!------------------ View Bank Numbers --------------------->
+    <!-- <div class="modal fade" id="PortofoilDetails" tabindex="-1" aria-labelledby="addPlan" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addPlan">ارقام الحسابات</h1>
+                </div>
+                <div class="outerBorder shadow_5 table-responsive my-4">
+
+                    <table class="table text-center table-responsive table-hover">
+                        <thead class="tableHead">
+                            <th class="py-2">Bank Account</th>
+                        </thead>
+                        <tbody>
+                            
+                            <tr *ngFor="let item of BankAccounts">
+                                <td>{{item}}</td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>   
+
+                <div class="modal-footer py-3">
+                    <button  type="button" mat-raised-button
+                        data-bs-dismiss="modal">Close</button>
+                </div>
+
+                
+            </div>
+        </div>
+    </div> -->
+                          <!------------------ Belete Bank --------------------->
+    <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="addPlan" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addPlan">{{'Admin.DeleteBank'|translate}}</h1>
+                </div>
+                <div class="outerBorder shadow_5 table-responsive my-4">
+
+                    <div class="alert alert-danger fs-4">
+                        {{'Admin.AreYouSuretoDelete'|translate}}
+                    </div>
+                </div>   
+
+                <div class="modal-footer py-3">
+                    <button [disabled]="this.isClicked" (click)="deleteBank()" type="button" mat-raised-button color="accent">{{'Shared.Delete'|translate}}</button>
+                    <button  type="button" mat-raised-button
+                        data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,198 @@
+<div class="AllUsers my-3">
+    <div class="container-fluid">        
+        <div class="d-flex justify-content-between mx-5">
+            <div class="d-flex align-items-center">
+                <p class="font_Coloered3 text-center my-4 mx-3">{{'SideBar.Users'|translate}}</p>
+                <button *ngIf="this.permissions.includes('Permissions.Users.Create')" routerLink="/signup" mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
+            </div>
+            <!-- <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;" [(ngModel)]='term' placeholder="{{'Shared.SearchHere'|translate}}" /> -->
+        </div>
+        <div class="outerBorder outerItem shadow_5 table-responsive" style="overflow: auto;">
+            
+            <table class="table table-striped text-center">
+                <thead class="tableHead">
+                    <th class="py-2">{{'Users.FirstName'|translate}}</th>
+                    <th class="py-2">{{'Users.LastName'|translate}}</th>
+                    <th class="py-2">{{'Users.UserName'|translate}}</th>
+                    <th class="py-2">{{'Shared.Email'|translate}}</th>
+                    <th class="py-2">{{'Users.Locked'|translate}}</th>
+                    <th class="py-2">{{'Users.Role'|translate}}</th>
+                    <th class="py-2">Resrikts</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of Users|search:term|paginate:{
+                        itemsPerPage:tableSize,
+                        currentPage:page,
+                        totalItems:count}; let i=index">
+                        <td class="align-middle">{{user.firstName}}</td>
+                        <td class="align-middle">{{user.lastName}}</td>
+                        <td class="align-middle">{{user.userName}}</td>
+                        <td class="align-middle">{{user.email}}</td>
+                        <td class="align-middle">{{user.isLocked}}</td>
+                        <td class="align-middle">{{user.role}}</td>
+                        <td>
+                            <i routerLink="/Restriks/{{user.id}}" class="fa-solid fa-list text-info fs-5 px-3 py-2"></i>
+                            <i *ngIf="this.permissions.includes('Permissions.Users.Update')" (click)="getUserDetails(user)" data-bs-toggle="modal" data-bs-target="#edit" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
+                            <!-- <i class="fa-regular fa-eye text-success fs-5 px-3 py-2"></i> -->
+                            <i (click)="getUserId(user.id)" data-bs-toggle="modal" data-bs-target="#delete" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081" *ngIf="this.permissions.includes('Permissions.Users.Delete')"></i>
+                            <img (click)="getUserId(user.id)" data-bs-toggle="modal" data-bs-target="#Forgot" src="../../../../assets/imgs/forgot.png" alt="forgot" style="width: 7%; cursor: pointer;">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end mt-4">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+                <select (change)="onTableSizeChange($event)" class="tableSize rounded-pill px-1">
+                  <option *ngFor=" let size of tableSizes">{{size}}</option>
+                </select>
+            </div>
+            <div id="loading" *ngIf="loading">
+                <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+            </div>
+        </div>
+
+    </div>
+</div>
+  <!--------------------------------------- Edit User--------------------------->
+  <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="edit">Edit User</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+       <div class="container_custom">
+        <form [formGroup]="EditUserForm" class="my-5">
+            <div class="row">
+                <div class="col-md-6">
+                
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select Role </mat-label>
+                        <mat-select [(value)]="selectedRoleValue">
+                            <mat-option *ngFor="let role of Roles" value="{{role.id}}">{{role.value}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+    
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>First Name </mat-label>
+                        <input formControlName="firstName" type="text" matInput>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Last Name </mat-label>
+                        <input formControlName="lastName" type="text" matInput>
+                    </mat-form-field>
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select Gender</mat-label>
+                        <mat-select [(value)]="selectedGenderValue">
+                            <mat-option value="0">Male</mat-option>
+                            <mat-option value="1">Female</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-checkbox (click)="isLockedToggle()" formControlName="isLocked" color="warm" class="example-margin mx-2">Is Locked ?</mat-checkbox>
+
+                </div>
+                <div class="col-md-6">
+                
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Mobile </mat-label>
+                        <input formControlName="phoneNumber" type="text" matInput>
+                    </mat-form-field>
+    
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Email </mat-label>
+                        <input formControlName="email" type="email" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>User Name </mat-label>
+                        <input formControlName="userName" type="text" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field id="lockDate" style="display: none;" class="w-100" appearance="outline" color="warn">
+                        <mat-label>Lock Date</mat-label>
+                        <input formControlName="lockDate"  matInput [matDatepicker]="picker7">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker7"></mat-datepicker-toggle>
+                        <mat-datepicker #picker7></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+              <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">Close</button>
+              <button type="button" mat-raised-button color="warn"(click)="submitEditUser()">Save</button>
+            </div>
+        </form>
+       </div>
+        
+      </div>
+    </div>
+  </div>
+                        <!------------------ Belete User --------------------->
+    <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="addPlan" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addPlan">Delete User</h1>
+                </div>
+                <div class="outerBorder shadow_5 table-responsive my-4">
+
+                    <div class="alert alert-danger fs-4">
+                        Are You Sure to Delete This User ?
+                    </div>
+                </div>   
+
+                <div class="modal-footer py-3">
+                    <button [disabled]="this.isClicked" (click)="deleteUser()" type="button" mat-raised-button color="accent">
+                        <span *ngIf="!this.isClicked">Delete</span>
+                        <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-spin"></i></span>
+                    </button>
+                    <button  type="button" mat-raised-button
+                        data-bs-dismiss="modal">Close</button>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+                        <!------------------ Forgot password User --------------------->
+    <div class="modal fade" id="Forgot" tabindex="-1" aria-labelledby="Forgot" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="Forgot">Change Password</h1>
+                </div>
+                <div class="outerBorder shadow_5 table-responsive my-4">
+                    <form [formGroup]="ChangePasswordForm">
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <mat-form-field class="w-100">
+                                    <mat-label>New Password</mat-label>
+                                    <input (keyup)="checkPass()" formControlName="newPassword" type="password" matInput>
+                                </mat-form-field>
+                                <mat-form-field class="w-100">
+                                    <mat-label>Confirm Password </mat-label>
+                                    <input (keyup)="checkPass()" formControlName="confirmPassword" type="password" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </form>
+                </div>   
+
+                <div class="modal-footer py-3">
+                    <button [disabled]="this.ChangePasswordForm.status=='INVALID'||this.isClickedChange" (click)="SubChangePassword()" type="button" mat-raised-button color="primary">
+                        <span *ngIf="!this.isClickedChange">Save</span>
+                        <span *ngIf="this.isClickedChange"><i class="fa-solid fa-fan fa-spin"></i></span>
+                    </button>
+                    <button  type="button" mat-raised-button
+                        data-bs-dismiss="modal">Close</button>
+                </div>
+
+                
+            </div>
+        </div>
+    </div>

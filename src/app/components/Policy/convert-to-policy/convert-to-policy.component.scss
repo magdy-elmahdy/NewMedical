@@ -1,0 +1,19 @@
+label{
+    font-family: 'El Messiri', sans-serif!important;
+}
+.Download{
+    cursor: pointer;
+}
+.customDanger{
+    background-color: rgb(201, 166, 166);
+}
+tr td {
+    font-family: 'El Messiri', sans-serif!important;
+}   
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
