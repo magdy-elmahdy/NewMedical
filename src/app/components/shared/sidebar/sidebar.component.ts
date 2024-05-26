@@ -9,13 +9,18 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit{
-  permissions:any[]= JSON.parse(localStorage.getItem('permissions')!)
-
+  customersTypes:any
   constructor(private _AdminService:AdminService, public _AuthService:AuthService, public _Router:Router){
     console.log(this.roles); 
 }
   roles:any= JSON.parse(localStorage.getItem("userType")!)?.roles
+  items:any='[button.w-100.px-2.mainSideItem, button.mainSideItem.w-100.collapsed.px-2, button.w-100.collapsed.px-2.mainSideItem, button.w-100.collapsed.px-2.mainSideItem, button.w-100.collapsed.px-2.mainSideItem]'
 
+  // getCustomerTypes(){
+  //   this._AdminService.getCustomerTypes().subscribe(data=>{
+  //     this.customersTypes=data;
+  //   })
+  // }
 
   redirectTo(uri: string) {
     this._Router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
@@ -27,6 +32,19 @@ export class SidebarComponent implements OnInit{
   }
   this.redirectTo("AllCustomers/"+id)
  }
+  async getActivee(TargetItem:any){
+
+    console.log(TargetItem);
+    TargetItem as HTMLElement
+    document.querySelector('.activee')?.classList.remove('activee')
+    TargetItem.classList.add("activee");
+    
+  
+  
+ }
   ngOnInit(): void {
+    const navLinkEls = document.querySelectorAll('.mainSideItem');
+    console.log(navLinkEls);
+    // this.getCustomerTypes();
   }
 }
