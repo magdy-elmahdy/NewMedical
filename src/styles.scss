@@ -234,17 +234,19 @@ html{
     border-right: solid 0px rgba(0,0,0,.12)!important; 
 }
 .mat-drawer {
-    background-color: #343957!important;
+    // background-color: #343957!important;
     color: rgba(0,0,0,.87);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.12)!important;
 }
 .accordion-item {
-    color: #FFF!important;
-     background-color: #343957!important; 
+    color: #000!important;
+    //  background-color: #343957!important; 
     // border: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
 }
 .accordion-header button{
-    background-color:#343957!important ;
-    color: #FFF!important;
+    background-color:#FFF!important ;
+    color: #000!important;
+    
 }
 
 .accordion-body {
@@ -256,48 +258,35 @@ html{
     color: #FFF!important;
 }
 .accordion-body div {
-    
-     color: #FFF!important;
+     color: #000!important;
 }
-.active::after{
-    content: '';
-    position: absolute!important;
-    width: 30px!important;
-    height: 30px!important;
-    right: 0!important;
-    bottom: -30px!important;
-    background-color: #FFF!important;
-    border-radius: 50%!important;
-    box-shadow: 35px -35px 0 #FFF!important;
-    pointer-events: none;
-  }
 
 .mdc-form-field>label {
     font-size: 1.1rem;
-    font-family: 'El Messiri', sans-serif!important;
+    font-family: "Inter", sans-serif!important;
 }
 .mdc-button .mdc-button__label {
     font-size: 1.2rem!important;
-    font-family: 'El Messiri', sans-serif!important;
+    font-family: "Inter", sans-serif!important;
 }
 mat-label{
     font-size: 1.25rem!important;
     font-weight: 500!important;
-    font-family: 'El Messiri', sans-serif!important;
+    font-family: "Inter", sans-serif!important;
 
 }
 mat-label{
     font-size: 1.2rem!important;
     font-weight: 600!important;
-    font-family: 'El Messiri', sans-serif!important;
+    font-family: "Inter", sans-serif!important;
 
 }
 input{
     font-size: 1.1rem!important;
-    font-family: 'El Messiri', sans-serif!important;
+    font-family: "Inter", sans-serif!important;
 }
 table thead th,.alert{
-    font-family: 'El Messiri', sans-serif!important;
+    font-family: "Inter", sans-serif!important;
 }
 @media print {
     .Prentable{

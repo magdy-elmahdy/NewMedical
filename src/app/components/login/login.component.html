@@ -1,48 +1,65 @@
     <!----------------------------- Start Login ----------------->
-<section id="login" class=" d-flex align-items-center" data-aos-duration='1000' data-aos="fade-right">
-    <div class="container">
-      <div class="inner p-5 shadow_5" >
-        <div class="row">
-            <p class="font_Coloered3 text-center">{{"Auth.Login"|translate}}</p>
-
-          <div class="col-lg-6">
-            <ng-lottie [options]="login">
-            </ng-lottie>
-          </div>
-          
-          <div class="col-lg-6 d-flex align-items-center col2">
-            <div class="w-100">
-              <form [formGroup]="loginForm">
-                  <mat-form-field class="w-100" appearance="fill">
-                      <mat-label>{{"Users.UserName"|translate}}</mat-label>
-                      <input formControlName="userName" type="text" matInput>
-                  </mat-form-field>
+    <section id="login"  data-aos-duration='1000' data-aos="fade-right">
+      <div class="container">
+        <!--  -->
+        <div class="row pt-5">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-8">
+            <div class="light_outer pt-5 px-2">
+              <div style="width: 80%;margin: auto;">
+                <p class="text-center title">Login</p>
+                <form [formGroup]="loginForm" class="pt-4">
+                    <!-- <div class="form-group"> -->
+                      <div class="row">
+                        <div class="col-3 d-flex align-items-center">
+                          <label>User Name<span style="color: red;">*</span></label>
+                        </div>
+                        <div class="col-9">
+                          <input formControlName="userName" type="text" class="form-control" placeholder="name">
+                        </div>
+                      </div>
+                      <div *ngIf="loginForm.controls.userName.errors && loginForm.controls.userName.touched" class="alert alert-danger">
+                        Please Enter Valid UserName 
+                      </div>
+                    <!-- </div> -->
+                  <!-- <div class="form-group"> -->
+                    <div class="row mt-3">
+                      <div class="col-3 d-flex align-items-center">
+                        <label>Password <span style="color: red;">*</span></label>
+                      </div>
+                      <div class="col-9">
+                        <input formControlName="password" type="password" class="form-control" placeholder="password">
+                      </div>
+                      <span class="forgetpassword">Forget Password?</span>
+                    </div>
+                    <div *ngIf="loginForm.controls.password.errors && loginForm.controls.password.touched" class="alert alert-danger">
+                      Please Enter Valid Password 
+                    </div>
+                  <!-- </div> -->
+                <div *ngIf="errorEsist" class="alert alert-danger mt-5">
+                  Invalid Username Or Password
+                </div>
+                <div class="py-4 d-flex justify-content-center">
+                <button [disabled]="this.loginForm.status=='INVALID'" (click)="submitLoginForm()" class="btn login w-25"><span *ngIf="!isClicked" class="h6 ">Login</span><span *ngIf="isClicked" class="h5">Waiting...</span></button>
+                <button class="btn register w-25 mx-3" routerLink="/signup">Register</button>
+                </div>
   
+               
+                <!-- <p class="youHave text-center mt-3">You have account? <span class="lightBlue" routerLink="/signup">Register</span></p> -->
                 
-
                 
-                  <mat-form-field class="w-100" appearance="fill">
-                      <mat-label>{{"Auth.Password"|translate}}</mat-label>
-                      <input formControlName="password" type="password" matInput>
-                  </mat-form-field>
-                  
-                
-
-                 <div class="mt-2">
-                    <button [disabled]="this.loginForm.status=='INVALID'||this.isClicked" (click)="submitLoginForm()"  mat-raised-button color="primary" class="px-4 w-50">
-                      <span *ngIf="!isClicked" class="h6 ">{{"Auth.Login"|translate}}</span>
-                      <span *ngIf="isClicked" class="h5"><i class="fa-solid fa-fan fa-spin"></i></span>
-                    </button>
-                 </div>
-                 
-                 
-              </form>
-             
+                </form>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
   
-  <!----------------------------- End login ----------------->
+          </div>
+          <div class="col-lg-2"></div>
+  
+        </div>
+        <!--  -->
+  
+      </div>
+    </section>
+    
+    <!----------------------------- End login ----------------->
+  

@@ -7,57 +7,76 @@
             <div class="accordion-item">
                 <h2 class="accordion-header head ">
                     <button (click)="getActivee(item1)" #item1 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_2">
-                        <span class="mx-3"></span><i class="fa-solid fa-table-cells-large"></i> Main
+                        <i class="fa-solid fa-table-cells-large"></i> AdministratorSetup
                     </button>
                 </h2>
                 <div id="H_2" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                        <!-- <h2 style="line-height: 41px;" class="accordion-header">
-                            <button routerLink="/AllCustomers" routerLinkActive="active" class="w-100 collapsed px-2" type="button" data-bs-toggle="collapse"style="padding: 0px 20px!important;"
+                    <div class="accordion-body pl-5">
+                        <div class="my-1" routerLinkActive="activee" routerLink="/Main"><i class="fa-solid fa-house"></i>
+                            Dashboard</div>
+                        <h2 style="line-height: 41px;" class="accordion-header">
+                            <button routerLink="/AllCustomers" routerLinkActive="activee" class="w-100 collapsed px-2" type="button" data-bs-toggle="collapse"style="padding: 0px 20px!important;"
                                 data-bs-target="#H_1">
-                                <span class="mx-3"></span><i class="fa fa-users"></i> {{"SideBar.Customers"|translate}}
+                                <i class="fa fa-users"></i> {{"SideBar.Customers"|translate}}
                             </button>
-                        </h2> -->
+                        </h2>
                         <!-- Customers -->
-                        <!-- <div class="accordion accordion-flush" id="accordionFlushExample" style="padding: 0px!important;">
+                        <div class="accordion accordion-flush" id="accordionFlushExample" style="padding: 0px!important;">
                             <div id="H_1" class="accordion-collapse collapse">
                                 <div class="accordion-body">
-                                    <div class="my-1"(click)="Customers('')" routerLinkActive="active">All Customers</div>
-                                    <div *ngFor="let type of customersTypes" routerLinkActive="active" class="my-1"
+                                    <div class="my-1"(click)="Customers('')" routerLinkActive="activee">All Customers</div>
+                                    <div *ngFor="let type of customersTypes" routerLinkActive="activee" class="my-1"
                                         (click)="Customers(type.id)">{{type.value}}</div>
                                 </div>
                             </div>
-                        </div> -->
-                        <div class="subMenue" routerLinkActive="active" routerLink="/Main"><i class="fa-solid fa-house"></i>
-                            Dashboard</div>
-                        <div *ngIf="this.roles?.includes('Admin')" class="subMenue" routerLinkActive="active" routerLink="/Users"><i class="fa-solid fa-user-group"></i>
+                        </div>
+                        <div *ngIf="this.roles?.includes('Admin')" class="my-1"routerLinkActive="activee" routerLink="/Users"><i class="fa-solid fa-user-group"></i>
                             {{"SideBar.Users"|translate}}</div>
-                        <div class="subMenue" routerLink="/Commissions" routerLinkActive="active">
+                        <div class="my-1" routerLink="/Commissions" routerLinkActive="activee">
                             <i class="fa-solid fa-droplet"></i> {{"SideBar.Commissions"|translate}}</div>
-                        <!-- <div class="my-1" routerLink="/AllPlans" routerLinkActive="active">
-                            <i class="fa-solid fa-hand-holding-droplet"></i> Plans</div> -->
-
-                        <!-- <div class="my-1" routerLinkActive="active" routerLink="/AddBenefit">
-                            <i class="fa-brands fa-slack"></i>{{"SideBar.AddGobalBenefit"|translate}}</div> -->
+                        <div class="my-1" routerLink="/AllPlans" routerLinkActive="activee">
+                            <i class="fa-solid fa-hand-holding-droplet"></i> Plans</div>
+    
+                        <div class="my-1" routerLinkActive="activee" routerLink="/AddBenefit">
+                            <i class="fa-brands fa-slack"></i>{{"SideBar.AddGobalBenefit"|translate}}</div>
                         <!-- <div class="my-1" routerLinkActive="active" routerLink="/BasicComision">
                             <i class="fa-brands fa-slack"></i>All gobal benefit</div> -->
-
-                        <!-- <div class="my-1" routerLink="/AllEarlyCollects" routerLinkActive="active"><i
-                                class="fa-solid fa-layer-group"></i> {{"SideBar.EarlyCollects"|translate}}</div> -->
-                        <!-- <div class=" subMenue" routerLink="/BasicComision" routerLinkActive="active">
-                            <i class="fa-solid fa-notes-medical"></i> {{"SideBar.AddBasicCommission"|translate}}</div> -->
+    
+                        <div class="my-1" routerLink="/AllEarlyCollects" routerLinkActive="activee"><i
+                                class="fa-solid fa-layer-group"></i> {{"SideBar.EarlyCollects"|translate}}</div>
+                        <div class="my-1" routerLink="/BasicComision" routerLinkActive="activee">
+                            <i class="fa-solid fa-notes-medical"></i> {{"SideBar.AddBasicCommission"|translate}}</div>
                         
-                        <div class=" subMenue" routerLinkActive="active" routerLink="/Early&Collect">
+                        <div class="my-1" routerLinkActive="activee" routerLink="/Early&Collect">
                             <i class="fa-regular fa-calendar-minus"></i> {{"SideBar.AddEarly&Collect"|translate}}</div>
-                        <div class=" subMenue" routerLinkActive="active" routerLink="/TPAFees">
+                        <div class="my-1" routerLinkActive="activee" routerLink="/TPAFees">
                             <i class="fa-regular fa-star"></i> {{"SideBar.TpaFees"|translate}}</div>
-                        <div class=" subMenue" routerLinkActive="active" routerLink="/AllReinsurers">
+                        <div class="my-1" routerLinkActive="activee" routerLink="/AllReinsurers">
                             <i class="fa-solid fa-wrench"></i> {{"SideBar.AllReinsurers"|translate}}</div>
-                        <div class=" subMenue" routerLinkActive="active" routerLink="/Branches">
+                        <div class="my-1" routerLinkActive="activee" routerLink="/Branches">
+                            <i class="fa-solid fa-code-branch"></i> Branches</div>
+     
+                    </div>   
+                </div>
+                <!-- <div id="H_2" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <div class="subMenue" routerLinkActive="activee" routerLink="/Main"><i class="fa-solid fa-house"></i>
+                            Dashboard</div>
+                        <div *ngIf="this.roles?.includes('Admin')" class="subMenue" routerLinkActive="activee" routerLink="/Users"><i class="fa-solid fa-user-group"></i>
+                            {{"SideBar.Users"|translate}}</div>
+                        <div class="subMenue" routerLink="/Commissions" routerLinkActive="activee">
+                            <i class="fa-solid fa-droplet"></i> {{"SideBar.Commissions"|translate}}</div>
+                        <div class=" subMenue" routerLinkActive="activee" routerLink="/Early&Collect">
+                            <i class="fa-regular fa-calendar-minus"></i> {{"SideBar.AddEarly&Collect"|translate}}</div>
+                        <div class=" subMenue" routerLinkActive="activee" routerLink="/TPAFees">
+                            <i class="fa-regular fa-star"></i> {{"SideBar.TpaFees"|translate}}</div>
+                        <div class=" subMenue" routerLinkActive="activee" routerLink="/AllReinsurers">
+                            <i class="fa-solid fa-wrench"></i> {{"SideBar.AllReinsurers"|translate}}</div>
+                        <div class=" subMenue" routerLinkActive="activee" routerLink="/Branches">
                             <i class="fa-solid fa-code-branch"></i> Branches</div>
     
                     </div>   
-                </div>
+                </div> -->
             </div>
 
 
@@ -68,15 +87,15 @@
         <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item">
                 <h2 class="accordion-header head">
-                    <button (click)="getActivee(item2)" #item2 class="mainSideItem w-100 collapsed px-2 " type="button" data-bs-toggle="collapse" data-bs-target="#H_3">
-                        <span class="mx-3"></span><i class="fa-solid fa-user-tie"></i> Customer List
+                    <button (click)="getActivee(item2)" #item2 class="mainSideItem w-100 collapsed px-2  " type="button" data-bs-toggle="collapse" data-bs-target="#H_3">
+                        <i class="fa-solid fa-user-tie"></i> Offers
                     </button>
                 </h2>
                 <div id="H_3" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                        <div class="my-1" class="subMenue" routerLink="/Offer" routerLinkActive="active"><i class="fa-solid fa-money-bill"></i> {{"SideBar.AddOffer"|translate}}
+                        <div class="my-1" class="subMenue" routerLink="/Offer" routerLinkActive="activee"><i class="fa-solid fa-money-bill"></i> {{"SideBar.AddOffer"|translate}}
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/AllOffers" routerLinkActive="active"><i class="fa fa-file-alt"></i> {{"SideBar.AllOffers"|translate}}
+                        <div class="my-1" class="subMenue" routerLink="/AllOffers" routerLinkActive="activee"><i class="fa fa-file-alt"></i> {{"SideBar.AllOffers"|translate}}
                         </div>
 
                     </div>
@@ -88,21 +107,21 @@
             <div class="accordion-item">
                 <h2 class="accordion-header head">
                     <button (click)="getActivee(item3)" #item3 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_4">
-                        <span class="mx-3"></span><i class="fa-solid fa-shield-halved"></i>  Issuance
+                        <span></span><i class="fa-solid fa-shield-halved"></i>  Policies
                     </button>
                 </h2>
                 <div id="H_4" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                        <div class="my-1" class="subMenue" routerLink="/AllPolices" routerLinkActive="active"><i class="fa fa-window-maximize"></i>
+                        <div class="my-1" class="subMenue" routerLink="/AllPolices" routerLinkActive="activee"><i class="fa fa-window-maximize"></i>
                             {{'Policy.AllPolices'|translate}}
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/InitialEndorsment" routerLinkActive="active"><i class="fa-solid fa-battery-half"></i>
+                        <div class="my-1" class="subMenue" routerLink="/InitialEndorsment" routerLinkActive="activee"><i class="fa-solid fa-battery-half"></i>
                             {{'SideBar.Endorsment'|translate}}
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/InitialClaim" routerLinkActive="active"><i class="fa-solid fa-gear"></i>
+                        <div class="my-1" class="subMenue" routerLink="/InitialClaim" routerLinkActive="activee"><i class="fa-solid fa-gear"></i>
                             {{'SideBar.Claims'|translate}}
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/AllEndorsments" routerLinkActive="active"><i class="fa-solid fa-gear"></i>
+                        <div class="my-1" class="subMenue" routerLink="/AllEndorsments" routerLinkActive="activee"><i class="fa-solid fa-gear"></i>
                             All Endorsements
                         </div>
                         
@@ -116,30 +135,30 @@
             <div class="accordion-item">
                 <h2 class="accordion-header head">
                     <button (click)="getActivee(item4)" #item4 class="mainSideItem bg-info w-100 collapsed px-2 " type="button" data-bs-toggle="collapse" data-bs-target="#H_8">
-                        <span class="mx-3"></span><i class="fa-solid fa-hand-holding-dollar"></i> {{'Collections.Collections'|translate}}
+                        <span></span><i class="fa-solid fa-hand-holding-dollar"></i> {{'Collections.Collections'|translate}}
                     </button>
                 </h2>
                 <div id="H_8" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                        <div class="my-1" class="subMenue" routerLink="/EmployeeCollection" routerLinkActive="active" ><i class="fa-solid fa-plus"></i>
+                        <div class="my-1" class="subMenue" routerLink="/EmployeeCollection" routerLinkActive="activee" ><i class="fa-solid fa-plus"></i>
                             {{'Collections.Collections'|translate}}
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/AdminCollection" routerLinkActive="active" ><i class="fa-solid fa-gear"></i>
+                        <div class="my-1" class="subMenue" routerLink="/AdminCollection" routerLinkActive="activee" ><i class="fa-solid fa-gear"></i>
                             {{'Portfolios.ApprovePortfolios'|translate}}
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/CollectionPayment" routerLinkActive="active"><i class="fa-brands fa-cc-amazon-pay"></i>
+                        <div class="my-1" class="subMenue" routerLink="/CollectionPayment" routerLinkActive="activee"><i class="fa-brands fa-cc-amazon-pay"></i>
                             {{'Portfolios.PortfolioPay'|translate}}
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/PendingPortfolio" routerLinkActive="active"><i class="fa-brands fa-cc-amazon-pay"></i>
+                        <div class="my-1" class="subMenue" routerLink="/PendingPortfolio" routerLinkActive="activee"><i class="fa-brands fa-cc-amazon-pay"></i>
                             Pending Portfolio
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/ClaimsPayment" routerLinkActive="active"><i class="fa-solid fa-money-bill"></i>
+                        <div class="my-1" class="subMenue" routerLink="/ClaimsPayment" routerLinkActive="activee"><i class="fa-solid fa-money-bill"></i>
                             {{'SideBar.ClaimsPayment'|translate}}
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/BrokeragePayment" routerLinkActive="active"><i class="fa-solid fa-comment-dollar"></i>
+                        <div class="my-1" class="subMenue" routerLink="/BrokeragePayment" routerLinkActive="activee"><i class="fa-solid fa-comment-dollar"></i>
                             {{'SideBar.BrokeragePay'|translate}}
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/TpaPayment" routerLinkActive="active"><i class="fa-solid fa-percent"></i>
+                        <div class="my-1" class="subMenue" routerLink="/TpaPayment" routerLinkActive="activee"><i class="fa-solid fa-percent"></i>
                             {{'SideBar.TPAPay'|translate}}
                         </div>
                         <!-- <div class="my-1" routerLink="/CommissionPermision" routerLinkActive="active"><i class="fa-solid fa-percent"></i>
@@ -148,13 +167,13 @@
                         <div class="my-1" routerLink="/CommissionPayment" routerLinkActive="active"><i class="fa-solid fa-percent"></i>
                             Commission Payment
                         </div> -->
-                        <div class="my-1" class="subMenue" routerLink="/PrintSubbliy" routerLinkActive="active"><i class="fa fa-file-alt"></i>
+                        <div class="my-1" class="subMenue" routerLink="/PrintSubbliy" routerLinkActive="activee"><i class="fa fa-file-alt"></i>
                             Print Subbliy
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/CreateHonsty" routerLinkActive="active"><i class="fa-solid fa-circle-plus"></i>
+                        <div class="my-1" class="subMenue" routerLink="/CreateHonsty" routerLinkActive="activee"><i class="fa-solid fa-circle-plus"></i>
                             CreateHonsty
                         </div>
-                        <div class="my-1" class="subMenue" routerLink="/AllExchangePermit" routerLinkActive="active"><i class="fa-solid fa-circle-plus"></i>
+                        <div class="my-1" class="subMenue" routerLink="/AllExchangePermit" routerLinkActive="activee"><i class="fa-solid fa-circle-plus"></i>
                             All Exchange Permit
                         </div>
                     </div>
@@ -162,10 +181,10 @@
             </div>
         </div>
         <!-- Claims -->
-        <div class="accordion accordion-flush" id="accordionFlushExample">
+        <!-- <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item">
                 <h2 class="accordion-header head">
-                    <button  (click)="getActivee(item6)" #item6 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_5">
+                    <button  (click)="getActivee(item6)" #item6 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_9">
                         <span class="mx-3"></span><i class="fa-solid fa-money-bill"></i> Claims
                     </button>
                 </h2>
@@ -175,9 +194,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Finance -->
-        <div class="accordion accordion-flush" id="accordionFlushExample">
+        <!-- <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item">
                 <h2 class="accordion-header head">
                     <button  (click)="getActivee(item7)" #item7 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_5">
@@ -190,9 +209,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Reinsurance -->
-        <div class="accordion accordion-flush" id="accordionFlushExample">
+        <!-- <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item">
                 <h2 class="accordion-header head">
                     <button  (click)="getActivee(item8)" #item8 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_5">
@@ -206,24 +225,24 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Reports -->
         <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item">
                 <h2 class="accordion-header head">
-                    <button  (click)="getActivee(item9)" #item9 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_5">
-                        <span class="mx-3"></span><i class="fa fa-file-alt"></i> Reporting
+                    <button  (click)="getActivee(item9)" #item9 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_10">
+                        <span></span><i class="fa fa-file-alt"></i> Reporting
                     </button>
                 </h2>
                 <div id="H_10" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                        <div class="my-1" class="subMenue" routerLink="/Reports" routerLinkActive="active"><i class="fa fa-cogs"></i> Reports</div>
-                        <div class="my-1" class="subMenue" routerLink="/CreatedPolices" routerLinkActive="active"><i class="fa fa-user"></i> Polices Reports</div>
-                        <div class="my-1" class="subMenue" routerLink="/ClaimDetailsReport" routerLinkActive="active"><i class="fa fa-folder-open"></i> ClaimDetailsReport
+                        <div class="my-1" class="subMenue" routerLink="/Reports" routerLinkActive="activee"><i class="fa fa-cogs"></i> Reports</div>
+                        <div class="my-1" class="subMenue" routerLink="/CreatedPolices" routerLinkActive="activee"><i class="fa fa-user"></i> Polices Reports</div>
+                        <div class="my-1" class="subMenue" routerLink="/ClaimDetailsReport" routerLinkActive="activee"><i class="fa fa-folder-open"></i> ClaimDetailsReport
                             </div>
-                        <div class="my-1" class="subMenue" routerLink="/OfferReports" routerLinkActive="active"><i class="fa fa-unlock"></i> Offers Reports
+                        <div class="my-1" class="subMenue" routerLink="/OfferReports" routerLinkActive="activee"><i class="fa fa-unlock"></i> Offers Reports
                             </div>
-                        <div class="my-1" class="subMenue" routerLink="/CustomersReport" routerLinkActive="active"><i class="fa fa-microchip"></i> Customers  Report
+                        <div class="my-1" class="subMenue" routerLink="/CustomersReport" routerLinkActive="activee"><i class="fa fa-microchip"></i> Customers  Report
                             </div>
                         <div class="my-1" class="subMenue" routerLink="/"><i class="fa fa-ruler-horizontal"></i> ..</div>
                         <div class="my-1" class="subMenue" routerLink="/"><i class="fa fa-wifi"></i> ...

@@ -1,12 +1,71 @@
 #login{
-    min-height: 90vh;
+    min-height: 94vh;
+    // background-image: url(../../../../assets/imgs/bgRegister.png);
+    background-size: cover;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
-.inner{
-    border-radius: 0.6rem;
+.title{
+    color: black;
+    font-size:1.8rem;
+    font-weight: 600;
 }
-
 .font_Coloered3:before{
     content: '';
     padding-left: 0.7rem;
     border-left: solid 0.32rem #4758B8;
 }
+.light_outer{
+    background: #FFF;
+    box-shadow: 0px 0px 17px 1px rgba(0, 0, 0, 0.07);
+    border-radius: 0.5rem;
+}
+.youHave{
+    font-size: 1rem;
+    font-weight: 500;
+    padding-bottom: 3rem!important;
+}
+.lightBlue{
+    color: #4F6FE8;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+}
+label {
+    // margin-right: 10px;
+    color: #2A2A2A;
+    font-family: "Nunito Sans";
+    font-size: 18px;
+    font-weight: 500;
+}
+.login{
+    border-radius: 6px;
+    background: #F3B900;
+}
+.register{
+    border-radius: 6px;
+    border: 1px solid #F3B900;
+    background: #FFF;
+}
+.forgetpassword{
+    position: relative;
+    left: 15rem;
+    color: #6B6B6B;
+    text-align: center;
+    font-family: "Nunito Sans";
+    font-size: 14px;
+    font-weight: 400;
+}
+@media all and (max-width:750px){
+    label {
+        font-size: 14px;
+    }
+    .forgetpassword{
+        position: relative;
+        left: 9rem;
+        font-size: 14px;
+    }
+    }

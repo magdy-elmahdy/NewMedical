@@ -1,81 +1,169 @@
 <div id="Policy">
     <div class="container">
-        <div class="d-flex justify-content-between mx-5">
-            <p class="font_Coloered3 text-center my-4">{{'SideBar.AddOffer'|translate}}</p>
+        <div>
+            
+
         </div>
         <form [formGroup]="OfferForm">
             <div class="outerBorder shadow_5">
+                <h1 class="Add-offer" style="text-align: center;">{{'SideBar.AddOffer'|translate}}</h1>
+                <h2 class="Add-offer">Company information Entry</h2>
                 <div class="row pt-1"> 
                     <!-- Col 1 -->
                     <div class="col-md-6">
-                        <mat-form-field class="w-100">
+                        <!-- <mat-form-field class="w-100">
                             <mat-label>{{'Shared.CompanyName'|translate}}</mat-label>
                             <input type="text" readonly value="{{'Shared.MisrTakafulInsurance'|translate}}" matInput>
                             <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-building"></i></mat-icon>
-                        </mat-form-field>
-                        <mat-form-field class="w-100">
+                        </mat-form-field> -->
+                        <div class="row">
+                            <div class="col-3 d-flex align-items-center">
+                                <label>ClientName<span style="color: red;" class="mx-1">*</span></label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" type="text" readonly value="{{'Shared.MisrTakafulInsurance'|translate}}">
+                            </div>
+                        </div>
+                        <!-- <mat-form-field class="w-100">
                             <mat-label><span class="text-danger mx-1">*</span>{{'Offer.BusinessType'|translate}}</mat-label>
                             <mat-select [(value)]="BusinessTypeValue">
                                 <mat-option *ngFor="let type of BusinessTypes" value="{{type.id}}">{{type.value}}</mat-option>
                             </mat-select> 
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <div class="row mt-3">
+                            <div class="col-3 d-flex align-items-center">
+                                <label>{{'Offer.BusinessType'|translate}}<span style="color: red;" class="mx-1">*</span></label>
+                            </div>
+                            <div class="col-9">
+                                <select class="form-select" [(value)]="BusinessTypeValue">
+                                    <option *ngFor="let type of BusinessTypes" value="{{type.id}}">{{type.value}}</option>
+                                </select>
+                            </div>
+                        </div>
 
-                        <mat-form-field class="w-100">
+                        <!-- <mat-form-field class="w-100">
                             <mat-label>{{'Offer.Insured'|translate}}</mat-label>
                             <input type="text" formControlName="customerName" matInput>
                             <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-person"></i></mat-icon>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <div class="row mt-3">
+                            <div class="col-3 d-flex align-items-center">
+                                <label>{{'Offer.Insured'|translate}}<span style="color: red;" class="mx-1">*</span></label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" formControlName="customerName" type="text">
+                            </div>
+                        </div>
 
-                        <mat-form-field class="w-100" >
+                        <!-- <mat-form-field class="w-100" >
                             <mat-label>{{'Offer.TpaName'|translate}}</mat-label>
                             <mat-select formControlName="tpaId">
                                 <mat-option *ngFor="let tpa of listOfTpa" [value]="tpa.id">{{tpa.arabicName}}</mat-option>
                             </mat-select>
                             <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-suitcase-medical"></i></mat-icon>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <div class="row mt-3">
+                            <div class="col-3 d-flex align-items-center">
+                                <label>{{'Offer.TpaName'|translate}}<span style="color: red;" class="mx-1">*</span></label>
+                            </div>
+                            <div class="col-9">
+                                <select class="form-select" formControlName="tpaId">
+                                    <option *ngFor="let tpa of listOfTpa" [value]="tpa.id">{{tpa.arabicName}}</option>
+                                </select>
+                            </div>
+                        </div>
                         
                     </div>
                     <!-- Col 2 -->
                     <div class="col-md-6">
-                        <mat-form-field  class="w-100"  color="warn">
+                        <!-- <mat-form-field  class="w-100"  color="warn">
                             <mat-label>{{'Offer.OfferDate'|translate}}</mat-label>
                             <input formControlName="offerDate" matInput  [matDatepicker]="picker">
                             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <div class="row">
+                            <div class="col-3 d-flex align-items-center">
+                                <label>{{'Offer.OfferDate'|translate}}<span style="color: red;" class="mx-1">*</span></label>
+                            </div>
+                            <div class="col-9">
+                                <input class="form-control" formControlName="offerDate" type="date">
+                            </div>
+                        </div>
 
-                        <mat-form-field class="w-100" >
+                        <!-- <mat-form-field class="w-100" >
                             <mat-label>{{'Offer.InsuranceClass'|translate}}</mat-label>
                             <mat-select formControlName="insuranceClass" #team >
                                 <mat-option *ngFor="let type of InsuranceClasses" [value]="type.id">{{type.value}}</mat-option>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <div class="row mt-3">
+                            <div class="col-3 d-flex align-items-center">
+                                <label>{{'Offer.InsuranceClass'|translate}}<span style="color: red;" class="mx-1">*</span></label>
+                            </div>
+                            <div class="col-9">
+                                <select class="form-select" formControlName="insuranceClass">
+                                    <option *ngFor="let type of InsuranceClasses" [value]="type.id">{{type.value}}</option>
+                                </select>
+                            </div>
+                        </div>
                         
-                        <mat-form-field class="w-100">
+                        <!-- <mat-form-field class="w-100">
                             <mat-label>{{'Admin.Branch'|translate}}</mat-label>
                             <mat-select formControlName="BranchId">
                                 <mat-option *ngFor="let item of AllBranches" [value]="item.id">{{item.name}}</mat-option>
                             </mat-select>
                             <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"><i class="fa-solid fa-code-branch"></i></mat-icon>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <div class="row mt-3">
+                            <div class="col-3 d-flex align-items-center">
+                                <label>{{'Admin.Branch'|translate}}<span style="color: red;" class="mx-1">*</span></label>
+                            </div>
+                            <div class="col-9">
+                                <select class="form-select" formControlName="BranchId">
+                                    <option *ngFor="let item of AllBranches" [value]="item.id">{{item.name}}</option>
+                                </select>
+                            </div>
+                        </div>
 
-                        <mat-form-field class="w-100" >
+                        <!-- <mat-form-field class="w-100" >
                             <mat-label>{{'Offer.PolicySource'|translate}}</mat-label>
                             <mat-select formControlName="policySource" #item (selectionChange)="getSourceVal(item.value)">
                                 <mat-option [value]="0">{{'Admin.Direct'|translate}}</mat-option>
                                 <mat-option [value]="1">{{'Admin.Indirect'|translate}}</mat-option>
                             </mat-select>
-                        </mat-form-field>
-                        <mat-form-field style="display: none;" class="w-100"  id="BrokerFiled">
+                        </mat-form-field> -->
+                        <div class="row mt-3">
+                            <div class="col-3 d-flex align-items-center">
+                                <label>{{'Offer.PolicySource'|translate}}<span style="color: red;" class="mx-1">*</span></label>
+                            </div>
+                            <div class="col-9">
+                                <select class="form-select" formControlName="BranchId">
+                                    <option [value]="0">{{'Admin.Direct'|translate}}</option>
+                                    <option [value]="1">{{'Admin.Indirect'|translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <mat-form-field style="display: none;" class="w-100"  id="BrokerFiled">
                             <mat-label >{{'Offer.Broker'|translate}}</mat-label>
                             <mat-select [(value)]="BrokerValue" (selectionChange)="getBrokerVal()">
                                 <mat-option *ngFor="let type of brokerCustomers" [value]="type.id">{{type.arabicName}}</mat-option>
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <div class="row mt-3">
+                            <div class="col-3 d-flex align-items-center">
+                                <label>{{'Offer.Broker'|translate}}<span style="color: red;" class="mx-1">*</span></label>
+                            </div>
+                            <div class="col-9">
+                                <select class="form-select" [(value)]="BrokerValue" (selectionChange)="getBrokerVal()">
+                                    <option *ngFor="let type of brokerCustomers" [value]="type.id">{{type.arabicName}}</option>
+                                </select>
+                            </div>
+                        </div>
     
                     </div>         
                 </div> 
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-center mt-4">
                 <button class="w-25" (click)="SubmitOffer()" [disabled]="this.OfferForm.get('insuranceClass')?.value==0||OfferForm.status=='INVALID'||!BusinessTypeValue||brokerInputValidation||this.isClicked"  mat-raised-button color="primary"><span *ngIf="this.isClicked">Waiting..</span><span *ngIf="!this.isClicked">{{'Shared.Submit'|translate}}</span></button>
             </div>
         </div>

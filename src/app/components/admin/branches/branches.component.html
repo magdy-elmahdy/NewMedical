@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between mx-5">
             <div class="d-flex align-items-center">
                 <p class="font_Coloered3 text-center my-4 mx-3">{{'Admin.Branch'|translate}}</p>
-                <button *ngIf="this.permissions.includes('Permissions.Branches.Create')" data-bs-toggle="modal" data-bs-target="#Add" (click)="WhenModalOpen()" mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
+                <button *ngIf="this.permissions?.includes('Permissions.Branches.Create')" data-bs-toggle="modal" data-bs-target="#Add" (click)="WhenModalOpen()" mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
             </div>
             <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;" [(ngModel)]='term' placeholder="{{'Shared.SearchHere'|translate}}" />
         </div>
@@ -13,7 +13,7 @@
                 <thead class="tableHead">
                     <th class="py-2">{{'PolicyCalculatins.Code'|translate}}</th>
                     <th class="py-2">{{'addCustomer.Name'|translate}}</th>
-                    <th *ngIf="this.permissions.includes('Permissions.Branches.Update')"></th>
+                    <th *ngIf="this.permissions?.includes('Permissions.Branches.Update')"></th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let Branch of AllBranches|search:term|paginate:{
@@ -22,7 +22,7 @@
                         totalItems:count}; let i=index">
                         <td class="align-middle">{{Branch.code}}</td>
                         <td class="align-middle">{{Branch.name}}</td>
-                        <td *ngIf="this.permissions.includes('Permissions.Branches.Update')">
+                        <td *ngIf="this.permissions?.includes('Permissions.Branches.Update')">
                             <i (click)="getBranchDetails(Branch)" data-bs-toggle="modal" data-bs-target="#Edit" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
                         </td>
                     </tr>

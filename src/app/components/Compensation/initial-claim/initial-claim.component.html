@@ -180,7 +180,7 @@
                         </tr>
                         
 
-                        <tr *ngIf="this.permissions.includes('Permissions.Claims.Create')">
+                        <tr *ngIf="this.permissions?.includes('Permissions.Claims.Create')">
                             <th class="w-30 py-2 align-middle">{{'SideBar.Claims'|translate}}</th>
                             <td class="w-60 py-2"><button [routerLink]="['/Claim',this.PolicyDetails?.id]" mat-raised-button color="primary" class="w-50">{{'SideBar.Claims'|translate}} <i class="fa-solid fa-handshake-angle"></i></button></td>
                         </tr>

@@ -10,9 +10,9 @@
                         <button mat-stroked-button color="primary" class="w_85 py-5 cust_Btn" data-bs-toggle="dropdown" aria-expanded="false">{{'Reports.issuanceReports'|translate}}
                         </button>
                     <ul class="dropdown-menu">
-                        <li *ngIf="this.permissions.includes('Permissions.Reports.SourceRecord')"><a class="dropdown-item" routerLink="/SourceRecord" target="_blank">سجل المصدر</a></li>
+                        <li *ngIf="this.permissions?.includes('Permissions.Reports.SourceRecord')"><a class="dropdown-item" routerLink="/SourceRecord" target="_blank">سجل المصدر</a></li>
                         <hr>
-                        <li *ngIf="this.permissions.includes('Permissions.Reports.ClaimDetails')"><a class="dropdown-item" routerLink="/ClaimDetailsReport" target="_blank">بيانات التعويضات</a></li>
+                        <li *ngIf="this.permissions?.includes('Permissions.Reports.ClaimDetails')"><a class="dropdown-item" routerLink="/ClaimDetailsReport" target="_blank">بيانات التعويضات</a></li>
                     </ul>
                 </div>
                 <!-- CollectionReports -->
@@ -20,23 +20,23 @@
                     <button mat-stroked-button color="primary" class="w_85 py-5" data-bs-toggle="dropdown" aria-expanded="false">{{'Reports.CollectionReports'|translate}}</button>
                     <ul class="dropdown-menu">
                         
-                        <li *ngIf="this.permissions.includes('Permissions.Reports.Treasury')"><a class="dropdown-item" routerLink="/TreasuryReport" target="_blank">تقرير الخزينه  </a></li>
+                        <li *ngIf="this.permissions?.includes('Permissions.Reports.Treasury')"><a class="dropdown-item" routerLink="/TreasuryReport" target="_blank">تقرير الخزينه  </a></li>
                         <hr>
-                        <li *ngIf="this.permissions.includes('Permissions.Reports.PaidAndCollector')"><a class="dropdown-item" routerLink="/PaidCollectorPremium" target="_blank">سجل المسدد (المحصل)  </a></li>
+                        <li *ngIf="this.permissions?.includes('Permissions.Reports.PaidAndCollector')"><a class="dropdown-item" routerLink="/PaidCollectorPremium" target="_blank">سجل المسدد (المحصل)  </a></li>
                         <hr>
-                        <li *ngIf="this.permissions.includes('Permissions.Reports.UnderCollector')"><a class="dropdown-item" routerLink="/UnderCollectorPremium" target="_blank">سجل اقساط تحت التحصيل</a></li>
+                        <li *ngIf="this.permissions?.includes('Permissions.Reports.UnderCollector')"><a class="dropdown-item" routerLink="/UnderCollectorPremium" target="_blank">سجل اقساط تحت التحصيل</a></li>
                         <hr>
-                        <li *ngIf="this.permissions.includes('Permissions.Reports.GetInsured')"><a class="dropdown-item" routerLink="/PendingInsured" target="_blank">جـاري مـؤمن له</a></li>
+                        <li *ngIf="this.permissions?.includes('Permissions.Reports.GetInsured')"><a class="dropdown-item" routerLink="/PendingInsured" target="_blank">جـاري مـؤمن له</a></li>
                         <hr>
-                        <li *ngIf="this.permissions.includes('Permissions.Reports.CurrentAgent')"><a class="dropdown-item" routerLink="/NegativeBrokerages" target="_blank">جاري وكلاء ومنتجون</a></li>
+                        <li *ngIf="this.permissions?.includes('Permissions.Reports.CurrentAgent')"><a class="dropdown-item" routerLink="/NegativeBrokerages" target="_blank">جاري وكلاء ومنتجون</a></li>
                         <hr>
-                        <li *ngIf="this.permissions.includes('Permissions.Reports.SecretariatRecord')"><a class="dropdown-item" routerLink="/SecretariatsRecords" target="_blank">سجل الامانات</a></li>
+                        <li *ngIf="this.permissions?.includes('Permissions.Reports.SecretariatRecord')"><a class="dropdown-item" routerLink="/SecretariatsRecords" target="_blank">سجل الامانات</a></li>
                         <hr>
-                        <li *ngIf="this.permissions.includes('Permissions.Reports.DueCommissions')"><a class="dropdown-item" routerLink="/DueCommissionForCollector" target="_blank">عمولات مستحقة لاقساط تحت التحصيل</a></li>
+                        <li *ngIf="this.permissions?.includes('Permissions.Reports.DueCommissions')"><a class="dropdown-item" routerLink="/DueCommissionForCollector" target="_blank">عمولات مستحقة لاقساط تحت التحصيل</a></li>
                         <hr>
-                        <li *ngIf="this.permissions.includes('Permissions.Reports.paidCommissions')"><a class="dropdown-item" routerLink="/PaidCommissions" target="_blank">عمولات منصرفة</a></li>
+                        <li *ngIf="this.permissions?.includes('Permissions.Reports.paidCommissions')"><a class="dropdown-item" routerLink="/PaidCommissions" target="_blank">عمولات منصرفة</a></li>
                         
-                        <li  *ngIf="this.permissions.includes('Permissions.Reports.CollectionDaily')"><a class="dropdown-item" routerLink="/DailyCollection" target="_blank">طباعه يوميه التحصيل </a></li>
+                        <li  *ngIf="this.permissions?.includes('Permissions.Reports.CollectionDaily')"><a class="dropdown-item" routerLink="/DailyCollection" target="_blank">طباعه يوميه التحصيل </a></li>
                         <!-- <li ><a class="dropdown-item" routerLink="/DueCommission" target="_blank">طباعه عمولات مستحقه </a></li> -->
                     </ul>
                 </div>

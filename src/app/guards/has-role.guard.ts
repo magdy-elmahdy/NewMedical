@@ -15,15 +15,15 @@ export class HasRoleGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       
-    const isAutherized =JSON.parse(localStorage.getItem("permissions")!).includes(route.data[0])
-    if(!isAutherized){
+      const isAutherized =JSON.parse(localStorage.getItem("userType")!)?.roles.includes(route.data[0])
+      ||JSON.parse(localStorage.getItem("userType")!)?.roles.includes(route.data[1])
+      ||JSON.parse(localStorage.getItem("userType")!)?.roles.includes(route.data[2])    
+      if(!isAutherized){
       Swal.fire({
         icon: 'error',
         title: '403',
         text: 'You Are Not Allowed To Access That Details',
-      })
-      this._Router.navigate(['/Forbidden'])
-      
+      })      
     }
     return isAutherized
   }

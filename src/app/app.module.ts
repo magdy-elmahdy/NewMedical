@@ -122,6 +122,7 @@ import { GovernoratesComponent } from './components/admin/governorates/governora
 import { ReInsuranceBrokerComponent } from './components/reinsurance/re-insurance-broker/re-insurance-broker.component';
 import { ReInsuranceCompanyComponent } from './components/reinsurance/re-insurance-company/re-insurance-company.component';
 import { MedicalTreatySetupComponent } from './components/reinsurance/medical-treaty-setup/medical-treaty-setup.component';
+import { MainComponent } from './components/shared/main/main.component';
 export function playerFactory(){
   return player;
 }
@@ -223,6 +224,7 @@ export function playerFactory(){
     ReInsuranceBrokerComponent,
     ReInsuranceCompanyComponent,
     MedicalTreatySetupComponent,
+    MainComponent,
   ],
   imports: [
     DropdownModule,

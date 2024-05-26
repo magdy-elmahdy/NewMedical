@@ -13,7 +13,7 @@
                     <!-- <th class="py-2">{{'Shared.AccountNo'|translate}}</th> -->
                     <th class="py-2">{{'Shared.Email'|translate}}</th>
                     <th *ngIf="CustomerTypeId ==null" class="py-2">{{'Shared.Type'|translate}}</th>
-                    <th class="py-2" *ngIf="this.permissions.includes('Permissions.Customers.Update')">Change Status</th>
+                    <th class="py-2" *ngIf="this.permissions?.includes('Permissions.Customers.Update')">Change Status</th>
                     <th class="py-2">{{'Shared.Settings'|translate}}</th>
                 </thead>
                 <tbody>
@@ -27,12 +27,12 @@
                         <!-- <td class="align-middle">{{customer.accountNO}}</td> -->
                         <td class="align-middle">{{customer.email}}</td>
                         <td *ngIf="CustomerTypeId ==null" class="align-middle">{{customer.customerType}}</td>
-                        <td class="align-middle" *ngIf="this.permissions.includes('Permissions.Customers.Update')">
+                        <td class="align-middle" *ngIf="this.permissions?.includes('Permissions.Customers.Update')">
                             <i data-bs-toggle="modal" data-bs-target="#Status" (click)="getCustomerStatus(customer)" class="fa-solid fa-road-barrier fs-5 px-3 py-2 text-secondary"></i>
                         </td>
                         <td style="vertical-align: middle;">
-                            <i (click)="getCustomerInfo(customer)" data-bs-toggle="modal" data-bs-target="#editCustomer" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;" *ngIf="this.permissions.includes('Permissions.Customers.Update')"></i>
-                            <i  routerLink="/CustomerDetails/{{customer.id}}" class="fa-regular fa-eye text-success fs-5 px-3 py-2" *ngIf="this.permissions.includes('Permissions.Customers.View')"></i>
+                            <i (click)="getCustomerInfo(customer)" data-bs-toggle="modal" data-bs-target="#editCustomer" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;" *ngIf="this.permissions?.includes('Permissions.Customers.Update')"></i>
+                            <i  routerLink="/CustomerDetails/{{customer.id}}" class="fa-regular fa-eye text-success fs-5 px-3 py-2" *ngIf="this.permissions?.includes('Permissions.Customers.View')"></i>
                             <!-- <i class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i> -->
                         </td>
                         <!-- <td><button mat-raised-button (click)="getCustomerInfo(customer)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editCustomer">Edit <i class="fa-solid fa-user-pen"></i></button></td> -->

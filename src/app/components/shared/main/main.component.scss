@@ -1,0 +1,109 @@
+.small-box{
+    border-top-right-radius: 0.7rem;
+    border-bottom-left-radius: 0.7rem;
+    padding: 0.6rem 0.6rem 0 0.6rem;
+    position: relative;
+    height: 9rem;
+    color:#fff;
+    margin: 0.2rem 0;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.small-box h2{
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+.icon img{
+    transition: 0.4s;
+}
+.small-box:hover img{
+    transform: scale(1.2);
+}
+.icon {
+    position: absolute;
+    top:22%;
+    right:0.7rem;
+    color:rgba(0, 0, 0, 0.20)
+
+}
+.icon i{
+    font-size:5rem;
+    transition: 0.4s;
+}
+.box-footer{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-bottom-left-radius:0.7rem ;
+    // border-bottom-right-radius:0.7rem ;
+    text-align: center;
+    background-color: rgba(100, 100, 111, 0.3);
+    padding: 0.3rem 0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.box-footer:hover {
+    background-color: rgba(100, 100, 111, 0.5);
+}
+.box-footer:hover a{
+    color: #fff;
+}
+.box-footer a{
+    text-decoration: none;
+    color: #d8d8d8;
+    font-size: 0.8rem
+
+}
+                // Charts
+.inner_Charts{
+    min-height: 20rem;
+    background-color: #fff;
+    border-radius: 0.8rem;
+    display: block;  border: none; margin-bottom: 20px; padding: 25px;
+}
+
+.bg_green{
+    background: #00A65A;
+}
+.bg_red{
+    background-color: #DD4B39;
+}
+.bg_yellow{
+    background-color: #F3B900;
+}
+.bg-info{
+    background: #00C0EF!important;
+}
+.bg_yellow_onen{
+    background-color:#F39C12
+}
+.bg_teal{
+    background-color:#39CCCC
+}
+
+.claims-header{
+color: var(--Secondary-Text, #717579);
+-webkit-text-stroke-width: 1;
+-webkit-text-stroke-color: #E9E9E9;
+font-family: "Nunito Sans";
+font-size: 18px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.claims-number{
+color: var(--Primary-Text, #171B1E);
+-webkit-text-stroke-width: 1;
+-webkit-text-stroke-color: #E9E9E9;
+font-family: "Nunito Sans";
+font-size: 32px;
+font-style: normal;
+font-weight: 800;
+line-height: normal;
+}
+.three-color-background {
+    height: 20px;
+    width: 100%;
+    background: linear-gradient(to right, #09BD3C 30%, rgba(243, 185, 0, 0.22) 20%, #F1F1F1 50%);
+}

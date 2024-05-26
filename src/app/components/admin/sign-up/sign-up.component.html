@@ -15,6 +15,16 @@
                           <mat-label>First Name </mat-label>
                           <input (keyup)="getFirstName()" formControlName="firstName" type="text" matInput>
                         </mat-form-field>
+                        <!-- <div class="form-group">
+                          <div class="row">
+                            <div class="col-3 d-flex align-items-center">
+                              <label>First Name<span style="color: red;">*</span></label>
+                            </div>
+                            <div class="col-9">
+                              <input (keyup)="getFirstName()" class="form-control" type="text" formControlName="firstName">
+                            </div>
+                          </div>
+                        </div> -->
                         <div *ngIf="SignUPForm.controls.firstName.errors && SignUPForm.controls.firstName.touched" class="alert alert-danger">
                         Please Enter Valid First Name 
                         </div>
@@ -25,13 +35,23 @@
                           <mat-label>Last Name </mat-label>
                           <input (keyup)="getLastName()" formControlName="lastName" type="text" matInput>
                         </mat-form-field>
+                        <!-- <div class="form-group">
+                          <div class="row">
+                            <div class="col-3 d-flex align-items-center">
+                              <label>Last Name<span style="color: red;">*</span></label>
+                            </div>
+                            <div class="col-9">
+                              <input (keyup)="getLastName()" class="form-control" type="text" formControlName="lastName">
+                            </div>
+                          </div>
+                        </div> -->
                         <div *ngIf="SignUPForm.controls.lastName.errors && SignUPForm.controls.lastName.touched" class="alert alert-danger">
                         Please Enter Valid Last Name 
                         </div>
                       </div>
                     </div>
                     <!-- Gender & Depart -->
-                    <div class="row">
+                    <div class="row mt-2">
                       <div class="col-md-6">
                         <mat-form-field class="w-100" appearance="fill" style="margin-bottom: -1em;">
                           <mat-label>Gender</mat-label>
@@ -40,6 +60,19 @@
                               <mat-option value="Female">Female</mat-option>
                           </mat-select>
                         </mat-form-field>
+                        <!-- <div class="form-group">
+                          <div class="row">
+                            <div class="col-3 d-flex align-items-center">
+                              <label>Gender<span style="color: red;">*</span></label>
+                            </div>
+                            <div class="col-9">
+                              <select class="form-select" formControlName="gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div> -->
                       </div>
                       <div class="col-md-6">
                         <mat-form-field class="w-100" appearance="fill" style="margin-bottom: -1em;">
@@ -47,7 +80,19 @@
                           <mat-select formControlName="departmentId">
                               <mat-option *ngFor="let item of AllDepartments" [value]="item.id">{{item.name}}</mat-option>
                           </mat-select>
-                      </mat-form-field>
+                       </mat-form-field>
+                       <!-- <div class="form-group">
+                        <div class="row">
+                          <div class="col-3 d-flex align-items-center">
+                            <label>Department<span style="color: red;">*</span></label>
+                          </div>
+                          <div class="col-9">
+                            <select class="form-select" formControlName="departmentId">
+                              <option *ngFor="let item of AllDepartments" [value]="item.id">{{item.name}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        </div> -->
                       </div>
                     </div>
                     
@@ -59,11 +104,27 @@
                         </mat-select>
                         <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"> <i class="fa-regular fa-user"></i></mat-icon>
                     </mat-form-field>
+                    <!-- <div class="form-group mt-2">
+                      <div class="row">
+                        <div class="col-2 d-flex align-items-center">
+                          <label>Branch<span style="color: red;">*</span></label>
+                        </div>
+                        <div class="col-10">
+                          <select class="form-select" formControlName="branchId">
+                            <option *ngFor="let item of AllBranches" [value]="item.id">{{item.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div> -->
 
                       <mat-form-field class="w-100" appearance="fill" style="margin-bottom: -1em;">
                           <mat-label>Mobile </mat-label>
                           <input formControlName="phoneNumber" type="text" matInput>
                       </mat-form-field>
+                      <!-- <div class="form-group">
+                        <label>Mobile<span style="color: red;">*</span></label>
+                        <input class="form-control" type="text" formControlName="phoneNumber">
+                      </div> -->
                       <div *ngIf="SignUPForm.controls.phoneNumber.errors && SignUPForm.controls.phoneNumber.touched" class="alert alert-danger">
                        Please Enter Valid Mobile No.
                       </div>
@@ -72,23 +133,35 @@
                           <mat-label>Email </mat-label>
                           <input formControlName="email" type="email" matInput>
                       </mat-form-field>
+                      <!-- <div class="form-group">
+                        <label>Email<span style="color: red;">*</span></label>
+                        <input class="form-control" type="email" formControlName="email">
+                      </div> -->
                       <div *ngIf="SignUPForm.controls.email.errors && SignUPForm.controls.email.touched" class="alert alert-danger">
                        Please Enter Valid Last Name 
                       </div>
 
-                      <mat-form-field class="w-100" appearance="fill" style="margin-bottom: -1em;">
+                      <!-- <mat-form-field class="w-100" appearance="fill" style="margin-bottom: -1em;">
                           <mat-label>User Name </mat-label>
                           <input formControlName="userName" type="text" matInput>
-                      </mat-form-field>
+                      </mat-form-field> -->
+                      <div class="form-group">
+                        <label>User Name<span style="color: red;">*</span></label>
+                        <input class="form-control" type="text" formControlName="userName">
+                      </div>
                       <div *ngIf="SignUPForm.controls.userName.errors && SignUPForm.controls.userName.touched" class="alert alert-danger">
                        Please Enter Valid UserName 
                       </div>
                 
                     
-                      <mat-form-field class="w-100" appearance="fill" style="margin-bottom: -1em;">
+                      <!-- <mat-form-field class="w-100" appearance="fill" style="margin-bottom: -1em;">
                           <mat-label>Password</mat-label>
                           <input formControlName="password" type="password" matInput>
-                      </mat-form-field>
+                      </mat-form-field> -->
+                      <div class="form-group">
+                        <label>Password<span style="color: red;">*</span></label>
+                        <input class="form-control" type="password" formControlName="password">
+                      </div>
                       <div *ngIf="SignUPForm.controls.password.errors && SignUPForm.controls.password.touched" class="alert alert-danger">
                           Please Enter Valid Password 
                        </div>
@@ -98,8 +171,8 @@
                         {{this.errorMsg}}
                      </div>
     
-                     <div class="mt-2">
-                        <button [disabled]="this.SignUPForm.status=='INVALID'" (click)="submitSignUpForm()" mat-raised-button color="primary" class="px-4 w-50"><span *ngIf="!isClicked" class="h6 ">Sign Up</span><span *ngIf="isClicked" class="h5">Waiting...</span></button>
+                     <div class="mt-4">
+                        <button [disabled]="this.SignUPForm.status=='INVALID'" (click)="submitSignUpForm()" mat-raised-button color="primary"  class="px-4 w-50"><span *ngIf="!isClicked" class="h6 ">Sign Up</span><span *ngIf="isClicked" class="h5">Waiting...</span></button>
                      </div>
                      
                   </form>

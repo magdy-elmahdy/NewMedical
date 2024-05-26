@@ -65,9 +65,18 @@ i{
 .accordion-body{
   border-bottom: solid 1px #F3B900;
 }
-.accordion-body div:hover, .accordion-body .accordion-header button:hover {
+.accordion-body div:hover{
   font-size: 1.05rem;
+  color: black!important;
+}
+.accordion-body{
+  font-size: 1.05rem;
+  color: black!important;
+}
+.accordion-header button:hover{
+   font-size: 1.05rem;
   color: #F3B900!important;
+  font-weight: 800 !important;
 }
 .active{
 

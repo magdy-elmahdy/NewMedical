@@ -8,7 +8,6 @@ import Swal from 'sweetalert2';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserModel } from 'src/app/Models/user.model';
 import { CookieService } from 'ngx-cookie-service';
-import { Location } from '@angular/common';
 
 declare var $:any
 @Component({
@@ -20,11 +19,8 @@ export class LoginComponent implements OnInit{
   res:any;
   errorEsist:boolean =false;
   isClicked:boolean =false;
-  permissions:any= false;
-  constructor(private location: Location,private _CookieService:CookieService,private _AuthService:AuthService, private _ToastrService:ToastrService, private _Router:Router){
-    if(this._AuthService.isLoggedIn()){
-      this.location.back();
-    }
+  
+  constructor(private _CookieService:CookieService,private _AuthService:AuthService, private _ToastrService:ToastrService, private _Router:Router){
   }
 
   // _JwtHelperService =new JwtHelperService()
@@ -44,22 +40,24 @@ export class LoginComponent implements OnInit{
       this._AuthService.logInForm(Model).subscribe(async (res:any)=>{
        await localStorage.setItem("userType",window.atob(res.token?.split('.')[1]))  ///
        await localStorage.setItem('MedicalToken',res.token)///////////////// Token
-       await localStorage.setItem('permissions',JSON.stringify(res.permissions))///////////////// permissions
       //  Coocie 
-        this._CookieService.set('MedicalToken',res.token)
+      this._CookieService.set('MedicalToken',res.token)
+
+        // this._ToastrService.success(res.massage, "Well Done");
+
 
         await this._Router.navigate(['/WelcomePage'])
-        console.log(res);
         
         await  window.location.reload()
+        // await  Swal.fire('Good job!',res.massage,'success')
         this.isClicked=false;
       },error=>{
         this.errorEsist =true;
-        // this._ToastrService.error('Invalid User Name Or Password', "Error Occurred");
+        this._ToastrService.error('Invalid User Name Or Password', "Error Occurred");
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: error.error ,
+          text: 'Invalid User Name Or Password',
         })
         this.isClicked=false;
         console.log(error);

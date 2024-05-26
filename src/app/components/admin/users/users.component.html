@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between mx-5">
             <div class="d-flex align-items-center">
                 <p class="font_Coloered3 text-center my-4 mx-3">{{'SideBar.Users'|translate}}</p>
-                <button *ngIf="this.permissions.includes('Permissions.Users.Create')" routerLink="/signup" mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
+                <button *ngIf="this.permissions?.includes('Permissions.Users.Create')" routerLink="/signup" mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
             </div>
             <!-- <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;" [(ngModel)]='term' placeholder="{{'Shared.SearchHere'|translate}}" /> -->
         </div>

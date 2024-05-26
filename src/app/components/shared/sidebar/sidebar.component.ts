@@ -36,8 +36,8 @@ export class SidebarComponent implements OnInit{
 
     console.log(TargetItem);
     TargetItem as HTMLElement
-    document.querySelector('.activee')?.classList.remove('activee')
-    TargetItem.classList.add("activee");
+    document.querySelector('.active')?.classList.remove('active')
+    TargetItem.classList.add("active");
     
   
   

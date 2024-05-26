@@ -29,10 +29,7 @@ export class BranchesComponent {
     'code':new FormControl('',[Validators.required,Validators.minLength(3)])
 });
   constructor(private _Router:Router,private _ToastrService:ToastrService,private _AuthService:AuthService ,private _PolicyService:PolicyService){
-    if(!this.permissions.includes('Permissions.Branches.View')){
-      this._ToastrService.show('عفوا ! ليس لديك صلاحية')
-      this._Router.navigate(['/Forbidden'])
-    }
+ 
   }
   
   
