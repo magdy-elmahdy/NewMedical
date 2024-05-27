@@ -1,5 +1,5 @@
 <div id="Policy">
-    <div class="container">
+    <div class="container-fluid">
         <div>
             
 
@@ -138,7 +138,7 @@
                                 <label>{{'Offer.PolicySource'|translate}}<span style="color: red;" class="mx-1">*</span></label>
                             </div>
                             <div class="col-9">
-                                <select class="form-select" formControlName="BranchId">
+                                <select class="form-select" formControlName="policySource">
                                     <option [value]="0">{{'Admin.Direct'|translate}}</option>
                                     <option [value]="1">{{'Admin.Indirect'|translate}}</option>
                                 </select>
@@ -155,7 +155,7 @@
                                 <label>{{'Offer.Broker'|translate}}<span style="color: red;" class="mx-1">*</span></label>
                             </div>
                             <div class="col-9">
-                                <select class="form-select" [(value)]="BrokerValue" (selectionChange)="getBrokerVal()">
+                                <select class="form-select" [(value)]="BrokerValue" (Change)="getBrokerVal()">
                                     <option *ngFor="let type of brokerCustomers" [value]="type.id">{{type.arabicName}}</option>
                                 </select>
                             </div>
@@ -163,8 +163,9 @@
     
                     </div>         
                 </div> 
-            <div class="d-flex justify-content-center mt-4">
-                <button class="w-25" (click)="SubmitOffer()" [disabled]="this.OfferForm.get('insuranceClass')?.value==0||OfferForm.status=='INVALID'||!BusinessTypeValue||brokerInputValidation||this.isClicked"  mat-raised-button color="primary"><span *ngIf="this.isClicked">Waiting..</span><span *ngIf="!this.isClicked">{{'Shared.Submit'|translate}}</span></button>
+            <div class="d-flex justify-content-center mt-5">
+                <!-- [disabled]="this.OfferForm.get('insuranceClass')?.value==0||OfferForm.status=='INVALID'||!BusinessTypeValue||brokerInputValidation||this.isClicked" -->
+                <button [disabled]="this.OfferForm.get('insuranceClass')?.value==0||OfferForm.status=='INVALID'||!BusinessTypeValue||brokerInputValidation||this.isClicked" class="w-25" (click)="SubmitOffer()"   mat-raised-button color="primary"><span *ngIf="this.isClicked">Waiting..</span><span *ngIf="!this.isClicked">{{'Shared.Submit'|translate}}</span></button>
             </div>
         </div>
         </form>

@@ -245,7 +245,8 @@ html{
 }
 .accordion-header button{
     background-color:#FFF!important ;
-    color: #000!important;
+    color: #717579!important;
+
     
 }
 
@@ -253,12 +254,13 @@ html{
     list-style: none;
     cursor: pointer;
     padding: 10px 7px;
-    transition: 0.2s;
+    // transition: 0.2s;
     font-size: 0.85rem;
     color: #FFF!important;
 }
+// color of each item in big item
 .accordion-body div {
-     color: #000!important;
+    color: var(--Secondary-Text, #717579);
 }
 
 .mdc-form-field>label {

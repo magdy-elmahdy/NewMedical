@@ -1,26 +1,30 @@
 <div id="all-endorsment">
     <div class="container-fluid">
         <div class="d-flex justify-content-between mx-5 pt-3">
-            <p class="font_Coloered3 text-center my-2">All Endorsments</p>
+            <p class="font_Coloered3 text-center my-2" style="color: grey;">All Endorsments</p>
         </div>
         <div class="outerBorder outerItem shadow_5 py-3">
             <p class="text-muted fs-5 fw-bold py-2">{{'Shared.SearchHere'|translate}} :</p>
             <form [formGroup]="SearchForm">
                 <div class="row">
                     <div class="col-md-4">
-                        <mat-form-field class="w-100">
+                        <!-- <mat-form-field class="w-100">
                             <mat-label>Policy Code</mat-label>
                             <input formControlName="PolicyCode" type="text" matInput>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <label>Policy Code<span class="mx-2" style="color: red;">*</span></label>
+                        <input class="form-control" type="text" formControlName="PolicyCode">
                     </div>
                     <div class="col-md-4">
-                        <mat-form-field class="w-100">
+                        <!-- <mat-form-field class="w-100">
                             <mat-label>Endorsement Code</mat-label>
                             <input formControlName="EndorsementCode" type="text" matInput>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <label>Endorsement Code<span class="mx-2" style="color: red;">*</span></label>
+                        <input class="form-control" type="text" formControlName="EndorsementCode">
                     </div>
                     <div class="col-md-4">
-                        <mat-form-field id="LocalCountryInput" class="w-100">
+                        <!-- <mat-form-field id="LocalCountryInput" class="w-100">
                             <mat-label>EndorsementType</mat-label>
                             <mat-select formControlName="EndorsementType">
                             <mat-option value="Add">Add</mat-option>
@@ -32,28 +36,42 @@
                             <mat-option value="Pump">Pump</mat-option>
                             </mat-select>
                             <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.6);"><i class="fa-solid fa-mountain-city"></i></mat-icon>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <label>EndorsementType<span class="mx-2" style="color: red;">*</span></label>
+                        <select class="form-select" formControlName="EndorsementType">
+                            <option value="Add">Add</option>
+                            <option value="Remove">Remove</option>
+                            <option value="Technical">Technical</option>
+                            <option value="CategoryEdit">CategoryEdit</option>
+                            <option value="CancelFromBeginning">CancelFromBeginning</option>
+                            <option value="Cancel">Cancel</option>
+                            <option value="Pump">Pump</option>                        
+                        </select>
                     </div>
-                    <div class="col-md-4">
-                        <mat-form-field class="w-100">
+                    <div class="col-md-4 mt-3">
+                        <!-- <mat-form-field class="w-100">
                             <mat-label>{{'Policy.From'|translate}}</mat-label>
                             <input formControlName="From" matInput [matDatepicker]="picker">
                             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <label>{{'Policy.From'|translate}}<span class="mx-2" style="color: red;">*</span></label>
+                        <input class="form-control" type="date" formControlName="From">
                     </div>
-                    <div class="col-md-4">
-                        <mat-form-field class="w-100">
+                    <div class="col-md-4 mt-3">
+                        <!-- <mat-form-field class="w-100">
                             <mat-label>{{'Policy.To'|translate}}</mat-label>
                             <input formControlName="To" matInput [matDatepicker]="picker2">
                             <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <label>{{'Policy.To'|translate}}<span class="mx-2" style="color: red;">*</span></label>
+                        <input class="form-control" type="date" formControlName="To">
                     </div>
         
                     <div class="col-md-2">
                         <!-- Search Now -->
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end mt-4">
                             <button id="searchBtn" [disabled]="this.SearchForm.status=='INVALID'||this.loading" (click)="Search()" mat-raised-button color="primary"
                                 class="w-75 py-2"><span *ngIf="this.loading"><i
                                         class="fa-4 fa-solid fa-fan fa-spin"></i></span> <span

@@ -11,3 +11,19 @@ thead th{
 tbody tr td{
     font-family: 'El Messiri', sans-serif!important;
 }
+label{
+    color: #2A2A2A;
+    // font-family: "Nunito Sans";
+    font-family: Nunito Sans;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+th{
+    text-decoration: underline;
+  }
+  .font_Coloered3:before{
+    content: '';
+    padding-left: 0.7rem;
+    border-left: solid 0.32rem gray;
+  }

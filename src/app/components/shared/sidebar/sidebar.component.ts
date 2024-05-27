@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit{
+  permissions:any[]= JSON.parse(localStorage.getItem('permissions')!)
+
   customersTypes:any
   constructor(private _AdminService:AdminService, public _AuthService:AuthService, public _Router:Router){
     console.log(this.roles); 

@@ -292,6 +292,22 @@ export class AllPolicesComponent implements OnInit{
   goBack(stepper: MatStepper){
     stepper.previous();
 }
+viewsetting:boolean=false
+offerid:any
+viewSettings(id:any){
+  console.log(id);
+  if(this.offerid=id){
+    // this.viewsetting =true
+        this.viewsetting=!this.viewsetting;
+
+  }
+  // else{
+  //   this.viewsetting = false
+  // }
+  
+    // this.viewsetting=!this.viewsetting;
+  
+}
   ngOnInit(): void {
     this.getAllOffers()
     this.getBusinessTypes();       

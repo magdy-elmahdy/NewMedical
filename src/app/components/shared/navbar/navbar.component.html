@@ -1,12 +1,10 @@
      <!-- Navbar -->
 
      <nav class="navbar navbar-expand-lg w-100 py-2 Non-prentable">
-      <div class="container-fluid">
+      <div class="container-fluid" style="padding-right: 30px;">
         <div class="d-flex w-50">
           <a href class="d-flex align-items-center"><img src="../../../../assets/imgs/obelisky logo 1.png" class="ml-auto mx-4" style="width:65%;" alt="logo"></a>
-    
         </div>
-    
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -18,6 +16,10 @@
             </ul>
             <!-- <a class="nav-link text_nav mx-2" routerLink="/addCustomer">{{'UserInfo.AddCustomer'|translate}}</a> -->
             <!-- <p>{{'UserInfo.FirstName' | translate}}</p> -->
+            <div class="d-flex w-50">
+              <input type="text" class="form-control search" placeholder="&#xF002; Search ..."  style="font-family:Arial, FontAwesome!important; position: relative;right: 200px;">
+    
+            </div>
     
             <select id="selectLanguage" (change)="getLanguage($event)">
               <option value="en">English</option>

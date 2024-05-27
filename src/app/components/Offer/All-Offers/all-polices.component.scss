@@ -12,3 +12,19 @@
 h1{
   font-family: 'El Messiri', sans-serif!important;
 }
+
+.view{
+  border-radius: 55px;
+border: 1px solid #F3B900;
+background: #FFF;
+padding-right: 25px;
+padding-left: 25px;
+}
+th{
+  text-decoration: underline;
+}
+.font_Coloered3:before{
+  content: '';
+  padding-left: 0.7rem;
+  border-left: solid 0.32rem gray;
+}

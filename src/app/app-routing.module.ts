@@ -98,15 +98,14 @@ import { MainComponent } from './components/shared/main/main.component';
 //   role:['Ahmed',"Admin"],
   
 // }
+// {path:'Main',component:MainComponent },
+
 
 const routes: Routes = [
   {path:'',component:WelcomePageComponent },
-  {path:'addCustomer',canActivate:[HasRoleGuard, AuthGuard],
-  data:["Admin","Tamer"],
-  component:AddCustomerComponent
- },
- {path:'Main',component:MainComponent },
-  // {path:'Departments',canActivate:[HasRoleGuard], data:["Permissions.Departments.View"],component:DepartmentsComponent },
+  {path:'addCustomer',canActivate:[HasRoleGuard],data:["Permissions.Customers.Create"],component:AddCustomerComponent},
+  {path:'Departments',canActivate:[HasRoleGuard], data:["Permissions.Departments.View"],component:DepartmentsComponent },
+  {path:'Main',component:MainComponent },
   {path:'CustomerDetails/:id',canActivate:[HasRoleGuard], data:["Permissions.Customers.View"],component:CustomerDetailsComponent },
   {path:'governorates',component:GovernoratesComponent },
   {path:'WelcomePage',component:WelcomePageComponent },
@@ -114,7 +113,7 @@ const routes: Routes = [
   {path:'AllCustomers/:id',canActivate:[HasRoleGuard], data:["Permissions.Customers.View"],component:AllCustomersComponent},
   {path:'AllReinsurers',component:AllReinsurersComponent },
   {path:'ReinsurerData/:id',component:ReinsurerDataComponent },
-  {path:'AllCustomers',component:AllCustomersComponent },
+  {path:'AllCustomers',canActivate:[HasRoleGuard], data:["Permissions.Customers.View"],component:AllCustomersComponent },
   {path:'AllEarlyCollects',component:AllEarlyCollectComponent },
   {path:'BasicComision',component:BasicComisionComponent },
   {path:'BasicComision',canActivate:[HasRoleGuard], data:["Permissions.BrokerageCommissions.Add"],component:BasicComisionComponent },
@@ -128,9 +127,9 @@ const routes: Routes = [
   {path:'AddBenefit',component:AddBenefitComponent },
   {path:'AllBenifits/:planName/:PlanId',component:AllbenefitsComponent},
   {path:'policy/:id',canActivate:[HasRoleGuard],data:["Permissions.Offers.Create"],component:AddOfferComponent },
-  {path:'Offer',component:AddOfferComponent },
+  {path:'Offer',canActivate:[HasRoleGuard],data:["Permissions.Offers.Create"],component:AddOfferComponent },
   {path:'AddPlan',component:AddPlanComponent },
-  {path:'AllOffers',component:AllPolicesComponent },
+  {path:'AllOffers',canActivate:[HasRoleGuard],data:["Permissions.Offers.View"],component:AllPolicesComponent },
   {path:'PolicyDetails/:name/:id',component:PolicyDetailsComponent},
   {path:'AddFamily/:customerId/:policyId',component:AddBedsComponent},
   {path:'SelectPlanToPolicy/:type/:customerId/:policyId',component:SelectPlanToPolicyComponent},
@@ -145,7 +144,7 @@ const routes: Routes = [
   {path:'groupOfPolicy/:id',component:GroupOfPolicyComponent},
   {path:'OfferDetails/:id',canActivate:[HasRoleGuard],data:["Permissions.Offers.View"],component:OfferDetailsComponent},
   {path:'OfferVersions/:id',component:OfferVersionsComponent},
-  {path:'Branches',component:BranchesComponent},
+  {path:'Branches',canActivate:[HasRoleGuard],data:["Permissions.Branches.View"],component:BranchesComponent},
   {path:'Banks',canActivate:[HasRoleGuard],data:["Permissions.Banks.View"],component:CreateBankComponent},
   {path:'url',component:UrlComponent},
   {path:'Restriks/:id',component:RestriksComponent},
@@ -153,50 +152,46 @@ const routes: Routes = [
   // Policy
   {path:'ConvertToPolicy/:id',canActivate:[HasRoleGuard],data:["Permissions.Offers.ConvertOfferToPolicy"],component:ConvertToPolicyComponent},
   {path:'PolicyCalculations/:id',canActivate:[HasRoleGuard],data:["Permissions.Policies.View"],component:PolicyCalculationsComponent},
-  {path:'AllPolices',component:AllPolicessComponent},
+  {path:'AllPolices',data:["Permissions.Policies.View"],component:AllPolicessComponent},
   {path:'ReNewPolicy/:id',data:["Permissions.Policies.Renewal"],component:ReNewPolicyComponent},
   {path:'groupNetPremium/:id',component:ActivatePolicyComponent},
   {path:'PolicyDetails/:id',canActivate:[HasRoleGuard],data:["Permissions.Policies.View"],component:PolicyDetailssComponent},
   {path:'PolicySetting',component:SettingPolicyComponent},
   {path:'ModelPolicy/:id',component:ModelPolicyComponent},
-  {path:'AllEndorsments',component:AllEndorsmentComponent},
+  {path:'AllEndorsments',canActivate:[HasRoleGuard],data:["Permissions.Endorsements.View"],component:AllEndorsmentComponent},
 
   // Compensations
-  {path:'InitialClaim',component:InitialClaimComponent},
-  {path:'InitialEndorsment',component:InitialEndorsmentComponent},
+  {path:'InitialClaim',canActivate:[HasRoleGuard],data:["Permissions.Claims.Create"],component:InitialClaimComponent},
+  {path:'InitialEndorsment',canActivate:[HasRoleGuard],data:["Permissions.Endorsements.Create"],component:InitialEndorsmentComponent},
   {path:'Endorsment/:id',canActivate:[HasRoleGuard],data:["Permissions.Endorsements.Create"],component:EndorsmentComponent},
   {path:'EndorsmentPrem/:id/:id2',component:EndorsmentPremComponent},
   {path:'Claim/:id',canActivate:[HasRoleGuard],data:["Permissions.Claims.Create"],component:ClaimComponent},
   {path:'CancleUpdate/:id/:id2',component:CancelUpdateComponent},
 
-  {
-    path:'Users',
-    canActivate:[HasRoleGuard],
-    data:["Admin","Tamer"],    
-    component:UsersComponent 
-  },  // Collection 
-  {path:'EmployeeCollection',component:CollectionUserComponent},
-  {path:'AdminCollection',component:CollectionAdminComponent},
-  {path:'CollectionPayment',component:PaymentWayComponent},
-  {path:'ClaimsPayment',component:ClaimsPayComponent},
+  {path:'Users',canActivate:[HasRoleGuard],data:["Permissions.Users.View"],component:UsersComponent },
+  // Collection 
+  {path:'EmployeeCollection',canActivate:[HasRoleGuard],data:["Permissions.Portfolios.Create"],component:CollectionUserComponent},
+  {path:'AdminCollection',canActivate:[HasRoleGuard],data:["Permissions.Portfolios.Approve"],component:CollectionAdminComponent},
+  {path:'CollectionPayment',canActivate:[HasRoleGuard],data:["Permissions.Portfolios.Payment"],component:PaymentWayComponent},
+  {path:'ClaimsPayment',canActivate:[HasRoleGuard],data:["Permissions.Claims.View"],component:ClaimsPayComponent},
   {path:'CommissionPermision',component:CommissionPermissionComponent},
   {path:'CommissionPayment',component:CommissionPaymentComponent},
-  {path:'PrintSubbliy',component:PrintSubbliyComponent},
+  {path:'PrintSubbliy',canActivate:[HasRoleGuard],data:["Permissions.Portfolios.View"],component:PrintSubbliyComponent},
   {path:'PortfolioModel/:id',component:ModelPortfolioComponent},
   {path:'PortfolioModel',component:ModelPortfolioComponent},
   {path:'BrokerageModel',component:ModelBrokerageComponent},
   {path:'BrokerageModel/:id',component:ModelBrokerageComponent},
-  {path:'TpaPayment',component:TpaPayComponent},
-  {path:'BrokeragePayment',component:BrokeragePayComponent},
-  {path:'CreateHonsty',component:CreateHonstyComponent},
-  {path:'AllExchangePermit',component:AllExchangePremitComponent},
-  {path:'PendingPortfolio',component:PendingPortfolioComponent},
+  {path:'TpaPayment',canActivate:[HasRoleGuard],data:["Permissions.TpaCommissions.Pay"],component:TpaPayComponent},
+  {path:'BrokeragePayment',canActivate:[HasRoleGuard],data:["Permissions.BrokerageCommissions.Pay"],component:BrokeragePayComponent},
+  {path:'CreateHonsty',canActivate:[HasRoleGuard],data:["Permissions.CustomerSecretaries.Create"],component:CreateHonstyComponent},
+  {path:'AllExchangePermit',canActivate:[HasRoleGuard],data:["Permissions.ExchangePermits.View"],component:AllExchangePremitComponent},
+  {path:'PendingPortfolio',canActivate:[HasRoleGuard],data:["Permissions.Portfolios.FinalApprove"],component:PendingPortfolioComponent},
   
   // Reports 
   {path:'DailyCollection',canActivate:[HasRoleGuard],data:["Permissions.Reports.CollectionDaily"],component:ModelDailyCollectionComponent},
   {path:'Reports',component:ReportsComponent},
   {path:'CreatedPolices',component:PolicyCreationComponent},
-  {path:'ClaimDetailsReport',component:ClaimDetailsReportComponent},
+  {path:'ClaimDetailsReport',canActivate:[HasRoleGuard],data:["Permissions.Reports.ClaimDetails"],component:ClaimDetailsReportComponent},
   {path:'OfferReports',component:OfferReportsComponent},
   {path:'CustomersReport',component:CustomersReportComponent},
   {path:'UnderCollection',component:UnderCollectionComponent},
@@ -213,7 +208,7 @@ const routes: Routes = [
   {path:'PaidCommissions',component:PaidCommissionsComponent},
 
   // Auth
-  {path:'signup',component:SignUpComponent },
+  {path:'signup',canActivate:[HasRoleGuard],data:["Permissions.Users.Create"],component:SignUpComponent },
   {path:'login',component:LoginComponent},
 
   // Re Insurance

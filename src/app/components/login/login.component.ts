@@ -16,6 +16,7 @@ declare var $:any
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit{
+  
   res:any;
   errorEsist:boolean =false;
   isClicked:boolean =false;
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit{
       this._AuthService.logInForm(Model).subscribe(async (res:any)=>{
        await localStorage.setItem("userType",window.atob(res.token?.split('.')[1]))  ///
        await localStorage.setItem('MedicalToken',res.token)///////////////// Token
+       await localStorage.setItem('permissions',JSON.stringify(res.permissions))
       //  Coocie 
       this._CookieService.set('MedicalToken',res.token)
 

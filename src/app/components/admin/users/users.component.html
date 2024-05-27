@@ -2,15 +2,15 @@
     <div class="container-fluid">        
         <div class="d-flex justify-content-between mx-5">
             <div class="d-flex align-items-center">
-                <p class="font_Coloered3 text-center my-4 mx-3">{{'SideBar.Users'|translate}}</p>
-                <button *ngIf="this.permissions?.includes('Permissions.Users.Create')" routerLink="/signup" mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
+                <p class="font_Coloered3 text-center my-4 mx-3" style="color: grey;">{{'SideBar.Users'|translate}}</p>
+                <button *ngIf="this.permissions?.includes('Permissions.Users.Create')" routerLink="/signup" mat-raised-button color="grey">{{'Shared.AddNew'|translate}}</button>
             </div>
             <!-- <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;" [(ngModel)]='term' placeholder="{{'Shared.SearchHere'|translate}}" /> -->
         </div>
         <div class="outerBorder outerItem shadow_5 table-responsive" style="overflow: auto;">
             
             <table class="table table-striped text-center">
-                <thead class="tableHead">
+                <thead class="tableHead align-middle" style="background: #F3F2F2;height: 50px;">
                     <th class="py-2">{{'Users.FirstName'|translate}}</th>
                     <th class="py-2">{{'Users.LastName'|translate}}</th>
                     <th class="py-2">{{'Users.UserName'|translate}}</th>
