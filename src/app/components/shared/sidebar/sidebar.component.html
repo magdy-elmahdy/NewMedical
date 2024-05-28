@@ -14,22 +14,26 @@
                     <div class="accordion-body pl-5">
                         <div class="my-1" routerLinkActive="activee" routerLink="/Main"><i class="fa-solid fa-house"></i>
                             Dashboard</div>
-                        <!-- <h2 *ngIf="this.permissions.includes('Permissions.Customers.View')" style="line-height: 41px;" class="accordion-header">
-                            <button routerLink="/AllCustomers" routerLinkActive="activee" class="w-100 collapsed px-2" type="button" data-bs-toggle="collapse"style="padding: 0px 20px!important;"
+                        <h2 *ngIf="this.permissions.includes('Permissions.Customers.View')" style="line-height: 41px;" class="accordion-header">
+                            <button routerLinkActive="activee" routerLink="/AllCustomers" class="w-100 collapsed px-2" type="button" data-bs-toggle="collapse"style="padding: 0px 20px!important;"
                                 data-bs-target="#H_1">
                                 <i class="fa fa-users"></i> {{"SideBar.Customers"|translate}}
                             </button>
-                        </h2> -->
+                        </h2>
                         <!-- Customers -->
-                        <!-- <div class="accordion accordion-flush" id="accordionFlushExample" style="padding: 0px!important;">
+                        <div class="accordion accordion-flush" id="accordionFlushExample" style="padding: 0px!important;">
                             <div id="H_1" class="accordion-collapse collapse">
                                 <div class="accordion-body">
-                                    <div class="my-1"(click)="Customers('')" routerLinkActive="activee">All Customers</div>
-                                    <div *ngFor="let type of customersTypes" routerLinkActive="activee" class="my-1"
-                                        (click)="Customers(type.id)">{{type.value}}</div>
+                                    <div class="my-1"(click)="Customers('')">All Customers</div>
+                                    <div class="my-1"(click)="Customers(0)">Individual</div>
+                                    <div class="my-1"(click)="Customers(1)">Corporate</div>
+                                    <div class="my-1"(click)="Customers(2)">TPA</div>
+                                    <div class="my-1"(click)="Customers(3)">Broker</div>
+                                    <div class="my-1"(click)="Customers(4)">ReInsurer</div>
+                                    
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                         <div *ngIf="this.permissions.includes('Permissions.Users.View')" class="my-1"routerLinkActive="activee" routerLink="/Users"><i class="fa-solid fa-user-group"></i>
                             {{"SideBar.Users"|translate}}</div>
                         <div *ngIf="this.permissions.includes('Permissions.BrokerageCommissions.View')" class="my-1" routerLink="/Commissions" routerLinkActive="activee">
