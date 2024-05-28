@@ -2,7 +2,7 @@
     <div class="container">        
         <div class="d-flex justify-content-between mx-5">
             <div class="d-flex align-items-center">
-                <p class="font_Coloered3 text-center my-4 mx-3">{{'Admin.Branch'|translate}}</p>
+                <p class="font_Coloered3 text-center my-4 mx-3" style="color: gray;">{{'Admin.Branch'|translate}}</p>
                 <button *ngIf="this.permissions?.includes('Permissions.Branches.Create')" data-bs-toggle="modal" data-bs-target="#Add" (click)="WhenModalOpen()" mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
             </div>
             <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;" [(ngModel)]='term' placeholder="{{'Shared.SearchHere'|translate}}" />
@@ -10,7 +10,7 @@
         <div class="outerBorder outerItem shadow_5 table-responsive" style="overflow: auto;">
             
             <table class="table table-striped text-center">
-                <thead class="tableHead">
+                <thead class="tableHead align-middle" style="background: #F3F2F2; height: 50px;">
                     <th class="py-2">{{'PolicyCalculatins.Code'|translate}}</th>
                     <th class="py-2">{{'addCustomer.Name'|translate}}</th>
                     <th *ngIf="this.permissions?.includes('Permissions.Branches.Update')"></th>

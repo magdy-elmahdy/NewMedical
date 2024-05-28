@@ -8,3 +8,11 @@
 .customDanger{
     background-color: rgb(201, 166, 166);
 }
+.font_Coloered3:before{
+    content: '';
+    padding-left: 0.7rem;
+    border-left: solid 0.32rem gray;
+  }
+  thead th{
+    text-decoration: underline;
+  }

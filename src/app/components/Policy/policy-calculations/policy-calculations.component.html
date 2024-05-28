@@ -2,7 +2,7 @@
     <div class="accepted" >
         <div class="container">
             <div class="d-flex justify-content-between mx-5 mt-5">
-                <p class="font_Coloered3 text-center">{{'Offer.Calcualtions'|translate}}</p>
+                <p class="font_Coloered3 text-center" style="color: gray;">{{'Offer.Calcualtions'|translate}}</p>
                 <button [disabled]="PolicyCaluculations?.code!=null" mat-stroked-button color="primary"routerLink="/groupNetPremium/{{PolicyId}}">{{'Shared.Update'|translate}} {{'Shared.Group'|translate}}</button>
             </div> 
             <div class="outerBorder shadow_5 py-3 outerItem">
@@ -156,15 +156,15 @@
         
        <div class="container_custom">
         <div style="max-height:22rem;overflow: auto;" id="currentGroup" class="py-4 outerItem">
-            <table class="table table-striped text-center">
-                <thead>
-                    <th class="py-3">{{'addCustomer.Name'|translate}}</th>
-                    <th class="py-3">{{'addCustomer.Sex'|translate}}</th>
-                    <th class="py-3">{{'Offer.GroupRel'|translate}}</th>
-                    <th class="py-3">{{'addCustomer.D.O.B'|translate}}</th>
-                    <th class="py-3">{{'Offer.NetPremium'|translate}}</th>
-                    <th class="py-3">{{'Offer.PlanName'|translate}}</th>
-                    <th class="py-3">{{'addCustomer.Notes'|translate}}</th>
+            <table class="table text-center">
+                <thead class="align-middle" style="height: 50px;background-color: #F3F2F2;">
+                    <th style="text-decoration: underline;" class="py-3">{{'addCustomer.Name'|translate}}</th>
+                    <th style="text-decoration: underline;" class="py-3">{{'addCustomer.Sex'|translate}}</th>
+                    <th style="text-decoration: underline;" class="py-3">{{'Offer.GroupRel'|translate}}</th>
+                    <th style="text-decoration: underline;" class="py-3">{{'addCustomer.D.O.B'|translate}}</th>
+                    <th style="text-decoration: underline;" class="py-3">{{'Offer.NetPremium'|translate}}</th>
+                    <th style="text-decoration: underline;" class="py-3">{{'Offer.PlanName'|translate}}</th>
+                    <th style="text-decoration: underline;" class="py-3">{{'addCustomer.Notes'|translate}}</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let group of this.PolicyGroupDetails;">

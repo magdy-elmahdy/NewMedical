@@ -1,7 +1,7 @@
 <div id="offer_Versions">
     <div class="container">
         <div class="d-flex justify-content-between mx-5">
-            <p class="font_Coloered3 text-center my-4">{{"Shared.Details"|translate}}</p>
+            <p class="font_Coloered3 text-center my-4" style="color: gray;">{{"Shared.Details"|translate}}</p>
         </div>
         <div class="outerBorder outerItem shadow_5">
 
@@ -83,11 +83,11 @@
             <div class="container shadow_5 py-3" style="border-radius: 0.5rem;">
                 <div *ngIf="this.OfferPlans?.length==0" class="alert alert-info w-75 my-5 m-auto text-center"><strong>{{'Offer.NoPlansYet'|translate}}</strong></div>
                 <div style="max-height:19rem;overflow: auto;">
-                    <table *ngIf="this.OfferPlans.length>0" class="table table-striped text-center">
-                        <thead>
-                            <th>{{'Offer.PlanName'|translate}}</th>
-                                    <th>{{'Offer.NetPremium'|translate}}</th>
-                                    <th>{{'Offer.AnnualMaxLimit'|translate}}</th>
+                    <table *ngIf="this.OfferPlans.length>0" class="table text-center">
+                        <thead  class="align-middle" style="background: #F3F2F2;height: 50px;">
+                            <th style="text-decoration: underline;">{{'Offer.PlanName'|translate}}</th>
+                                    <th style="text-decoration: underline;">{{'Offer.NetPremium'|translate}}</th>
+                                    <th style="text-decoration: underline;">{{'Offer.AnnualMaxLimit'|translate}}</th>
                         </thead>
                         <tbody>
                             <tr class="my-2" *ngFor="let plan of this.OfferPlans;let index = index">
@@ -105,13 +105,13 @@
             <div class="container shadow_5 p-3" style="border-radius: 0.5rem;">
                 <div *ngIf="this.OfferGroup.length==0" class="alert alert-info w-75 my-5 m-auto text-center"><strong>{{'Offer.NoCustomerGroupYet'|translate}}</strong></div>
                 <div *ngIf="this.OfferGroup.length>0" style="max-height:19rem;overflow: auto;" id="currentGroup">
-                    <table class="table table-striped text-center">
-                        <thead>
-                            <th>{{'addCustomer.Name'|translate}}</th>
-                            <th>{{'addCustomer.Sex'|translate}}</th>
-                            <th>{{'Offer.GroupRel'|translate}}</th>
-                            <th>{{'addCustomer.D.O.B'|translate}}</th>
-                            <th>{{'addCustomer.Notes'|translate}}notes</th>
+                    <table class="table text-center">
+                        <thead class="align-middle" style="background: #F3F2F2;height: 50px;">
+                            <th style="text-decoration: underline;">{{'addCustomer.Name'|translate}}</th>
+                            <th style="text-decoration: underline;">{{'addCustomer.Sex'|translate}}</th>
+                            <th style="text-decoration: underline;">{{'Offer.GroupRel'|translate}}</th>
+                            <th style="text-decoration: underline;">{{'addCustomer.D.O.B'|translate}}</th>
+                            <th style="text-decoration: underline;">{{'addCustomer.Notes'|translate}}notes</th>
                         </thead>
                         <tbody>
                             <tr *ngFor="let plan of this.OfferGroup;">

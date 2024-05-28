@@ -302,8 +302,8 @@ export class ReNewPolicyComponent implements OnInit{
 
       let inception = new Date(data.expiryDate);
       inception.setDate(inception.getDate() + 2);
-      
-      this.MainForm.get('InceptionDate')?.setValue(inception)
+      // edit
+      this.MainForm.get('InceptionDate')?.setValue(this.datePipe.transform(inception,'yyyy-MM-dd') )
       this.MainForm.get('TpaFees')?.setValue(data.tpaFeesPCT)
       this.MainForm.get('Brokerage')?.setValue(data.brokerage)
       this.MainForm.get('TaxNo')?.setValue(data.taxNo)
@@ -311,7 +311,11 @@ export class ReNewPolicyComponent implements OnInit{
       this.MainForm.get('BranchId')?.setValue(data.branch)
       let Expiry = new Date(this.MainForm.get('InceptionDate')?.value);
       Expiry.setFullYear(Expiry.getFullYear()+1)
-      this.MainForm.get('ExpiryDate')?.setValue(Expiry)
+      //edit
+      this.MainForm.get('ExpiryDate')?.setValue(this.datePipe.transform(Expiry,'yyyy-MM-dd'))
+      // Added new
+      this.MainForm.get('IssueDate')?.setValue(this.datePipe.transform(data.issueDate,'yyyy-MM-dd'))
+
       
       // min expiry Date 
       this.MinExpiryDate =new Date()

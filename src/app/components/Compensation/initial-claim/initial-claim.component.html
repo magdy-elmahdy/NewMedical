@@ -68,7 +68,7 @@
                         <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.6);"><i class="fa-solid fa-people-arrows"></i></mat-icon>
                     </mat-form-field> -->
                     <label>{{'Offer.Broker'|translate}}<span class="mx-2" style="color: red;">*</span></label>
-                    <select [(value)]="BrokerIdVal" class="form-select">
+                    <select [(ngModel)]="BrokerIdVal" class="form-select">
                         <option value="">{{'Shared.Null'|translate}}</option>
                         <option *ngFor="let type of brokerCustomers" [value]="type.id">{{type.name}}</option>
                     </select>

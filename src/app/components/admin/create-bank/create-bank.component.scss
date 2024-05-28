@@ -11,3 +11,11 @@ thead th{
 tbody tr td{
     font-family: 'El Messiri', sans-serif!important;
 }
+th{
+    text-decoration: underline;
+}
+.font_Coloered3:before{
+    content: '';
+    padding-left: 0.7rem;
+    border-left: solid 0.32rem gray;
+  }

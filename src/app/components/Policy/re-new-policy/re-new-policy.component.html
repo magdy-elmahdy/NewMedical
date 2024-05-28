@@ -15,119 +15,169 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                                    <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                         <mat-label>{{'Shared.CompanyName'|translate}}</mat-label>
                                         <input disabled type="text" readonly value="Misr Takaful Insurance" matInput>
                                         <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"> <i class="fa-regular fa-building"></i></mat-icon>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div style="margin-bottom: -1em!important">
+                                        <label>{{'Shared.CompanyName'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                        <input class="form-control" disabled type="text" readonly value="Misr Takaful Insurance">
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                                    <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                         <mat-label>{{'Offer.Insured'|translate}}</mat-label>
                                         <input disabled type="text" readonly value="{{this.ThePolicy?.insuredName}}" matInput>
                                         <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"> <i class="fa-regular fa-user"></i></mat-icon>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div style="margin-bottom: -1em!important">
+                                        <label>{{'Offer.Insured'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                        <input class="form-control" disabled type="text" readonly value="{{this.ThePolicy?.insuredName}}">
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                                    <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                         <mat-label>{{'Offer.TpaName'|translate}}</mat-label>
                                         <input disabled type="text" readonly value="{{this.ThePolicy?.tpaName}}" matInput>
                                         <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"> <i class="fa-regular fa-user"></i></mat-icon>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+                                    <div style="margin-bottom: -1em!important">
+                                        <label>{{'Offer.TpaName'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                        <input class="form-control" disabled type="text" readonly value="{{this.ThePolicy?.tpaName}}">
+                                    </div>
                                 </div>
                                 
                             </div>
                         </div>
                         <!-- col 1 -->
-                        <div class="col-md-3">
+                        <div class="col-md-3 mt-3">
                             
-                            <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                            <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                 <mat-label>{{'Offer.InsuranceClass'|translate}}</mat-label>
                                 <input disabled type="text" readonly value="{{this.ThePolicy?.insuranceClass}}" matInput>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div style="margin-bottom: -1em!important">
+                                <label>{{'Offer.InsuranceClass'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                <input class="form-control" disabled type="text" readonly value="{{this.ThePolicy?.insuranceClass}}">
+                            </div>
 
                         </div>
                         <!-- col 2 -->
-                        <div class="col-md-3">
+                        <div class="col-md-3 mt-3">
                             
-                            <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                            <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                 <mat-label>{{'Offer.BusinessType'|translate}}</mat-label>
                                 <input disabled type="text" readonly value="{{this.ThePolicy?.businessType}}" matInput>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div style="margin-bottom: -1em!important">
+                                <label>{{'Offer.BusinessType'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                <input class="form-control" disabled type="text" readonly value="{{this.ThePolicy?.businessType}}" >
+                            </div>
                             
                         </div>
                         <!-- col 3 -->
-                        <div class="col-md-3">
-                            <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                        <div class="col-md-3 mt-3">
+                            <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                 <mat-label>{{'Offer.PolicySource'|translate}}</mat-label>
                                 <input disabled type="text" readonly value="{{this.ThePolicy?.policySource}}" matInput>
-                            </mat-form-field>
-
-
+                            </mat-form-field> -->
+                            <div style="margin-bottom: -1em!important">
+                                <label>{{'Offer.PolicySource'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                <input class="form-control" disabled type="text" readonly value="{{this.ThePolicy?.policySource}}">
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <mat-form-field *ngIf="this.ThePolicy?.brokerId!=0" class="w-100" style="margin-bottom: -1em!important">
+                        <div class="col-md-3 mt-3">
+                            <!-- <mat-form-field *ngIf="this.ThePolicy?.brokerId!=0" class="w-100" style="margin-bottom: -1em!important">
                                 <mat-label>{{'Offer.Broker'|translate}}</mat-label>
                                 <input disabled type="text" readonly value="{{this.ThePolicy?.brokerName}}" matInput>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div style="margin-bottom: -1em!important">
+                                <label>{{'Offer.Broker'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                <input class="form-control" disabled type="text" readonly value="{{this.ThePolicy?.brokerName}}">
+                            </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col-md-3">
-                                <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                                <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                     <mat-label>{{'Policy.UY'|translate}}</mat-label>
                                     <input disabled type="text" readonly value="{{this.MainForm.get('InceptionDate')?.value|date:'yyyy'}}" matInput>
-                                </mat-form-field>
+                                </mat-form-field> -->
+                                <div style="margin-bottom: -1em!important">
+                                    <label>{{'Policy.UY'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                    <input class="form-control" disabled type="text" readonly value="{{this.MainForm.get('InceptionDate')?.value|date:'yyyy'}}">
+                                </div>
                             </div>
                             
                             <div class="col-md-3">
-                                <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                                <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                     <mat-label>Old {{'Policy.IssueDate'|translate}}</mat-label>
                                     <input disabled readonly value="{{this.ThePolicy?.issueDate|date:'dd-MM-YYYY'}}" matInput>
-                                </mat-form-field>
+                                </mat-form-field> -->
+                                <div style="margin-bottom: -1em!important">
+                                    <label>Old {{'Policy.IssueDate'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                    <input class="form-control" disabled readonly value="{{this.ThePolicy?.issueDate|date:'dd-MM-YYYY'}}" matInput>
+                                </div>
                             </div>
                             <div class="col-md-3">
-                                <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                                <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                     <mat-label>Old {{'Policy.InceptionDate'|translate}}</mat-label>
                                     <input disabled readonly value="{{this.ThePolicy?.inceptionDate|date:'dd-MM-YYYY'}}" matInput>
-                                </mat-form-field>
+                                </mat-form-field> -->
+                                <div style="margin-bottom: -1em!important">
+                                    <label>Old {{'Policy.InceptionDate'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                    <input class="form-control" disabled readonly value="{{this.ThePolicy?.inceptionDate|date:'dd-MM-YYYY'}}" matInput>
+                                </div>
                             </div>
                             <div class="col-md-3">
-                                <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                                <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                     <mat-label>Old {{'Policy.ExpiryDate'|translate}}</mat-label>
                                     <input disabled readonly value="{{this.ThePolicy?.expiryDate|date:'dd-MM-YYYY'}}" matInput>
-                                </mat-form-field>
+                                </mat-form-field> -->
+                                <div style="margin-bottom: -1em!important">
+                                    <label>Old {{'Policy.ExpiryDate'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                    <input class="form-control" disabled readonly value="{{this.ThePolicy?.expiryDate|date:'dd-MM-YYYY'}}" matInput>
+                                </div>
                             </div>
-                            <!-- <div class="col-md-3">
-                                <mat-form-field class="w-100">
-                                    <mat-label>{{'Policy.IssueDate'|translate}}</mat-label>
-                                    <input value="{{this.today|date:'yyyy-MM-dd'}}" matInput>
-                                </mat-form-field>
-                            </div> -->
                             
                         </div>
                             <!-- col 1 Edit -->
                         <div class="col-md-6">
-                            <mat-form-field class="w-100" style="margin-bottom:-1em!important">
+                            <!-- <mat-form-field class="w-100" style="margin-bottom:-1em!important">
                                 <mat-label>Branch</mat-label>
                                 <mat-select formControlName="BranchId">
                                     <mat-option *ngFor="let item of AllBranches" [value]="item.id">{{item.name}}</mat-option>
                                 </mat-select>
                                 <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"> <i class="fa-regular fa-user"></i></mat-icon>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div style="margin-bottom:-1em!important" class="mt-4">
+                                <label>Branch<span class="mx-2" style="color: red;">*</span></label>
+                                <select class="form-select" formControlName="BranchId">
+                                    <option *ngFor="let item of AllBranches" [value]="item.id">{{item.name}}</option>
+                                </select>
+                            </div>
 
-                            <mat-form-field  class="w-100" style="margin-bottom: -1em!important">
+                            <!-- <mat-form-field  class="w-100" style="margin-bottom: -1em!important">
                                 <mat-label>{{'addCustomer.TaxNo'|translate}}</mat-label>
                                 <input formControlName="TaxNo" type="number" matInput>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div style="margin-bottom: -1em!important" class="mt-4">
+                                <label>{{'addCustomer.TaxNo'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                <input class="form-control" formControlName="TaxNo" type="number" >
+                            </div>
 
-                            <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                            <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                 <mat-label>{{'Policy.IssueDate'|translate}}</mat-label>
                                 <input [min]="this.today" formControlName="IssueDate" matInput [matDatepicker]="picker15">
                                 <mat-datepicker-toggle matIconSuffix [for]="picker15"></mat-datepicker-toggle>
                                 <mat-datepicker #picker15></mat-datepicker>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div style="margin-bottom: -1em!important" class="mt-4">
+                                <label>{{'Policy.IssueDate'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                <input class="form-control" [min]="this.today" formControlName="IssueDate">
+                            </div>
 
-                            <mat-form-field  style="margin-bottom: -1em!important" class="w-100">
+                            <!-- <mat-form-field  style="margin-bottom: -1em!important" class="w-100">
                                 <mat-label>{{'Policy.InceptionDate'|translate}}</mat-label>
                                 <input [min]="this.minInceptionDate" formControlName="InceptionDate"
                                 
@@ -135,27 +185,42 @@
                                  matInput [matDatepicker]="picker1">
                                 <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div style="margin-bottom: -1em!important" class="mt-4">
+                                <label>{{'Policy.InceptionDate'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                <input class="form-control" [min]="this.minInceptionDate" formControlName="InceptionDate"
+                                (change)="getInceptionDate($event)">                            
+                            </div>
                             
-                            <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                            <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                 <mat-label>{{'Policy.ExpiryDate'|translate}}</mat-label>
                                 <input (dateChange)="checkExpiryDate($event)"
                                  [min]="this.MinExpiryDate" formControlName="ExpiryDate" matInput [matDatepicker]="picker2">
                                 <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                                 <mat-datepicker #picker2></mat-datepicker>
-                            </mat-form-field>
+                            </mat-form-field>  -->
+                            <div class="mt-4" style="margin-bottom: -1em!important">
+                                <label>{{'Policy.ExpiryDate'|translate}}</label>
+                                <input (change)="checkExpiryDate($event)"
+                                 [min]="this.MinExpiryDate" formControlName="ExpiryDate" class="form-control">
+                            </div> 
+
 
                         </div>
                         <!-- col 2 Edit --> 
                         <div class="col-md-6">
                             
 
-                            <mat-form-field  class="w-100" style="margin-bottom: -1em!important">
+                            <!-- <mat-form-field  class="w-100" style="margin-bottom: -1em!important">
                                 <mat-label>{{'addCustomer.RegNo'|translate}}</mat-label>
                                 <input formControlName="RegNo" type="number" matInput>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div class="mt-4" style="margin-bottom: -1em!important">
+                                <label>{{'addCustomer.RegNo'|translate}}<span class="mx-" style="color: red;">*</span></label>
+                                <input class="form-control" formControlName="RegNo" type="number">
+                            </div>
 
-                            <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                            <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                 <mat-label>{{'Policy.PaymentPeriod'|translate}}</mat-label>
                                 <mat-select formControlName="PaymentPeriod" (selectionChange)="getPaymentPeriod($event.value)">
                                 <mat-option [value]="0">Yearly</mat-option>
@@ -163,21 +228,37 @@
                                 <mat-option [value]="2">Quarterly</mat-option>
                                 </mat-select>
                                 <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.6);"><i class="fa-solid fa-money-bill"></i></mat-icon>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div class="mt-4" style="margin-bottom: -1em!important">
+                                <label>{{'Policy.PaymentPeriod'|translate}}<span class="mx-2" style="color: red;">*</span></label>
+                                <select class="form-select" formControlName="PaymentPeriod" (change)="getPaymentPeriod($event)">
+                                <option [value]="0">Yearly</option>
+                                <option [value]="1">Half Yearly</option>
+                                <option [value]="2">Quarterly</option>
+                                </select>
+                            </div>
 
                             
-                            <mat-form-field class="w-100" style="margin-bottom: -1em!important">
+                            <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important">
                                 <mat-label>{{'SideBar.TpaFees'|translate}}</mat-label>
                                 <input formControlName="TpaFees" max="{{this.ThePolicy?.tpaFeesPCT}}"  type="number" matInput>
                                 <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"> <i class="fa-solid fa-percent"></i></mat-icon>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div class="mt-4" style="margin-bottom: -1em!important">
+                                <label>{{'SideBar.TpaFees'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                <input class="form-control" formControlName="TpaFees" max="{{this.ThePolicy?.tpaFeesPCT}}"  type="number">
+                            </div>
 
-                            <mat-form-field class="w-100" style="margin-bottom: -1em!important" >
+                            <!-- <mat-form-field class="w-100" style="margin-bottom: -1em!important" >
                                 <mat-label>{{'Offer.Brokerage'|translate}}</mat-label>
                                 <input formControlName="Brokerage" type="number" max="{{this.ThePolicy?.brokerage}}" matInput>
                                 <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.65);"> <i class="fa-solid fa-percent"></i></mat-icon>
-                            </mat-form-field>
-                            <div>
+                            </mat-form-field> -->
+                            <div class="mt-4" style="margin-bottom: -1em!important">
+                                <label>{{'Offer.Brokerage'|translate}}<span style="color: red;" class="mx-2">*</span></label>
+                                <input class="form-control" formControlName="Brokerage" type="number" max="{{this.ThePolicy?.brokerage}}">
+                            </div>
+                            <div class="mt-4">
                                 <label class="fs-6 text-muted">{{'Offer.UpoadSignedOffer'|translate}}</label>
                                 <input accept=".pdf" (change)="uploadPdfFile($event)" class="form-control py-2" type="file">
                             </div>
