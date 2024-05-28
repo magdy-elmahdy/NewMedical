@@ -1,13 +1,13 @@
 <div class="AllCustomers">
     <div class="container-fluid">
         <div class="d-flex justify-content-between mx-5 pt-3">
-                <p class="font_Coloered3 text-center my-4">{{customersTypes}} Customers</p>
+                <p class="font_Coloered3 text-center my-4" style="color: grey;">{{customersTypes}} Customers</p>
                 <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;" [(ngModel)]='term' placeholder="{{'Shared.SearchHere'|translate}}" />
         </div>
 
         <div class="outerBorder outerItem shadow_5 table-responsive">
-            <table class="table table-striped text-center">
-                <thead class="tableHead">
+            <table class="table text-center">
+                <thead class="tableHead" style="background: #F3F2F2;height: 50px;">
                     <th class="py-2">{{'Shared.Name'|translate}}</th>
                     <th class="py-2">{{'Shared.MobileNo'|translate}}</th>
                     <!-- <th class="py-2">{{'Shared.AccountNo'|translate}}</th> -->
@@ -24,19 +24,26 @@
                         totalItems:count}; let i=index">
                         <td class="align-middle">{{customer.name}}</td>
                         <td class="align-middle">{{customer.mobile}}</td>
-                        <!-- <td class="align-middle">{{customer.accountNO}}</td> -->
                         <td class="align-middle">{{customer.email}}</td>
                         <td *ngIf="CustomerTypeId ==null" class="align-middle">{{customer.customerType}}</td>
                         <td class="align-middle" *ngIf="this.permissions?.includes('Permissions.Customers.Update')">
                             <i data-bs-toggle="modal" data-bs-target="#Status" (click)="getCustomerStatus(customer)" class="fa-solid fa-road-barrier fs-5 px-3 py-2 text-secondary"></i>
                         </td>
                         <td style="vertical-align: middle;">
-                            <i (click)="getCustomerInfo(customer)" data-bs-toggle="modal" data-bs-target="#editCustomer" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;" *ngIf="this.permissions?.includes('Permissions.Customers.Update')"></i>
-                            <i  routerLink="/CustomerDetails/{{customer.id}}" class="fa-regular fa-eye text-success fs-5 px-3 py-2" *ngIf="this.permissions?.includes('Permissions.Customers.View')"></i>
-                            <!-- <i class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i> -->
+                            <!-- <i (click)="getCustomerInfo(customer)" data-bs-toggle="modal" data-bs-target="#editCustomer" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;" *ngIf="this.permissions?.includes('Permissions.Customers.Update')"></i> -->
+                            <!-- <i  routerLink="/CustomerDetails/{{customer.id}}" class="fa-regular fa-eye text-success fs-5 px-3 py-2" *ngIf="this.permissions?.includes('Permissions.Customers.View')"></i> -->
+                            <div class="dropdown">
+                                <i class="fa-solid fa-ellipsis-vertical" type="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+
+                                <!-- <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Dropdown button
+                                </button> -->
+                                <ul class="dropdown-menu">
+                                    <i (click)="getCustomerInfo(customer)" data-bs-toggle="modal" data-bs-target="#editCustomer" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5; display: block;" *ngIf="this.permissions?.includes('Permissions.Customers.Update')"></i>
+                                    <i  routerLink="/CustomerDetails/{{customer.id}}" class="fa-regular fa-eye text-success fs-5 px-3 py-2" style="display: block;" *ngIf="this.permissions?.includes('Permissions.Customers.View')"></i>
+                                </ul>
+                            </div>
                         </td>
-                        <!-- <td><button mat-raised-button (click)="getCustomerInfo(customer)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editCustomer">Edit <i class="fa-solid fa-user-pen"></i></button></td> -->
-                        <!-- <td><button mat-raised-button color="primary" routerLink="/CustomerDetails/{{customer.id}}">View <i class="fa-solid fa-magnifying-glass"></i></button></td> -->
                         <td *ngIf="customer.customerType =='Broker' && CustomerTypeId !=null"><button mat-raised-button color="primary" routerLink="/BrokerCommissions/{{customer.name}}/{{customer.id}}">Commissions <i class="fa-solid fa-droplet"></i></button></td>
                         <td *ngIf="customer.customerType =='TPA' && CustomerTypeId !=null"><button mat-raised-button color="primary" routerLink="/AllPlans/{{customer.id}}">Plans <i class="fa-solid fa-hand-holding-droplet"></i></button></td>
                     </tr>
