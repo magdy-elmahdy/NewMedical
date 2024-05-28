@@ -75,7 +75,10 @@ export class AddOfferComponent implements OnInit{
         console.log(res);
         this.policyId = res.id
         await this._router.navigate(['/Offer'],{queryParams:{
-          brokerId:this.BrokerValue,BranchId:Model.BranchId,tpaId:Model.tpaId,policySource:Model.policySource,customerName:Model.customerName
+          brokerId:this.BrokerValue,BranchId:Model.BranchId,
+          tpaId:Model.tpaId,policySource:Model.policySource,
+          customerName:Model.customerName,
+          offerDate:Model.offerDate
         }})
         this._router.navigate(['/UploadPlansFile/'+this.policyId])
       },async error=>{
@@ -238,6 +241,7 @@ export class AddOfferComponent implements OnInit{
     this.OfferForm.get('BranchId')?.setValue(this.CashedInputs.BranchId==null?'': Number(this.CashedInputs.BranchId))
     this.OfferForm.get('tpaId')?.setValue(this.CashedInputs.tpaId==null?'': Number(this.CashedInputs.tpaId))
     this.OfferForm.get('policySource')?.setValue(this.CashedInputs.policySource==null?'':Number(this.CashedInputs.policySource))
+    this.OfferForm.get('offerDate')?.setValue(this.CashedInputs.offerDate)
     if(Number(this.CashedInputs.brokerId)>0){
       this.BrokerValue =Number(this.CashedInputs.brokerId)
     }else{
