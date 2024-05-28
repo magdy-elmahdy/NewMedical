@@ -16,11 +16,12 @@
                         </div>
                         <div class="col-9">
                           <input formControlName="userName" type="text" class="form-control" placeholder="name">
+                          <div *ngIf="loginForm.controls.userName.errors && loginForm.controls.userName.touched" class="alert alert-danger mt-2">
+                            Please Enter Valid UserName 
+                          </div>
                         </div>
                       </div>
-                      <div *ngIf="loginForm.controls.userName.errors && loginForm.controls.userName.touched" class="alert alert-danger">
-                        Please Enter Valid UserName 
-                      </div>
+                     
                     <!-- </div> -->
                   <!-- <div class="form-group"> -->
                     <div class="row mt-3">
@@ -29,12 +30,13 @@
                       </div>
                       <div class="col-9">
                         <input formControlName="password" type="password" class="form-control" placeholder="password">
+                        <div *ngIf="loginForm.controls.password.errors && loginForm.controls.password.touched" class="alert alert-danger mt-2">
+                          Please Enter Valid Password 
+                        </div>
                       </div>
                       <!-- <span class="forgetpassword">Forget Password?</span> -->
                     </div>
-                    <div *ngIf="loginForm.controls.password.errors && loginForm.controls.password.touched" class="alert alert-danger">
-                      Please Enter Valid Password 
-                    </div>
+                  
                   <!-- </div> -->
                 <div *ngIf="errorEsist" class="alert alert-danger mt-5">
                   Invalid Username Or Password
