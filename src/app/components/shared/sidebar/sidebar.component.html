@@ -38,29 +38,51 @@
                             {{'UserInfo.AddCustomer'|translate}}</div>
                         <div *ngIf="this.permissions.includes('Permissions.Users.View')" class="my-1"routerLinkActive="activee" routerLink="/Users"><i class="fa-solid fa-user-group"></i>
                             {{"SideBar.Users"|translate}}</div>
-                        <div *ngIf="this.permissions.includes('Permissions.BrokerageCommissions.View')" class="my-1" routerLink="/Commissions" routerLinkActive="activee">
+                            
+                    <div *ngIf="this.permissions.includes('Permissions.BrokerageCommissions.Add')" class="my-1" routerLink="/BasicComision" routerLinkActive="activee">
+                        <i class="fa-solid fa-notes-medical"></i> {{"SideBar.AddBasicCommission"|translate}}</div>
+                    <div *ngIf="this.permissions.includes('Permissions.BrokerageCommissions.View')" class="my-1" routerLink="/Commissions" routerLinkActive="activee">
+                        <i class="fa-solid fa-droplet"></i> {{"SideBar.Commissions"|translate}}</div>
+                    <!-- <div class="my-1" routerLinkActive="active" routerLink="/Early&Collect">
+                        <i class="fa-regular fa-calendar-minus"></i> {{"SideBar.AddEarly&Collect"|translate}}</div> -->
+                    <div *ngIf="this.permissions.includes('Permissions.TpaCommissions.View')" class="my-1" routerLinkActive="activee" routerLink="/TPAFees">
+                        <i class="fa-regular fa-star"></i> {{"SideBar.TpaFees"|translate}}</div>
+                    <!-- <div class="my-1" routerLinkActive="active" routerLink="/AllReinsurers">
+                        <i class="fa-solid fa-wrench"></i> {{"SideBar.AllReinsurers"|translate}}</div> -->
+                    <div *ngIf="this.permissions.includes('Permissions.Branches.View')" class="my-1" routerLinkActive="activee" routerLink="/Branches">
+                        <i class="fa-solid fa-code-branch"></i> {{"Admin.Branch"|translate}}</div>
+                        
+                    <div *ngIf="this.permissions.includes('Permissions.Banks.View')" class="my-1" routerLinkActive="activee" routerLink="/Banks">
+                        <i class="fa-solid fa-building-columns"></i> {{"Admin.Banks"|translate}}</div>
+
+                    <div *ngIf="this.permissions.includes('Permissions.Departments.View')" class="my-1" routerLinkActive="activee" routerLink="/Departments">
+                        <i class="fa-brands fa-microsoft"></i> {{"Admin.Departments"|translate}} </div>
+
+                    <div *ngIf="this.permissions.includes('Permissions.Governorates.View')" class="my-1" routerLinkActive="activee" routerLink="/governorates">
+                        <i class="fa-solid fa-city"></i> {{"Admin.Governorates"|translate}}</div>
+                        <!-- <div *ngIf="this.permissions.includes('Permissions.BrokerageCommissions.View')" class="my-1" routerLink="/Commissions" routerLinkActive="activee">
                             <i class="fa-solid fa-droplet"></i> {{"SideBar.Commissions"|translate}}</div>
                         <div class="my-1" routerLink="/AllPlans" routerLinkActive="activee">
                             <i class="fa-solid fa-hand-holding-droplet"></i> Plans</div>
     
                         <div class="my-1" routerLinkActive="activee" routerLink="/AddBenefit">
-                            <i class="fa-brands fa-slack"></i>{{"SideBar.AddGobalBenefit"|translate}}</div>
+                            <i class="fa-brands fa-slack"></i>{{"SideBar.AddGobalBenefit"|translate}}</div> -->
                         <!-- <div class="my-1" routerLinkActive="active" routerLink="/BasicComision">
                             <i class="fa-brands fa-slack"></i>All gobal benefit</div> -->
     
-                        <div class="my-1" routerLink="/AllEarlyCollects" routerLinkActive="activee"><i
+                        <!-- <div class="my-1" routerLink="/AllEarlyCollects" routerLinkActive="activee"><i
                                 class="fa-solid fa-layer-group"></i> {{"SideBar.EarlyCollects"|translate}}</div>
                         <div *ngIf="this.permissions.includes('Permissions.BrokerageCommissions.Add')" class="my-1" routerLink="/BasicComision" routerLinkActive="activee">
-                            <i class="fa-solid fa-notes-medical"></i> {{"SideBar.AddBasicCommission"|translate}}</div>
+                            <i class="fa-solid fa-notes-medical"></i> {{"SideBar.AddBasicCommission"|translate}}</div> -->
                         
-                        <div class="my-1" routerLinkActive="activee" routerLink="/Early&Collect">
+                        <!-- <div class="my-1" routerLinkActive="activee" routerLink="/Early&Collect">
                             <i class="fa-regular fa-calendar-minus"></i> {{"SideBar.AddEarly&Collect"|translate}}</div>
                         <div *ngIf="this.permissions.includes('Permissions.TpaCommissions.View')" class="my-1" routerLinkActive="activee" routerLink="/TPAFees">
                             <i class="fa-regular fa-star"></i> {{"SideBar.TpaFees"|translate}}</div>
                         <div class="my-1" routerLinkActive="activee" routerLink="/AllReinsurers">
                             <i class="fa-solid fa-wrench"></i> {{"SideBar.AllReinsurers"|translate}}</div>
                         <div class="my-1" routerLinkActive="activee" routerLink="/Branches">
-                            <i class="fa-solid fa-code-branch"></i> Branches</div>
+                            <i class="fa-solid fa-code-branch"></i> Branches</div> -->
      
                     </div>   
                 </div>
