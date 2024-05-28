@@ -34,6 +34,8 @@
                                 </div>
                             </div>
                         </div>
+                        <div *ngIf="this.permissions.includes('Permissions.Customers.Create')" class="my-1" routerLinkActive="activee" routerLink="/addCustomer"><i class="fa-solid fa-user-plus"></i>
+                            {{'UserInfo.AddCustomer'|translate}}</div>
                         <div *ngIf="this.permissions.includes('Permissions.Users.View')" class="my-1"routerLinkActive="activee" routerLink="/Users"><i class="fa-solid fa-user-group"></i>
                             {{"SideBar.Users"|translate}}</div>
                         <div *ngIf="this.permissions.includes('Permissions.BrokerageCommissions.View')" class="my-1" routerLink="/Commissions" routerLinkActive="activee">
