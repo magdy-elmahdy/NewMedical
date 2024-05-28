@@ -262,22 +262,22 @@
             <div class="accordion-item">
                 <h2 class="accordion-header head">
                     <button  (click)="getActivee(item9)" #item9 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_10">
-                        <span></span><i class="fa fa-file-alt"></i> Reporting
+                        <span></span><i class="fa fa-file-alt"></i> Reports
                     </button>
                 </h2>
                 <div id="H_10" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <div class="my-1" class="subMenue" routerLink="/Reports" routerLinkActive="activee"><i class="fa fa-cogs"></i> Reports</div>
                         <div *ngIf="this.permissions.includes('Permissions.Reports.Polices')" class="my-1" class="subMenue" routerLink="/CreatedPolices" routerLinkActive="activee"><i class="fa fa-user"></i> Polices Reports</div>
-                        <div class="my-1" class="subMenue" routerLink="/ClaimDetailsReport" routerLinkActive="activee"><i class="fa fa-folder-open"></i> ClaimDetailsReport
-                            </div>
+                        <!-- <div class="my-1" class="subMenue" routerLink="/ClaimDetailsReport" routerLinkActive="activee"><i class="fa fa-folder-open"></i> ClaimDetailsReport
+                            </div> -->
                         <div *ngIf="this.permissions.includes('Permissions.Reports.Offers')" class="my-1" class="subMenue" routerLink="/OfferReports" routerLinkActive="activee"><i class="fa fa-unlock"></i> Offers Reports
                             </div>
                         <div *ngIf="this.permissions.includes('Permissions.Reports.Customers')" class="my-1" class="subMenue" routerLink="/CustomersReport" routerLinkActive="activee"><i class="fa fa-microchip"></i> Customers  Report
                             </div>
-                        <div class="my-1" class="subMenue" routerLink="/"><i class="fa fa-ruler-horizontal"></i> ..</div>
+                        <!-- <div class="my-1" class="subMenue" routerLink="/"><i class="fa fa-ruler-horizontal"></i> ..</div>
                         <div class="my-1" class="subMenue" routerLink="/"><i class="fa fa-wifi"></i> ...
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
