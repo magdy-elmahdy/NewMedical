@@ -93,6 +93,10 @@ import { MedicalTreatySetupComponent } from './components/reinsurance/medical-tr
 import { ReInsuranceBrokerComponent } from './components/reinsurance/re-insurance-broker/re-insurance-broker.component';
 import { ReInsuranceCompanyComponent } from './components/reinsurance/re-insurance-company/re-insurance-company.component';
 import { MainComponent } from './components/shared/main/main.component';
+import { AddCategoryComponent } from './components/admin/add-category/add-category.component';
+import { AddBenefietComponent } from './components/admin/add-benefiet/add-benefiet.component';
+import { EdgePandComponent } from './components/admin/edge-pand/edge-pand.component';
+import { PricingComponent } from './components/admin/pricing/pricing.component';
 
 // , data:{
 //   role:['Ahmed',"Admin"],
@@ -148,6 +152,11 @@ const routes: Routes = [
   {path:'Banks',canActivate:[HasRoleGuard],data:["Permissions.Banks.View"],component:CreateBankComponent},
   {path:'url',component:UrlComponent},
   {path:'Restriks/:id',component:RestriksComponent},
+   // Pricing Tool
+   {path:'AddCategory',component:AddCategoryComponent},
+   {path:'AddBenfit',component:AddBenefietComponent},
+   {path:'EdgePand',component:EdgePandComponent},
+   {path:'Pricing',component:PricingComponent},
   
   // Policy
   {path:'ConvertToPolicy/:id',canActivate:[HasRoleGuard],data:["Permissions.Offers.ConvertOfferToPolicy"],component:ConvertToPolicyComponent},

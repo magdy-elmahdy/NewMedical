@@ -1,0 +1,62 @@
+#Add_Category{
+    min-height: 100vh;
+}
+  .modal{
+    --bs-modal-width: 80%;
+}
+.container_custom{
+  width: 85%;
+  margin: auto;
+}
+////////////
+.wrapper {
+  overflow: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(16, 74, 143, 0.25);
+}
+.jobRolesDescriptions{
+    border-radius: 0.3rem;
+    border: solid 1px rgb(172, 172, 172);
+    min-height: 3.5rem;
+    // overflow: auto;
+    color: #104A8F;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-style: hidden;
+
+  width:100%;
+  max-width: 100%;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #CCCCCC;
+  color: #000;
+
+  ;
+}
+.view{
+  // border: 1px solid #F3B900;
+  background: rgba(243, 185, 0, 0.85);  
+  // padding-right: 25px;
+  // padding-left: 25px;
+  color: white;
+  }
+  th{
+    text-decoration: underline;
+  }
+  .font_Coloered3:before{
+    content: '';
+    padding-left: 0.7rem;
+    border-left: solid 0.32rem gray;
+  }
+  label{
+    color: #2A2A2A;
+    font-family: "Nunito Sans";
+    font-size: 15px;
+    font-weight: 600;
+    }

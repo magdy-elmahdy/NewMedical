@@ -12,6 +12,20 @@
                 </h2>
                 <div id="H_2" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body pl-5">
+                         <!-- Start Pricing Tool -->
+
+                    <!-- Add Category -->
+                    <div class="my-1" routerLink="/AddCategory" routerLinkActive="activee">
+                        <i class="fa-solid fa-list"></i> Add Category</div>
+                    <!-- Add Benefit -->
+                    <div class="my-1" routerLinkActive="activee" routerLink="/AddBenfit">
+                        <i class="fa-brands fa-slack"></i>Add Benefit</div>
+                    <!-- Edge Band -->
+                    <div class="my-1" routerLinkActive="activee" routerLink="/EdgePand">
+                        <i class="fa-solid fa-people-robbery"></i> Edge Band</div>
+                    <!-- Edge Band -->
+                    <div class="my-1" routerLinkActive="activee" routerLink="/Pricing">
+                        <i class="fa-solid fa-hand-holding-dollar"></i> Pricing</div>
                         <div class="my-1" routerLinkActive="activee" routerLink="/Main"><i class="fa-solid fa-house"></i>
                             Dashboard</div>
                         <h2 *ngIf="this.permissions.includes('Permissions.Customers.View')" style="line-height: 41px;" class="accordion-header">

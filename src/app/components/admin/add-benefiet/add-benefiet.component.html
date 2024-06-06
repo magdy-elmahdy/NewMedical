@@ -1,0 +1,287 @@
+<div id="Add_Benefit">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between mx-5">
+            <div class="d-flex align-items-center">
+                <p class="font_Coloered3 text-center my-4 mx-3" style="color: grey;">Add Benefits</p>
+                <button data-bs-toggle="modal" data-bs-target="#Add" (click)="WhenModalOpen()" mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
+            </div>
+            <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;"  placeholder="{{'Shared.SearchHere'|translate}}" />
+        </div>
+        <div class="outerBorder outerItem shadow_5 table-responsive">
+          <table class="text-center table">
+            <thead class="tableHead align-middle"  style="background: #F3F2F2;height: 50px;">
+                <th class="py-2">English Name</th>
+                <th class="py-2">Arabic Name</th>
+                <th class="py-2">Max Limit</th>
+                <th >Settings</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of AllItems|search:term|paginate:{
+                    itemsPerPage:tableSize,
+                    currentPage:page,
+                    totalItems:count}; let i=index">
+                    <td class="align-middle">{{item.englishName}}</td>
+                    <td class="align-middle">{{item.arabicName}}</td>
+                    <td class="align-middle">{{item.maxLimit}}</td>
+                    <!-- <td class="align-middle">{{item.to}}</td> -->
+                    <td>
+                        <i (click)="openEditModal(item)" data-bs-toggle="modal" data-bs-target="#EditBenfit" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
+                        <i (click)="deleteBenfit(item.id)" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-end mt-4">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+            <select (change)="onTableSizeChange($event)" class="tableSize rounded-pill px-1">
+              <option *ngFor=" let size of tableSizes">{{size}}</option>
+            </select>
+        </div>
+        <div id="loading" *ngIf="loading">
+            <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+        </div>
+        </div>
+
+    </div>
+</div>
+<!--------------------------------------- Add Benefit / benefits --------------------------->
+<div class="modal fade" id="Add" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="edit">Add Benefit / Benefits</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+       <div class="container_custom">
+          <form [formGroup]="Form" class="my-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- <mat-form-field class="w-100" >
+                            <mat-label>Category</mat-label>
+                            <mat-select formControlName="categoryId">
+                                <mat-option *ngFor="let item of this.AllCates" [value]="item.id">{{item.categoryName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                        <div class="formGroup">
+                            <label>Category</label>
+                            <select class="form-select mt-2" formControlName="categoryId">
+                                <option *ngFor="let item of this.AllCates" [value]="item.id">{{item.englishName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <!-- <mat-form-field class="w-100">
+                            <mat-label><span class="text-danger mx-1">*</span>Benfit Name</mat-label>
+                            <input formControlName="benfitName" type="text" matInput>
+                        </mat-form-field> -->
+                        <div class="formGroup">
+                            <label>Benfit Name EN<span style="color: red;">*</span></label>
+                            <input class="form-control mt-2" formControlName= "englishName" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <!-- <mat-form-field class="w-75">
+                            <mat-label><span class="text-danger mx-1">*</span>Benfit Type</mat-label>
+                            <input [(ngModel)]="BenfitType" [ngModelOptions]="{standalone: true}" type="text" matInput>
+                        </mat-form-field>    -->
+                        <div class="formGroup">
+                            <label>Benfit Name AR<span style="color: red;">*</span></label>
+                            <input class="form-control mt-2" formControlName= "arabicName" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class="formGroup">
+                            <label>Max Limit<span style="color: red;">*</span></label>
+                            <input class="form-control mt-2" formControlName= "maxLimit" type="number">
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="margin-top: 28px;">
+                        <button (click)="addbenfitinarray()" [disabled]="this.Form.status == 'INVALID'" mat-raised-button color="accent" class="mt-2" style="width: 35%;margin-left: 3%;">Add</button>
+                    <!-- </div>
+                    <div class="col-md-6">
+                        <div class="wrapper" *ngIf="this.arrTest.length>0">
+                            <table  class="custom_table text-center bordered">
+                                <thead>
+                                    <th></th>
+                                    <th>Benefit Type</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of arrTest;let index = index" style="vertical-align: middle;">
+                                        <td>{{index+1}}</td>
+                                        <td>{{item.type}}</td>
+                                        <td><button color="warn" (click)="RemoveBenfit(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div> -->
+                        <!-- <div class="d-flex justify-content-end">
+                            <button (click)="AddToCateTable()" *ngIf="this.Form.status=='VALID'&&this.arrTest.length>0" mat-raised-button color="accent" class="mt-2">Add benefit</button>
+                        </div> -->
+                    </div>
+                    
+                </div>
+          </form>
+            <div class="d-flex" *ngIf="this.arrCate.length>0">
+                <!-- Table Of Categories -->
+                <div class="wrapper w-100">
+                    <table class="custom_table text-center bordered">
+                        <thead>
+                            <th></th>
+                            <th>Arabic Name</th>
+                            <th>English Name</th>
+                            <th>Max Limt</th>
+                            <th>Category</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of arrCate;let index = index" style="vertical-align: middle;">
+                                <td>{{index+1}}</td>
+                                <td>{{item.arabicName}}</td>
+                                <td>{{item.englishName}}</td>
+                                <td>{{item.maxLimit}}</td>
+                                <td>{{item.categoryId}}</td>
+                                <!-- <td>
+                                    <i (click)="ViewBenefitTypes(item)" class="fa-regular fa-eye text-success fs-5 px-3 py-2"></i>
+                                </td> -->
+                                <td><button color="warn" (click)="RemoveBenfit(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <!-- types -->
+                    <div id="benefitTypes" style="display: none;">
+                        <p *ngFor="let item of ShowBenefitTypes" class="fs-5" style="color:#104A8F;">{{item.type}}</p>
+                    </div>
+            </div>
+         
+       </div>
+       <div class="modal-footer">
+        <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+        <button (click)="AddBenfit()" *ngIf="this.arrCate.length>0" [disabled]="this.isClicked" type="button" mat-raised-button color="primary">
+          <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
+          <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------- Add Benefit / benefits --------------------------->
+<div class="modal fade" id="EditBenfit" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="edit">Edit Benefit / Benefits</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+       <div class="container_custom">
+          <form [formGroup]="EditForm" class="my-5">
+                <div class="row">
+                    <!-- <div class="col-md-12"> -->
+                        <!-- <mat-form-field class="w-100" >
+                            <mat-label>Category</mat-label>
+                            <mat-select formControlName="categoryId">
+                                <mat-option *ngFor="let item of this.AllCates" [value]="item.id">{{item.categoryName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+                        <!-- <div class="formGroup">
+                            <label>Category</label>
+                            <select class="form-select mt-2" formControlName="categoryId">
+                                <option *ngFor="let item of this.AllCates" [value]="item.id">{{item.englishName}}</option>
+                            </select>
+                        </div> -->
+                    <!-- </div> -->
+                    <div class="col-md-6 mt-2">
+                        <!-- <mat-form-field class="w-100">
+                            <mat-label><span class="text-danger mx-1">*</span>Benfit Name</mat-label>
+                            <input formControlName="benfitName" type="text" matInput>
+                        </mat-form-field> -->
+                        <div class="formGroup">
+                            <label>Benfit Name EN<span style="color: red;">*</span></label>
+                            <input class="form-control mt-2" formControlName= "englishName" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <!-- <mat-form-field class="w-75">
+                            <mat-label><span class="text-danger mx-1">*</span>Benfit Type</mat-label>
+                            <input [(ngModel)]="BenfitType" [ngModelOptions]="{standalone: true}" type="text" matInput>
+                        </mat-form-field>    -->
+                        <div class="formGroup">
+                            <label>Benfit Name AR<span style="color: red;">*</span></label>
+                            <input class="form-control mt-2" formControlName= "arabicName" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-2">
+                        <div class="formGroup">
+                            <label>Max Limit<span style="color: red;">*</span></label>
+                            <input class="form-control mt-2" formControlName= "maxLimit" type="number">
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-6" style="margin-top: 28px;"> -->
+                        <!-- <button (click)="addbenfitinarray()" [disabled]="this.Form.status == 'INVALID'" mat-raised-button color="accent" class="mt-2" style="width: 35%;margin-left: 3%;">Add</button> -->
+                    <!-- </div>
+                    <div class="col-md-6">
+                        <div class="wrapper" *ngIf="this.arrTest.length>0">
+                            <table  class="custom_table text-center bordered">
+                                <thead>
+                                    <th></th>
+                                    <th>Benefit Type</th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of arrTest;let index = index" style="vertical-align: middle;">
+                                        <td>{{index+1}}</td>
+                                        <td>{{item.type}}</td>
+                                        <td><button color="warn" (click)="RemoveBenfit(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div> -->
+                        <!-- <div class="d-flex justify-content-end">
+                            <button (click)="AddToCateTable()" *ngIf="this.Form.status=='VALID'&&this.arrTest.length>0" mat-raised-button color="accent" class="mt-2">Add benefit</button>
+                        </div> -->
+                    <!-- </div> -->
+                    
+                </div>
+          </form>
+            <!-- <div class="d-flex" *ngIf="this.arrCate.length>0">
+                <div class="wrapper w-100">
+                    <table class="custom_table text-center bordered">
+                        <thead>
+                            <th></th>
+                            <th>Arabic Name</th>
+                            <th>English Name</th>
+                            <th>Max Limt</th>
+                            <th>Category</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of arrCate;let index = index" style="vertical-align: middle;">
+                                <td>{{index+1}}</td>
+                                <td>{{item.arabicName}}</td>
+                                <td>{{item.englishName}}</td>
+                                <td>{{item.maxLimit}}</td>
+                                <td>{{item.categoryId}}</td>
+                               
+                                <td><button color="warn" (click)="RemoveBenfit(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <div id="benefitTypes" style="display: none;">
+                        <p *ngFor="let item of ShowBenefitTypes" class="fs-5" style="color:#104A8F;">{{item.type}}</p>
+                    </div>
+            </div> -->
+         
+       </div>
+       <div class="modal-footer">
+        <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+        <button (click)="saveCategoryEdit()"  [disabled]="this.isClicked || this.EditForm.status == 'INVALID'" type="button" mat-raised-button color="primary">
+          <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
+          <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>

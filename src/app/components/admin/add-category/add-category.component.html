@@ -1,0 +1,183 @@
+<div id="Add_Category">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between mx-5">
+            <div class="d-flex align-items-center">
+                <p class="font_Coloered3 text-center my-4 mx-3" style="color: grey;">Add Category</p>
+                <button data-bs-toggle="modal" data-bs-target="#Add" (click)="WhenModalOpen()" mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
+            </div>
+            <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;"  placeholder="{{'Shared.SearchHere'|translate}}" />
+        </div>
+
+        <div class="outerBorder outerItem shadow_5 table-responsive">
+          <table class="text-center table">
+            <thead class="tableHead align-middle" style="background: #F3F2F2;height: 50px;">
+                <th class="py-2">English Name </th>
+                <th class="py-2">Arabic Name</th>
+                <th >Settings</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let Bank of AllItems|search:term|paginate:{
+                    itemsPerPage:tableSize,
+                    currentPage:page,
+                    totalItems:count}; let i=index">
+                    <td class="align-middle">{{Bank.englishName}}</td>
+                    <td class="align-middle">{{Bank.arabicName}}</td>
+                    <td>
+                        <i (click)="openEditModal(Bank)" data-bs-toggle="modal" data-bs-target="#EditForm" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
+                        <i (click)="deleteCategory(Bank.id)" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-end mt-4">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+            <select (change)="onTableSizeChange($event)" class="tableSize rounded-pill px-1">
+              <option *ngFor=" let size of tableSizes">{{size}}</option>
+            </select>
+        </div>
+        <div id="loading" *ngIf="loading">
+            <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+        </div>
+        </div>
+
+    </div>
+</div>
+<!--------------------------------------- Add Category --------------------------->
+<div class="modal fade" id="Add" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="edit">Add Category </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+       <div class="container_custom">
+          <form [formGroup]="Form" class="my-5">
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- <mat-form-field class="w-75">
+                    <mat-label>Category Name EN</mat-label>
+                    <input formControlName="arabicName" type="text" matInput>
+                  </mat-form-field> -->
+                  <div class="formGroup">
+                    <label>Category Name EN<span style="color: red;">*</span></label>
+                    <input class="form-control mt-2" formControlName= "englishName" type="text">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <!-- <mat-form-field class="w-75">
+                    <mat-label>Category Name AR</mat-label>
+                    <input formControlName="englishName" type="text" matInput>
+                  </mat-form-field> -->
+                  <div class="formGroup">
+                    <label>Category Name AR<span style="color: red;">*</span></label>
+                    <input class="form-control mt-2" formControlName="arabicName" type="text">
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <button (click)="view()" [disabled]="this.Form.status=='INVALID'"  class="btn view w-25 mt-4">Add</button>
+              </div>
+
+          </form>
+          <!-- Table -->
+          <div class="wrapper mt-5" *ngIf="this.arrCate.length>0">
+            <table  class="custom_table text-center bordered">
+                <thead>
+                    <th></th>
+                    <th>English Name</th>
+                    <th>Arabic Name </th>
+                    <th ></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of arrCate;let index = index" style="vertical-align: middle;">
+                        <td>{{index+1}}</td>
+                        <td>{{item.englishName}}</td>
+                        <td>{{item.arabicName}}</td>
+                        <td><button color="warn" (click)="remove(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>
+                </tbody>
+
+            </table>
+            </div>
+       </div>
+       <div class="modal-footer">
+        <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+        <button [disabled]="this.isClicked||this.arrCate.length==0" type="button" mat-raised-button color="primary"(click)="AddCategory()">
+          <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
+          <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>
+<!-- Edit Ctegory -->
+<div class="modal fade" id="EditForm" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="edit">Edit Category </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+     <div class="container_custom">
+        <form [formGroup]="EDitForm" class="my-5">
+            <div class="row">
+              <div class="col-md-6">
+                <!-- <mat-form-field class="w-75">
+                  <mat-label>Category Name EN</mat-label>
+                  <input formControlName="arabicName" type="text" matInput>
+                </mat-form-field> -->
+                <div class="formGroup">
+                  <label>Category Name EN<span style="color: red;">*</span></label>
+                  <input class="form-control mt-2" formControlName="EnglishName" type="text">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <!-- <mat-form-field class="w-75">
+                  <mat-label>Category Name AR</mat-label>
+                  <input formControlName="englishName" type="text" matInput>
+                </mat-form-field> -->
+                <div class="formGroup">
+                  <label>Category Name AR<span style="color: red;">*</span></label>
+                  <input class="form-control mt-2" formControlName="ArabicName" type="text">
+                </div>
+              </div>
+            </div>
+            <!-- <div class="text-center">
+              <button (click)="view()" [disabled]="this.Form.status=='INVALID'"  class="btn view w-25 mt-4">Add</button>
+            </div> -->
+
+        </form>
+        <!-- Table -->
+        <!-- <div class="wrapper mt-5" *ngIf="this.arrCate.length>0">
+          <table  class="custom_table text-center bordered">
+              <thead>
+                  <th></th>
+                  <th>Arabic Name</th>
+                  <th>English Name</th>
+                  <th ></th>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of arrCate;let index = index" style="vertical-align: middle;">
+                      <td>{{index+1}}</td>
+                      <td>{{item.arabicName}}</td>
+                      <td>{{item.englishName}}</td>
+                      <td><button color="warn" (click)="remove(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                  </tr>
+              </tbody>
+
+          </table>
+          </div> -->
+     </div>
+     <div class="modal-footer">
+      <button id="EditForm" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+      <button [disabled]="this.isClicked || this.EDitForm.status=='INVALID'" type="button" mat-raised-button color="primary"(click)="saveCategoryEdit()">
+        <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
+        <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
+      </button>
+    </div>
+    </div>
+  </div>
+</div>

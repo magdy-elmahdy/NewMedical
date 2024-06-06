@@ -123,6 +123,10 @@ import { ReInsuranceBrokerComponent } from './components/reinsurance/re-insuranc
 import { ReInsuranceCompanyComponent } from './components/reinsurance/re-insurance-company/re-insurance-company.component';
 import { MedicalTreatySetupComponent } from './components/reinsurance/medical-treaty-setup/medical-treaty-setup.component';
 import { MainComponent } from './components/shared/main/main.component';
+import { AddCategoryComponent } from './components/admin/add-category/add-category.component';
+import { AddBenefietComponent } from './components/admin/add-benefiet/add-benefiet.component';
+import { EdgePandComponent } from './components/admin/edge-pand/edge-pand.component';
+import { PricingComponent } from './components/admin/pricing/pricing.component';
 export function playerFactory(){
   return player;
 }
@@ -225,6 +229,10 @@ export function playerFactory(){
     ReInsuranceCompanyComponent,
     MedicalTreatySetupComponent,
     MainComponent,
+    AddCategoryComponent,
+    AddBenefietComponent,
+    EdgePandComponent,
+    PricingComponent,
   ],
   imports: [
     DropdownModule,
