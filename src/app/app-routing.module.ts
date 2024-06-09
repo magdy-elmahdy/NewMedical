@@ -97,6 +97,7 @@ import { AddCategoryComponent } from './components/admin/add-category/add-catego
 import { AddBenefietComponent } from './components/admin/add-benefiet/add-benefiet.component';
 import { EdgePandComponent } from './components/admin/edge-pand/edge-pand.component';
 import { PricingComponent } from './components/admin/pricing/pricing.component';
+import { PlanComponent } from './components/admin/plan/plan.component';
 
 // , data:{
 //   role:['Ahmed',"Admin"],
@@ -157,6 +158,7 @@ const routes: Routes = [
    {path:'AddBenfit',component:AddBenefietComponent},
    {path:'EdgePand',component:EdgePandComponent},
    {path:'Pricing',component:PricingComponent},
+   {path:'Plan',component:PlanComponent},
   
   // Policy
   {path:'ConvertToPolicy/:id',canActivate:[HasRoleGuard],data:["Permissions.Offers.ConvertOfferToPolicy"],component:ConvertToPolicyComponent},

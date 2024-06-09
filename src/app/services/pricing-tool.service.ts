@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { ThisReceiver } from '@angular/compiler';
 
 
 
@@ -76,6 +77,30 @@ export class PricingToolService {
   DeleteAgeBand(id:any){
     return this._HttpClient.delete(this.baseUrl+'Benfit/DeleteAgeBand?id='+id)
   }
+  // Pricing
+  GetAllPricing(){
+    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllPricing',this.httpOptions)
+  }
+ AddBenfitPricing(Model:any){ 
+  return this._HttpClient.post(this.baseUrl+'Benfit/AddBenfitPricing',Model,this.httpOptions)
+ }
+ EditBenfitPricing(Model:any){
+  return this._HttpClient.put(this.baseUrl+'Benfit/UpdatePricing',Model)
+ }
+ deletpricing(id:any){
+  return this._HttpClient.delete(this.baseUrl+'Benfit/DeletePricing?id='+id)
+
+ }
+ // Plans
+ getAllPlans(){
+  return this._HttpClient.get(this.baseUrl+'Benfit/GetAllPlans',this.httpOptions)
+ }
+ AddNewPlan(Model:any){
+  return this._HttpClient.post(this.baseUrl+'Benfit/AddNewPlan',Model,this.httpOptions)
+ }
+ EditPlan(Model:any){
+  return this._HttpClient.put(this.baseUrl+'Benfit/UpdatePlan',Model)
+ }
 
 
 
@@ -88,9 +113,6 @@ export class PricingToolService {
       return this._HttpClient.get(this.baseUrl+'Benfit/GetAllBenfitTypes?benfitId='+id,this.httpOptions)
     }
     
-    //   Add Benfit Pricing
-    AddBenfitPricing(Model:any){ 
-      return this._HttpClient.post(this.baseUrl+'Benfit/AddBenfitPricing',Model,this.httpOptions)
-    }
+   
 
 }

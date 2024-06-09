@@ -1,1 +1,350 @@
-<p>pricing works!</p>
+<div id="edge-pand">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between mx-5">
+            <div class="d-flex align-items-center">
+                <p class="font_Coloered3 text-center my-4 mx-3"  style="color: grey;">Add Benfit Bricing</p>
+                <button data-bs-toggle="modal" data-bs-target="#AddPricing"  mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
+            </div>
+            <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;"  placeholder="{{'Shared.SearchHere'|translate}}" />
+        </div>
+        <div class="outerBorder outerItem shadow_5 table-responsive">
+            <div *ngIf="loading" class="d-flex justify-content-center align-items-center">
+                <app-spinner></app-spinner>
+            </div>
+        <ng-container>
+            <table class="text-center table">
+                <thead class="tableHead align-middle" style="background: #F3F2F2;height: 50px;">
+                    <th class="py-2">Category</th>
+                    <th class="py-2">Benefit</th>
+                    <th class="py-2">Edge Band</th>
+                    <th class="py-2">Premium</th>
+                    <th class="py-2">Loading</th>
+                    <th >Settings</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of AllPricingArr|search:term|paginate:{
+                        itemsPerPage:tableSize,
+                        currentPage:page,
+                        totalItems:count}; let i=index">
+                        <td class="align-middle">{{item.category.englishName}}</td>
+                        <td class="align-middle">{{item.benfits.englishName}}</td>
+                        <td class="align-middle">{{item.ageBand.from}}-{{item.ageBand.to}}</td>
+                        <td class="align-middle">{{item.premium}}</td>
+                        <td class="align-middle">{{item.loading}}</td>
+                        <td>
+                            <i (click)="openEditModal(item)" data-bs-toggle="modal" data-bs-target="#EditPricing" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
+                            <i (click)="deleteCategory(item.id)" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center align-items-center" *ngIf="AllPricingArr.length == 0">
+                <div class="alert alert-info fs-5 text-center w-50">
+                    <span>No Pricing yet</span>
+                    <!-- <app-spinner></app-spinner> -->
+                </div>
+            </div>
+        </ng-container>
+        
+
+        <!-- <div class=" alert alert-info fs-5 my-4 text-center w-50" *ngIf="AllPricingArr.length == 0 || loading">
+            <span>No Pricing yet</span>
+            <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+        </div> -->
+        <div class="d-flex justify-content-end mt-4">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+            <select (change)="onTableSizeChange($event)" class="tableSize rounded-pill px-1">
+              <option *ngFor=" let size of tableSizes">{{size}}</option>
+            </select>
+        </div>
+      
+        <div id="loading" *ngIf="loading">
+            <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+        </div>
+        </div>
+
+    </div>
+</div>
+<!--------------------------------------- Add Age / Ages --------------------------->
+<div class="modal fade" id="AddPricing" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="edit">Add Benfit Pricing</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+       <div class="container_custom py-5">
+        <form [formGroup]="Form">
+            <div class="row">
+                <!-- Category -->
+                <div class="col-md-6">
+                    <!-- <mat-form-field class="w-100" >
+                        <mat-label>Category</mat-label>
+                        <mat-select (selectionChange)="selectedCategory()" formControlName="categoryId">
+                            <mat-option *ngFor="let item of this.AllCates" [value]="item.id">{{item.categoryName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <div class="formGroup">
+                        <label>Category<span style="color: red;">*</span></label>
+                        <select class="form-select mt-2" formControlName="categoryId">
+                            <option *ngFor="let item of this.AllCates" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                        </select>
+                    </div>
+                </div>
+                  <!-- Benefit -->
+                  <div class="col-md-6">
+                    <!-- <mat-form-field class="w-100" >
+                        <mat-label>Benefit</mat-label>
+                        <mat-select (selectionChange)="selectedBenefit()" formControlName="benfitsId">
+                            <mat-option *ngFor="let item of this.AllBenefits" [value]="item.id">{{item.benfitName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <div class="formGroup">
+                        <label>Benefit<span style="color: red;">*</span></label>
+                        <select class="form-select mt-2" formControlName="benfitsId">
+                            <option *ngFor="let item of this.AllBenefits" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Age Band -->
+                <div class="col-md-6">
+                    <!-- <mat-form-field class="w-100" >
+                        <mat-label>Age Band</mat-label>
+                        <mat-select formControlName="ageBandId">
+                            <mat-option *ngFor="let item of this.AllAgeBand" [value]="item.id">{{item.from}} - {{item.to}}</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <div class="formGroup">
+                        <label>Age Band<span style="color: red;">*</span></label>
+                        <select class="form-select mt-2" formControlName="ageBandId">
+                            <option *ngFor="let item of this.AllAgeBand" [value]="item.id">{{item.from}} - {{item.to}}</option>
+                        </select>
+                    </div>
+                </div>
+                   <!-- premium -->
+                <div class="col-md-6">
+                    <!-- <mat-form-field class="w-100">
+                        <mat-label><span class="text-danger mx-1">*</span>Premium</mat-label>
+                        <input class="form-control" formControlName="premium" type="number">
+                    </mat-form-field> -->
+                    <div class="formGroup">
+                        <label>Premium<span style="color: red;">*</span></label>
+                        <input class="form-control mt-2" formControlName="premium" type="number">
+                    </div>
+                </div>
+                 <!-- loading -->
+                 <div class="col-md-6">
+                    <!-- <mat-form-field class="w-100">
+                        <mat-label><span class="text-danger mx-1">*</span>Loading</mat-label>
+                        <input formControlName="loading" type="number" matInput>
+                    </mat-form-field> -->
+                    <div class="formGroup">
+                        <label>Loading<span style="color: red;">*</span></label>
+                        <input class="form-control mt-2" formControlName="loading" type="number" >
+
+                    </div>
+                </div>
+              
+                <!-- Benefit Type -->
+                <!-- <div class="col-md-3">
+                    <mat-form-field class="w-100" >
+                        <mat-label>Benefit Type</mat-label>
+                        <mat-select formControlName="benfitTypeId">
+                            <mat-option *ngFor="let item of this.AllBenefitTypes" [value]="item.id">{{item.type}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+             
+               
+                <!-- sum Insured -->
+                <!-- <div class="col-md-3">
+                    <mat-form-field class="w-100">
+                        <mat-label><span class="text-danger mx-1">*</span>Sum Insured</mat-label>
+                        <input formControlName="sumInsured" type="number" matInput>
+                    </mat-form-field>
+                </div> -->
+                <!-- Add -->
+                <div class="col-md-4 d-flex align-items-center" style="padding-top: 28px;">
+                    <button (click)="view()" [disabled]="this.Form.status=='INVALID'" mat-raised-button color="accent" class="w-50">Add</button>
+                </div>
+            </div>
+        </form>
+         <!-- Table -->
+         <div class="wrapper mt-5" *ngIf="this.arrTest.length>0">
+            <table  class="custom_table text-center bordered">
+                <thead>
+                    <th></th>
+                    <th>category</th>
+                    <th>ageBandId</th>
+                    <th>benfitsId</th>
+                    <th>Loading</th>
+                    <th>Premium</th>
+                    <th ></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of arrTest;let index = index" style="vertical-align: middle;">
+                        <td>{{index+1}}</td>
+                        <td>{{item.categoryId}}</td>
+                        <td>{{item.ageBandId}}</td>
+                        <td>{{item.benfitsId}}</td>
+                        <td>{{item.loading}}</td>
+                        <td>{{item.premium}}</td>
+                        <td><button color="warn" (click)="remove(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+       </div>
+       <div class="modal-footer">
+        <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+        <button (click)="AddBenfitPricing()" *ngIf="this.arrTest.length>0" class="mt-2 w-25" [disabled]="this.isClicked" type="button" mat-raised-button color="primary">
+            <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
+            <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------- Edit Age / Ages --------------------------->
+<div class="modal fade" id="EditPricing" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="edit">Edit Benfit Pricing</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+       <div class="container_custom py-5">
+        <form [formGroup]="Form">
+            <div class="row">
+                <!-- Category -->
+                <div class="col-md-6">
+                    <!-- <mat-form-field class="w-100" >
+                        <mat-label>Category</mat-label>
+                        <mat-select (selectionChange)="selectedCategory()" formControlName="categoryId">
+                            <mat-option *ngFor="let item of this.AllCates" [value]="item.id">{{item.categoryName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <div class="formGroup">
+                        <label>Category<span style="color: red;">*</span></label>
+                        <select class="form-select mt-2" formControlName="categoryId">
+                            <option *ngFor="let item of this.AllCates" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                        </select>
+                    </div>
+                </div>
+                  <!-- Benefit -->
+                  <div class="col-md-6">
+                    <!-- <mat-form-field class="w-100" >
+                        <mat-label>Benefit</mat-label>
+                        <mat-select (selectionChange)="selectedBenefit()" formControlName="benfitsId">
+                            <mat-option *ngFor="let item of this.AllBenefits" [value]="item.id">{{item.benfitName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <div class="formGroup">
+                        <label>Benefit<span style="color: red;">*</span></label>
+                        <select class="form-select mt-2" formControlName="benfitsId">
+                            <option *ngFor="let item of this.AllBenefits" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Age Band -->
+                <div class="col-md-6">
+                    <!-- <mat-form-field class="w-100" >
+                        <mat-label>Age Band</mat-label>
+                        <mat-select formControlName="ageBandId">
+                            <mat-option *ngFor="let item of this.AllAgeBand" [value]="item.id">{{item.from}} - {{item.to}}</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+                    <div class="formGroup">
+                        <label>Age Band<span style="color: red;">*</span></label>
+                        <select class="form-select mt-2" formControlName="ageBandId">
+                            <option *ngFor="let item of this.AllAgeBand" [value]="item.id">{{item.from}} - {{item.to}}</option>
+                        </select>
+                    </div>
+                </div>
+                   <!-- premium -->
+                <div class="col-md-6">
+                    <!-- <mat-form-field class="w-100">
+                        <mat-label><span class="text-danger mx-1">*</span>Premium</mat-label>
+                        <input class="form-control" formControlName="premium" type="number">
+                    </mat-form-field> -->
+                    <div class="formGroup">
+                        <label>Premium<span style="color: red;">*</span></label>
+                        <input class="form-control mt-2" formControlName="premium" type="number">
+                    </div>
+                </div>
+                 <!-- loading -->
+                 <div class="col-md-6">
+                    <!-- <mat-form-field class="w-100">
+                        <mat-label><span class="text-danger mx-1">*</span>Loading</mat-label>
+                        <input formControlName="loading" type="number" matInput>
+                    </mat-form-field> -->
+                    <div class="formGroup">
+                        <label>Loading<span style="color: red;">*</span></label>
+                        <input class="form-control mt-2" formControlName="loading" type="number" >
+
+                    </div>
+                </div>
+              
+                <!-- Benefit Type -->
+                <!-- <div class="col-md-3">
+                    <mat-form-field class="w-100" >
+                        <mat-label>Benefit Type</mat-label>
+                        <mat-select formControlName="benfitTypeId">
+                            <mat-option *ngFor="let item of this.AllBenefitTypes" [value]="item.id">{{item.type}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+             
+               
+                <!-- sum Insured -->
+                <!-- <div class="col-md-3">
+                    <mat-form-field class="w-100">
+                        <mat-label><span class="text-danger mx-1">*</span>Sum Insured</mat-label>
+                        <input formControlName="sumInsured" type="number" matInput>
+                    </mat-form-field>
+                </div> -->
+                <!-- Add -->
+                <!-- <div class="col-md-4 d-flex align-items-center" style="padding-top: 28px;">
+                    <button (click)="view()" [disabled]="this.Form.status=='INVALID'" mat-raised-button color="accent" class="w-50">Add</button>
+                </div> -->
+            </div>
+        </form>
+         <!-- Table -->
+         <!-- <div class="wrapper mt-5" *ngIf="this.arrTest.length>0">
+            <table  class="custom_table text-center bordered">
+                <thead>
+                    <th></th>
+                    <th>category</th>
+                    <th>ageBandId</th>
+                    <th>benfitsId</th>
+                    <th>Loading</th>
+                    <th>Premium</th>
+                    <th ></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of arrTest;let index = index" style="vertical-align: middle;">
+                        <td>{{index+1}}</td>
+                        <td>{{item?.categoryId}}</td>
+                        <td>{{item.ageBandId}}</td>
+                        <td>{{item.benfitsId}}</td>
+                        <td>{{item.loading}}</td>
+                        <td>{{item.premium}}</td>
+                        <td><button color="warn" (click)="remove(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> -->
+       </div>
+       <div class="modal-footer">
+        <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+        <button (click)="AddBenfitPricing()" class="mt-3 w-25" [disabled]="this.Form.status=='INVALID' || this.isClicked" type="button" mat-raised-button color="primary">
+            <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
+            <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>

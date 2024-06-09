@@ -127,6 +127,7 @@ import { AddCategoryComponent } from './components/admin/add-category/add-catego
 import { AddBenefietComponent } from './components/admin/add-benefiet/add-benefiet.component';
 import { EdgePandComponent } from './components/admin/edge-pand/edge-pand.component';
 import { PricingComponent } from './components/admin/pricing/pricing.component';
+import { PlanComponent } from './components/admin/plan/plan.component';
 export function playerFactory(){
   return player;
 }
@@ -233,6 +234,7 @@ export function playerFactory(){
     AddBenefietComponent,
     EdgePandComponent,
     PricingComponent,
+    PlanComponent,
   ],
   imports: [
     DropdownModule,

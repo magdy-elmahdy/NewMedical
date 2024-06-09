@@ -1,0 +1,179 @@
+<div id="edge-pand">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between mx-5">
+            <div class="d-flex align-items-center">
+                <p class="font_Coloered3 text-center my-4 mx-3"  style="color: grey;">Add Plan</p>
+                <button data-bs-toggle="modal" data-bs-target="#AddPlan"  mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
+            </div>
+            <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;"  placeholder="{{'Shared.SearchHere'|translate}}" />
+        </div>
+        <div class="outerBorder outerItem shadow_5 table-responsive">
+            <div *ngIf="loading" class="d-flex justify-content-center align-items-center">
+                <app-spinner></app-spinner>
+            </div>
+        <ng-container>
+            <table class="text-center table">
+                <thead class="tableHead align-middle" style="background: #F3F2F2;height: 50px;">
+                    <th>plan Name</th>
+                    <th>Annual Max Limit</th>
+                    <th>Coverae Regions</th>
+                  
+                    <th >Settings</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of AllPlansArr|search:term|paginate:{
+                        itemsPerPage:tableSize,
+                        currentPage:page,
+                        totalItems:count}; let i=index">
+                        <td class="align-middle">{{item.planName}}</td>
+                        <td class="align-middle">{{item.annualMaxLimit}}</td>
+                        <td class="align-middle">
+                            <table class="text-center table">
+                                <thead class="tableHead align-middle" style="background: #F3F2F2;height: 50px;">
+                                    <th>covergeRegion</th>
+                                    <th>coverageType</th>
+                                    <th>note</th>
+                                    <th>partialPercantage</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let region of item.coverageRegions">
+                                        <td>{{region.covergeRegion}}</td>
+                                        <td>{{ region.coverageType }}</td>
+                                        <td>{{ region.note }}</td>
+                                        <td>{{ region.partialPercantage }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <ng-container *ngFor="let region of item.coverageRegions">
+                                {{ region.covergeRegion }} - {{ region.coverageType }} - {{ region.note }} - {{ region.partialPercantage }}
+                            </ng-container> -->
+                        </td>
+                        
+                        <td class="align-middle">
+                            <i data-bs-toggle="modal" data-bs-target="#EddPlan" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
+                            <i class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center align-items-center" *ngIf="AllPlansArr?.length == 0">
+                <div class="alert alert-info fs-5 text-center w-50">
+                    <span>No Pricing yet</span>
+                    <!-- <app-spinner></app-spinner> -->
+                </div>
+            </div>
+        </ng-container>
+        <div class="d-flex justify-content-end mt-4">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+            <select (change)="onTableSizeChange($event)" class="tableSize rounded-pill px-1">
+              <option *ngFor=" let size of tableSizes">{{size}}</option>
+            </select>
+        </div>
+      
+        <div id="loading" *ngIf="loading">
+            <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
+        </div>
+        </div>
+
+    </div>
+</div>
+<!-- Add Plan -->
+<div class="modal fade" id="AddPlan" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="edit">Add Plan</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+       <div class="container_custom py-5">
+        <form [formGroup]="Form">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="formGroup">
+                    <label>Plan Name<span style="color: red;">*</span></label>
+                    <input class="form-control mt-2" formControlName="planName">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="formGroup">
+                    <label>Annual Max Limit<span style="color: red;">*</span></label>
+                    <input class="form-control mt-2" formControlName="annualMaxLimit" type="number">
+                </div>
+              </div>
+            </div>
+            <form [formGroup]="NewForm" class="mt-5">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="formGroup">
+                            <label>coverge Region<span style="color: red;">*</span></label>
+                            <select class="form-select mt-2" formControlName="covergeRegion">
+                                <option *ngFor="let region of this.AllcovergeRegion" [value]="region.name">{{region.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="formGroup">
+                            <label>coverge Type<span style="color: red;">*</span></label>
+                            <select class="form-select mt-2" formControlName="coverageType">
+                                <option *ngFor="let type of this.AllcovergeType" [value]="type.name">{{type.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="formGroup">
+                            <label>Note</label>
+                            <input class="form-control mt-1" formControlName="note" type="text">
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 mt-2">
+                        <div class="formGroup">
+                            <label>partial Percantage<span style="color: red;">*</span></label>
+                            <input class="form-control mt-1" type="number" formControlName="partialPercantage">
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center" style="padding-top: 28px;">
+                        <button (click)="view()" [disabled]="this.NewForm.status=='INVALID'" mat-raised-button color="accent" class="w-50">Add</button>
+                    </div>
+                </div>
+            </form>
+               <!-- Table -->
+        <div class="wrapper mt-5" *ngIf="this.arrTest.length>0">
+            <table  class="custom_table text-center bordered">
+                <thead>
+                    <th></th>
+                    <th>covergeRegion</th>
+                    <th>coverageType</th>
+                    <th>note</th>
+                    <th>partialPercantage</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of arrTest;let index = index" style="vertical-align: middle;">
+                        <td>{{index+1}}</td>
+                        <td>{{item.covergeRegion}}</td>
+                        <td>{{item.coverageType}}</td>
+                        <td>{{item.note}}</td>
+                        <td>{{item.partialPercantage}}</td>
+                        <td><button color="warn" (click)="remove(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center mt-2" style="padding-top: 28px;">
+            <button (click)="viewArr()" [disabled]="this.Form.status=='INVALID' || this.arrTest.length == 0" mat-raised-button color="accent" class="w-50">Add</button>
+        </div>
+        </form>
+       </div>
+       <div class="modal-footer">
+        <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+        <button (click)="AddPlan()" class="mt-2 w-25" [disabled]="this.isClicked" type="button" mat-raised-button color="primary">
+            <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
+            <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
+        </button>
+      </div>
+      </div>
+    </div>
+  </div>
