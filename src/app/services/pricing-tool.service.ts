@@ -28,6 +28,22 @@ export class PricingToolService {
       this.baseUrl = 'https://'+localStorage.getItem('url')
     }
   }
+   // All Network
+   AddNetwork(Model:any){ 
+    return this._HttpClient.post(this.baseUrl+'Benfit/AddNewNetwork',Model,this.httpOptions)
+  }
+  GetAllNetwork(){
+    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllNetworks',this.httpOptions)
+  }
+  GetNetworkById(id:any){
+    return this._HttpClient.get(this.baseUrl+'Benfit/GetNetworkById?id='+id,this.httpOptions)
+  }
+  EditNetwork(Body:any){
+    return this._HttpClient.put(this.baseUrl+'Benfit/UpdateNetwork',Body)
+  }
+  DeleteNetwork(id:any){
+    return this._HttpClient.delete(this.baseUrl+'Benfit/DeleteNetwork?id='+id)
+  }
    // All  Category
    AddCategory(Model:any){ 
     return this._HttpClient.post(this.baseUrl+'Benfit/AddCategory',Model,this.httpOptions)

@@ -33,13 +33,14 @@ export class PlanComponent implements OnInit {
   AllCates:any[]=[]
   AllBenefitss:any[]=[]
   planCategories:any[]=[]
+  AllNetworkArr:any[]=[]
   isTableVisible = false;
   isthisTableVisible = true;
   constructor(private _PricingToolService:PricingToolService){}
   Form:FormGroup =new FormGroup({
-    // 'id':new FormControl(''),
     'planName':new FormControl('',[Validators.required]),
     'annualMaxLimit':new FormControl('',[Validators.required]),
+    'planNetworkId':new FormControl('',[Validators.required]),
 });
   NewForm:FormGroup = new FormGroup({
     'covergeRegion':new FormControl('',[Validators.required]),
@@ -81,6 +82,9 @@ export class PlanComponent implements OnInit {
     this.NewForm.reset()
     this.arrTest=[]
     this.MainArr=[]
+    this.categoryBenfitArr=[]
+    this.ShowProducts=[]
+
   }
   view(){
 
@@ -170,6 +174,9 @@ AddNewCategory() {
   };
   console.log(Model);
   this.planCategories.push(Model);
+  this.categoryBenfitArr=[]
+  this.CategoryForm.reset()
+  this.benfitsForm.reset()
 }
 RemoveFromCategoriesTable(index:number){
   this.planCategories.splice(index, 1)
@@ -177,17 +184,14 @@ RemoveFromCategoriesTable(index:number){
 ViewCoverageRegions(item:any){
   console.log(item);
   this.ShowProducts =item.benfitdata
-
-  // this.isTableVisible = true; 
-  console.log( this.ShowProducts);
-  
+  console.log(this.ShowProducts);
 }
 
 
   AddPlan(){
     this.isClicked =true
     let Model = Object.assign(this.Form.value,{coverageRegions:this.arrTest},{planCategories:this.planCategories})
-
+    // ,{planNetworkId:Number(this.Form.get('planNetworkId')?.value)}
     console.log(Model);
     this.MainArr.push(Model)
     this._PricingToolService.AddNewPlan(this.MainArr).subscribe((res:any)=>{
@@ -207,6 +211,8 @@ ViewCoverageRegions(item:any){
   editMode = false;
   currentPlanIndex: number | null = null;
   openEditModal(plan: any) {
+    console.log(plan);
+    
     this.editMode = true;
     this.currentPlanIndex = this.AllPlansArr.indexOf(plan);
     
@@ -243,6 +249,9 @@ ViewCoverageRegions(item:any){
       annualMaxLimit: plan.annualMaxLimit,
       coverageRegions: plan.coverageRegions
     }];
+    this.categoryBenfitArr=[{
+
+    }]
     // this.isTableVisible = true
   }
   
@@ -273,6 +282,7 @@ ViewCoverageRegions(item:any){
   //Delete
   PlanId:any
   deletePlan(id:any){
+   console.log(id);
    
     this.PlanId = id;
 
@@ -348,10 +358,17 @@ showCategoryForm: boolean = false;
 toggleCategoryForm() {
   this.showCategoryForm = !this.showCategoryForm;
 }
+getAllNetwork(){
+  this._PricingToolService.GetAllNetwork().subscribe((data:any)=>{
+    console.log(data);
+    this.AllNetworkArr = data
+  })
+}
   ngOnInit(): void {
     this.getAllPlans();
     this.GetAllCategories();
     this.getAllBenfits()
+    this.getAllNetwork()
   }
 
 }

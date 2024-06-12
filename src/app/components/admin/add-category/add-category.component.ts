@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { arabicTextValidator } from 'src/app/services/arabic-text.validator';
 import { PricingToolService } from 'src/app/services/pricing-tool.service';
 import Swal from 'sweetalert2';
 declare var $:any; 
+
 
 @Component({
   selector: 'app-add-category',
@@ -15,13 +17,13 @@ export class AddCategoryComponent implements OnInit {
   count:number=0;
   tableSize:number=5;
   tableSizes=[5,8,10,15,20];
+  term:any;
 
   loading:boolean=false;
   isClicked:boolean =false;
   arrCate:any[]=[]
   arrTest:any[]=[];
   AllItems:any;
-  term:any;
   categoryid:any
   categoryBenfitArr:any[]=[]
 
@@ -29,13 +31,16 @@ export class AddCategoryComponent implements OnInit {
   
   Form:FormGroup =new FormGroup({
     'id': new FormControl(null),
-    'arabicName':new FormControl('',[Validators.required]),
+    'arabicName':new FormControl('',[Validators.required,arabicTextValidator()]),
     'englishName':new FormControl('',[Validators.required]),
 });
   
 EDitForm:FormGroup =new FormGroup({
     'benfitId':new FormControl('',[Validators.required]),
 });
+get arabicText() {
+  return this.Form.get('arabicName');
+}
 
 
   WhenModalOpen(){
@@ -76,7 +81,9 @@ EDitForm:FormGroup =new FormGroup({
       this.arrCate =[];
     })
   }
-
+  remove(index:number){
+    this.arrCate.splice(index, 1)
+  }
              //Pagination Methods
   onTableDataChange(event:any){
     this.page=event;
@@ -88,9 +95,7 @@ EDitForm:FormGroup =new FormGroup({
     this.getAllItems();
   }
   
-  remove(index:number){
-    this.arrCate.splice(index, 1)
-  }
+
  
   editaddArr:any[]=[]
   benefitIdCounter: number = 1;
@@ -161,8 +166,7 @@ EDitForm:FormGroup =new FormGroup({
   saveCategoryEdit(){
     this.isClicked = true
     if (this.CurrentActivity) {
-      // let Model =Object.assign(this.Form.value,{benfitId:this.categoryBenfitArr})
-      let Model = Object.assign(Number(this.Form.value), { benfitId: this.categoryBenfitArr.map(benefit => benefit.id) });
+      let Model = Object.assign(this.Form.value, { benfitId: this.categoryBenfitArr.map(benefit => benefit.id) });
       console.log(Model);    
       this._PricingToolService.EditCategory(Model).subscribe((res) => {
         this.isClicked = false

@@ -1,0 +1,64 @@
+.font_Coloered3:before{
+    content: '';
+    padding-left: 0.7rem;
+    border-left: solid 0.32rem gray;
+  }
+  table {
+    width: 95%;
+    margin: auto;
+    border-collapse: collapse;
+}
+table {
+    border: 3px solid black;
+}
+th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+thead{
+    background-color:#345f92 !important;
+}
+th{
+    width: 60%;
+    color:dimgray;
+}
+td{
+    background-color:#95b3d7;
+    color:indigo;
+    border: 3px solid black;
+
+}
+@media print {
+    .Prentable{
+        visibility:visible;
+    }
+    .Non-prentable{
+        display: none;
+    }
+}
+// @media print {
+//     .print th, .print td {
+//         color: black !important;
+//         background-color: white !important;
+//         border: 1px solid black !important;
+//     }
+//     .print th[colspan] {
+//         text-align: center;
+//     }
+// }
+// @media print {
+//     table, th, td {
+//         border: 1px solid black !important;
+//     }
+//     th {
+//         background-color: #345f92 !important;
+//         color: white !important;
+//     }
+//     td {
+//         background-color: white !important;
+//         color: black !important;
+//     }
+// }
