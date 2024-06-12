@@ -48,6 +48,14 @@ export class PricingToolService {
    AddCategory(Model:any){ 
     return this._HttpClient.post(this.baseUrl+'Benfit/AddCategory',Model,this.httpOptions)
   }
+  AddBenfitToCategory(BenfitId:any,CategoryId:any){
+    const Model={
+      benfitId:BenfitId,
+      categoryId:CategoryId
+    }
+    return this._HttpClient.post(this.baseUrl+'Benfit/AddBenfitToCategory',Model,this.httpOptions)
+
+  }
   GetAllCategories(){
     return this._HttpClient.get(this.baseUrl+'Benfit/GetAllCategories',this.httpOptions)
   }

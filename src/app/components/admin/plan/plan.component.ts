@@ -42,6 +42,12 @@ export class PlanComponent implements OnInit {
     'annualMaxLimit':new FormControl('',[Validators.required]),
     'planNetworkId':new FormControl('',[Validators.required]),
 });
+editForm:FormGroup =new FormGroup({
+  'id':new FormControl(''),
+  'planName':new FormControl('',[Validators.required]),
+  'annualMaxLimit':new FormControl('',[Validators.required]),
+  'planNetworkId':new FormControl('',[Validators.required]),
+});
   NewForm:FormGroup = new FormGroup({
     'covergeRegion':new FormControl('',[Validators.required]),
     'coverageType':new FormControl('',[Validators.required]),
@@ -137,8 +143,13 @@ selecteCategory(){
 removeBenfit(index:number){
   this.categoryBenfitArr.splice(index, 1)
 }
+
 AddNewBenfit(){
+  const selectedCategoryId = this.CategoryForm.get('categoryId')?.value;
   let benefitId = this.benfitsForm.value.benfitsIds;
+  this._PricingToolService.AddBenfitToCategory(selectedCategoryId,benefitId).subscribe((data:any)=>{
+    console.log(data);
+  })
   console.log(benefitId);
   let selectedBenefit = this.AllBenefitss.find((benfit:any) => benfit.id == benefitId);
   console.log(selectedBenefit);
@@ -210,16 +221,18 @@ ViewCoverageRegions(item:any){
   }
   editMode = false;
   currentPlanIndex: number | null = null;
+  networkitem:any
   openEditModal(plan: any) {
     console.log(plan);
     
     this.editMode = true;
     this.currentPlanIndex = this.AllPlansArr.indexOf(plan);
-    
-    this.Form.patchValue({
-      id:plan.id,
+    this.networkitem = this.AllNetworkArr.find(item=>item.id==plan.planId)
+    this.editForm.patchValue({
+      id:plan.planId,
       planName: plan.planName,
-      annualMaxLimit: plan.annualMaxLimit
+      annualMaxLimit: plan.annualMaxLimit,
+      planNetworkId: this.networkitem.name
     });
     
     // Clear arrTest before adding new values
@@ -249,10 +262,30 @@ ViewCoverageRegions(item:any){
       annualMaxLimit: plan.annualMaxLimit,
       coverageRegions: plan.coverageRegions
     }];
-    this.categoryBenfitArr=[{
+     // Set values for CategoryForm and benfitsForm
+  if (plan.categoryId) {
+    this.CategoryForm.patchValue({
+      categoryId: plan.categoryId
+    });
+  }
+  if (plan.benfitsIds) {
+    this.benfitsForm.patchValue({
+      benfitsIds: plan.benfitsIds
+    });
+  }
 
-    }]
-    // this.isTableVisible = true
+  // this.MainArr = [{
+  //   planName: plan.planName,
+  //   annualMaxLimit: plan.annualMaxLimit,
+  //   coverageRegions: plan.coverageRegions
+  // }];
+
+  // Set values for category benefits array if any
+  this.categoryBenfitArr = plan.categoryBenfitArr || [];
+
+  this.planCategories = plan.planCategories || [];
+  this.ShowProducts = plan.ShowProducts || [];
+  
   }
   
   EditPlan() {
@@ -261,6 +294,7 @@ ViewCoverageRegions(item:any){
       id: this.Form.get('id')?.value,
       planName: this.Form.get('planName')?.value,
       annualMaxLimit: this.Form.get('annualMaxLimit')?.value,
+      planNetworkId: this.Form.get('planNetworkId')?.value,
       coverageRegions: this.arrTest
     };
     console.log(updatedPlan);
