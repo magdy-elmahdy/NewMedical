@@ -22,18 +22,19 @@ export class AddCategoryComponent implements OnInit {
   arrTest:any[]=[];
   AllItems:any;
   term:any;
+  categoryid:any
+  categoryBenfitArr:any[]=[]
 
   constructor(private _PricingToolService:PricingToolService, private _ToastrService:ToastrService){}
   
   Form:FormGroup =new FormGroup({
+    'id': new FormControl(null),
     'arabicName':new FormControl('',[Validators.required]),
     'englishName':new FormControl('',[Validators.required]),
 });
   
 EDitForm:FormGroup =new FormGroup({
-  'id': new FormControl(null),
-  'ArabicName':new FormControl('',[Validators.required]),
-  'EnglishName':new FormControl('',[Validators.required]),
+    'benfitId':new FormControl('',[Validators.required]),
 });
 
 
@@ -90,26 +91,80 @@ EDitForm:FormGroup =new FormGroup({
   remove(index:number){
     this.arrCate.splice(index, 1)
   }
+ 
+  editaddArr:any[]=[]
+  benefitIdCounter: number = 1;
+
+  editAdd() {
+    // Clone the form value to avoid direct mutation
+    let Model = Object.assign({}, this.EDitForm.value);
+  
+    // Assign a unique ID to the new benefit
+    const newBenefit = {
+      ...Model,
+      id: this.benefitIdCounter++
+    };
+  
+    console.log(newBenefit);
+  
+    // Push the new benefit to the editaddArr
+    this.editaddArr.push(newBenefit);
+    console.log(this.editaddArr);
+  
+    // Optionally, reset the form and the editaddArr after adding
+    // this.editaddArr = [];
+    // this.EDitForm.reset();
+  }
+  getCategoryBenfit() {
+    if (this.CurrentActivity && this.CurrentActivity.id) {
+      this._PricingToolService.GetAllCategoriesBenfits(this.CurrentActivity.id).subscribe((data: any) => {
+        // console.log(data);
+        this.categoryBenfitArr = data;
+      });
+    }
+  }
+  removeBenfit(index:number){
+    this.categoryBenfitArr.splice(index,1)
+  }
+  AllBenfitsArr:any
+  getAllBenfits(){
+    this._PricingToolService.GetAllBenfits().subscribe((data:any)=>{
+      // console.log(data);
+      this.AllBenfitsArr = data
+      // console.log(this.AllBenfitsArr);
+      
+    })
+  }
   // Edite Category
   CurrentActivity:any
   openEditModal(Category:any){
     console.log(Category);
     this.CurrentActivity=Category
-    this.EDitForm.setValue({id: Category.id,ArabicName:Category.arabicName,EnglishName:Category.englishName})
+    this.Form.setValue({id: Category.id,arabicName:Category.arabicName,englishName:Category.englishName})
+    // this.EDitForm.setValue({id:Category.benfits.id,arabicName:Category.benfits.arabicName,englishName:Category.benfits.englishName,maxLimit:Category.benfits.maxLimit,})
+    
+    this.editaddArr = Category.benefits
+    this.getCategoryBenfit()
+
   }
   formData:any = new FormData();
+  AddBenfit(){
+    let benefitId = this.EDitForm.value.benfitId;
+    console.log(benefitId);
+    let selectedBenefit = this.AllBenfitsArr.find((benfit:any) => benfit.id == benefitId);
+    console.log(selectedBenefit);
+    if (selectedBenefit) {
+      this.categoryBenfitArr.push(selectedBenefit);
+    }
+  }
 
   saveCategoryEdit(){
     this.isClicked = true
     if (this.CurrentActivity) {
-      // const updatedCategory = { ...this.CurrentActivity, ...this.EDitForm.value };
-      this.formData.append('id', this.EDitForm.get('id')?.value);
-      this.formData.append('ArabicName', this.EDitForm.get('ArabicName')?.value);
-      this.formData.append('EnglishName', this.EDitForm.get('EnglishName')?.value);
-      for (var pair of this.formData.entries()){
-        console.log(pair[0]+ ', ' + pair[1]);
-      }      
-      this._PricingToolService.EditCategory(this.formData).subscribe((res) => {
+      // let Model =Object.assign(this.Form.value,{benfitId:this.categoryBenfitArr})
+      let Model = Object.assign(Number(this.Form.value), { benfitId: this.categoryBenfitArr.map(benefit => benefit.id) });
+      console.log(Model);    
+      this._PricingToolService.EditCategory(Model).subscribe((res) => {
         this.isClicked = false
         console.log(res);
         $('#EditForm').modal('toggle'); 
@@ -185,7 +240,11 @@ EDitForm:FormGroup =new FormGroup({
       this.loading=false;
     })
   }
+ 
+
   ngOnInit(){
+    // this.getCategoryBenfit()
     this.getAllItems()
+    this.getAllBenfits()
   }
 }

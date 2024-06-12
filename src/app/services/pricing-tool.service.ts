@@ -35,11 +35,17 @@ export class PricingToolService {
   GetAllCategories(){
     return this._HttpClient.get(this.baseUrl+'Benfit/GetAllCategories',this.httpOptions)
   }
+  GetAllCategoriesBenfits(id:any){
+    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllCategoryBenfits?categoryid='+id,this.httpOptions)
+  }
   GetCategoryById(id:any){
     return this._HttpClient.get(this.baseUrl+'Benfit/GetCategoryById?id='+id,this.httpOptions)
   }
+  // EditCategory(Body:any){
+  //   return this._HttpClient.put(this.baseUrl+'Benfit/EditCategory',Body)
+  // }
   EditCategory(Body:any){
-    return this._HttpClient.put(this.baseUrl+'Benfit/EditCategory',Body)
+    return this._HttpClient.put(this.baseUrl+'Benfit/EditCategoryWithBenfit',Body)
   }
   DeleteCategory(id:any){
     return this._HttpClient.delete(this.baseUrl+'Benfit/DeleteCategory?id='+id)
@@ -100,6 +106,10 @@ export class PricingToolService {
  }
  EditPlan(Model:any){
   return this._HttpClient.put(this.baseUrl+'Benfit/UpdatePlan',Model)
+ }
+ deletplan(id:any){
+  return this._HttpClient.delete(this.baseUrl+'Benfit/DeletePlan?id='+id)
+
  }
 
 
