@@ -246,7 +246,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <th colspan="4">Add To Main Table?</th>
+                      <th colspan="4">Add To Category table?</th>
                       <th>
                         <button (click)="AddNewCategory()" mat-raised-button color="accent" class="w-25">Add</button>
                       </th>
@@ -529,7 +529,7 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <th colspan="4">Add To Main Table?</th>
+                      <th colspan="4">Add To Category table?</th>
                       <th>
                         <button (click)="AddNewCategory()" mat-raised-button color="accent" class="w-25">Add</button>
                       </th>
@@ -553,7 +553,7 @@
                         <tr *ngFor="let item of planCategories; let index = index" style="vertical-align: middle;">
                           <td>{{index + 1}}</td>
                           <td>{{item.categoryNameEnglish}}</td>
-                          <td class="icon-cell d-flex align-items-center justify-content-center"><i (click)="ViewCoverageRegions(item)" class="fa-solid fa-eye fs-5 text-success py-2"></i></td>
+                          <td class="icon-cell d-flex align-items-center justify-content-center"><i (click)="ViewCoverageRegion(item)" class="fa-solid fa-eye fs-5 text-success py-2"></i></td>
                           <td>
                             <button color="warn" (click)="RemoveFromCategoriesTable(index)" mat-raised-button>
                               <i class="fa-solid fa-trash"></i>
@@ -598,7 +598,7 @@
         </div>
        <div class="modal-footer">
         <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
-        <button (click)="EditPlan()" class="mt-2 w-25" [disabled]="this.isClicked || this.Form.status =='INVALID' || this.MainArr.length==0" type="button" mat-raised-button color="primary">
+        <button (click)="EditPlan()" class="mt-2 w-25" [disabled]="this.isClicked" type="button" mat-raised-button color="primary">
             <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
             <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
         </button>

@@ -150,17 +150,20 @@ AddNewBenfit(){
   
   let benefitId = this.benfitsForm.value.benfitsIds;
   console.log(benefitId);
-  this._PricingToolService.AddBenfitToCategory(selectedCategoryId,benefitId).subscribe((data:any)=>{
+  this._PricingToolService.AddBenfitToCategory(benefitId,selectedCategoryId).subscribe((data:any)=>{
     console.log(data);
+    console.log(benefitId);
+    let selectedBenefit = this.AllBenefitss.find((benfit:any) => benfit.id == benefitId);
+    console.log(selectedBenefit);
+    if (selectedBenefit) {
+      this.categoryBenfitArr.push(selectedBenefit);
+    }
+    console.log( this.categoryBenfitArr);
+    Swal.fire({title:'Benfit Added Successfully',timer:3000, timerProgressBar: true})
+  },error=>{
+    console.log(error);
+    Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
   })
-  console.log(benefitId);
-  let selectedBenefit = this.AllBenefitss.find((benfit:any) => benfit.id == benefitId);
-  console.log(selectedBenefit);
-  if (selectedBenefit) {
-    this.categoryBenfitArr.push(selectedBenefit);
-  }
-  console.log( this.categoryBenfitArr);
-
 }
 
 // AddNewCategory(){
@@ -306,18 +309,19 @@ console.log(this.planCategories);
 //  this.ShowProducts = this.planCategories?.benefits ;
 
 }
-// ViewCoverageRegion(item: any) {
-//   this.ShowProducts = item.benefits|| [];
-// }
+ViewCoverageRegion(item: any) {
+  this.ShowProducts = item.benefits|| [];
+}
   
   EditPlan() {
     this.isClicked =true
     const updatedPlan = {
-      id: this.Form.get('id')?.value,
-      planName: this.Form.get('planName')?.value,
-      annualMaxLimit: this.Form.get('annualMaxLimit')?.value,
-      planNetworkId: this.Form.get('planNetworkId')?.value,
-      coverageRegions: this.arrTest
+      id: this.editForm.get('id')?.value,
+      planName: this.editForm.get('planName')?.value,
+      annualMaxLimit: this.editForm.get('annualMaxLimit')?.value,
+      planNetworkId: this.editForm.get('planNetworkId')?.value,
+      coverageRegions: this.arrTest,
+      planCategories:this.planCategories 
     };
     console.log(updatedPlan);
     
