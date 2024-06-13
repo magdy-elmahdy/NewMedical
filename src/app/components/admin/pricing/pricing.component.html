@@ -17,8 +17,8 @@
                     <th class="py-2">Category</th>
                     <th class="py-2">Benefit</th>
                     <th class="py-2">Edge Band</th>
-                    <th class="py-2">Premium</th>
-                    <th class="py-2">Loading</th>
+                    <th class="py-2">Net Risk Premium</th>
+                    <!-- <th class="py-2">Loading</th> -->
                     <th >Settings</th>
                 </thead>
                 <tbody>
@@ -29,11 +29,11 @@
                         <td class="align-middle">{{item.category.englishName}}</td>
                         <td class="align-middle">{{item.benfits.englishName}}</td>
                         <td class="align-middle">{{item.ageBand.from}}-{{item.ageBand.to}}</td>
-                        <td class="align-middle">{{item.premium}}</td>
-                        <td class="align-middle">{{item.loading}}</td>
+                        <td class="align-middle">{{item.netRiskPremium}}</td>
+                        <!-- <td class="align-middle">{{item.loading}}</td> -->
                         <td>
                             <i (click)="openEditModal(item)" data-bs-toggle="modal" data-bs-target="#EditPricing" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
-                            <i (click)="deleteCategory(item.id)" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
+                            <i (click)="deletePricing(item.id)" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
                         </td>
                     </tr>
                 </tbody>
@@ -88,7 +88,7 @@
                     </mat-form-field> -->
                     <div class="formGroup">
                         <label>Category<span style="color: red;">*</span></label>
-                        <select class="form-select mt-2" formControlName="categoryId">
+                        <select (change)="selectedCategory()" class="form-select mt-2" formControlName="categoryId">
                             <option *ngFor="let item of this.AllCates" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
                         </select>
                     </div>
@@ -104,7 +104,7 @@
                     <div class="formGroup">
                         <label>Benefit<span style="color: red;">*</span></label>
                         <select class="form-select mt-2" formControlName="benfitsId">
-                            <option *ngFor="let item of this.AllBenefits" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                            <option *ngFor="let item of this.AllBenefitss" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
                         </select>
                     </div>
                 </div>
@@ -130,8 +130,8 @@
                         <input class="form-control" formControlName="premium" type="number">
                     </mat-form-field> -->
                     <div class="formGroup">
-                        <label>Premium<span style="color: red;">*</span></label>
-                        <input class="form-control mt-2" formControlName="premium" type="number">
+                        <label>Net Risk Premium<span style="color: red;">*</span></label>
+                        <input class="form-control mt-2" formControlName="netRiskPremium" type="number">
                     </div>
                 </div>
                  <!-- loading -->
@@ -140,11 +140,11 @@
                         <mat-label><span class="text-danger mx-1">*</span>Loading</mat-label>
                         <input formControlName="loading" type="number" matInput>
                     </mat-form-field> -->
-                    <div class="formGroup">
+                    <!-- <div class="formGroup">
                         <label>Loading<span style="color: red;">*</span></label>
                         <input class="form-control mt-2" formControlName="loading" type="number" >
 
-                    </div>
+                    </div> -->
                 </div>
               
                 <!-- Benefit Type -->
@@ -179,8 +179,8 @@
                     <th>category</th>
                     <th>ageBandId</th>
                     <th>benfitsId</th>
-                    <th>Loading</th>
-                    <th>Premium</th>
+                    <!-- <th>Loading</th> -->
+                    <th>netRiskPremium</th>
                     <th ></th>
                 </thead>
                 <tbody>
@@ -189,8 +189,8 @@
                         <td>{{item.categoryId}}</td>
                         <td>{{item.ageBandId}}</td>
                         <td>{{item.benfitsId}}</td>
-                        <td>{{item.loading}}</td>
-                        <td>{{item.premium}}</td>
+                        <!-- <td>{{item.loading}}</td> -->
+                        <td>{{item.netRiskPremium}}</td>
                         <td><button color="warn" (click)="remove(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
                     </tr>
                 </tbody>
@@ -245,7 +245,7 @@
                     <div class="formGroup">
                         <label>Benefit<span style="color: red;">*</span></label>
                         <select class="form-select mt-2" formControlName="benfitsId">
-                            <option *ngFor="let item of this.AllBenefits" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                            <option *ngFor="let item of this.AllBenefitss" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
                         </select>
                     </div>
                 </div>
@@ -272,7 +272,7 @@
                     </mat-form-field> -->
                     <div class="formGroup">
                         <label>Premium<span style="color: red;">*</span></label>
-                        <input class="form-control mt-2" formControlName="premium" type="number">
+                        <input class="form-control mt-2" formControlName="netRiskPremium" type="number">
                     </div>
                 </div>
                  <!-- loading -->
@@ -281,11 +281,11 @@
                         <mat-label><span class="text-danger mx-1">*</span>Loading</mat-label>
                         <input formControlName="loading" type="number" matInput>
                     </mat-form-field> -->
-                    <div class="formGroup">
+                    <!-- <div class="formGroup">
                         <label>Loading<span style="color: red;">*</span></label>
                         <input class="form-control mt-2" formControlName="loading" type="number" >
 
-                    </div>
+                    </div> -->
                 </div>
               
                 <!-- Benefit Type -->
@@ -340,7 +340,7 @@
        </div>
        <div class="modal-footer">
         <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
-        <button (click)="AddBenfitPricing()" class="mt-3 w-25" [disabled]="this.Form.status=='INVALID' || this.isClicked" type="button" mat-raised-button color="primary">
+        <button (click)="saveCategoryEdit()" class="mt-3 w-25" [disabled]="this.Form.status=='INVALID' || this.isClicked" type="button" mat-raised-button color="primary">
             <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
             <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
         </button>

@@ -28,18 +28,48 @@ export class PricingToolService {
       this.baseUrl = 'https://'+localStorage.getItem('url')
     }
   }
+   // All Network
+   AddNetwork(Model:any){ 
+    return this._HttpClient.post(this.baseUrl+'Benfit/AddNewNetwork',Model,this.httpOptions)
+  }
+  GetAllNetwork(){
+    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllNetworks',this.httpOptions)
+  }
+  GetNetworkById(id:any){
+    return this._HttpClient.get(this.baseUrl+'Benfit/GetNetworkById?id='+id,this.httpOptions)
+  }
+  EditNetwork(Body:any){
+    return this._HttpClient.put(this.baseUrl+'Benfit/UpdateNetwork',Body)
+  }
+  DeleteNetwork(id:any){
+    return this._HttpClient.delete(this.baseUrl+'Benfit/DeleteNetwork?id='+id)
+  }
    // All  Category
    AddCategory(Model:any){ 
     return this._HttpClient.post(this.baseUrl+'Benfit/AddCategory',Model,this.httpOptions)
   }
+  AddBenfitToCategory(BenfitId:any,CategoryId:any){
+    const Model={
+      benfitId:BenfitId,
+      categoryId:CategoryId
+    }
+    return this._HttpClient.post(this.baseUrl+'Benfit/AddBenfitToCategory',Model,this.httpOptions)
+
+  }
   GetAllCategories(){
     return this._HttpClient.get(this.baseUrl+'Benfit/GetAllCategories',this.httpOptions)
+  }
+  GetAllCategoriesBenfits(id:any){
+    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllCategoryBenfits?categoryid='+id,this.httpOptions)
   }
   GetCategoryById(id:any){
     return this._HttpClient.get(this.baseUrl+'Benfit/GetCategoryById?id='+id,this.httpOptions)
   }
+  // EditCategory(Body:any){
+  //   return this._HttpClient.put(this.baseUrl+'Benfit/EditCategory',Body)
+  // }
   EditCategory(Body:any){
-    return this._HttpClient.put(this.baseUrl+'Benfit/EditCategory',Body)
+    return this._HttpClient.put(this.baseUrl+'Benfit/EditCategoryWithBenfit',Body)
   }
   DeleteCategory(id:any){
     return this._HttpClient.delete(this.baseUrl+'Benfit/DeleteCategory?id='+id)
@@ -100,6 +130,10 @@ export class PricingToolService {
  }
  EditPlan(Model:any){
   return this._HttpClient.put(this.baseUrl+'Benfit/UpdatePlan',Model)
+ }
+ deletplan(id:any){
+  return this._HttpClient.delete(this.baseUrl+'Benfit/DeletePlan?id='+id)
+
  }
 
 

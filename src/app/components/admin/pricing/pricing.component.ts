@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -25,6 +26,7 @@ export class PricingComponent implements OnInit {
   AllAgeBand:any;
   term:any;
   AllBenefits:any
+  AllBenefitss:any
   AllBenefitTypes:any
   constructor(private _PricingToolService:PricingToolService, private _ToastrService:ToastrService){}
   
@@ -36,8 +38,8 @@ export class PricingComponent implements OnInit {
     'benfitsId':new FormControl('',[Validators.required]),
     // 'benfitTypeId':new FormControl('',[Validators.required]),
     // 'sumInsured':new FormControl('',[Validators.required]),
-    'premium':new FormControl('',[Validators.required]),
-    'loading':new FormControl('',[Validators.required])
+    'netRiskPremium':new FormControl('',[Validators.required]),
+    // 'loading':new FormControl('',[Validators.required])
 });
 
   WhenModalOpen(){
@@ -95,21 +97,32 @@ export class PricingComponent implements OnInit {
 
   // Edit
   CurrentItem:any
+  selecteCategory:any
   openEditModal(item:any){
-    console.log(item);
+    this.selecteCategory = this.AllPricingArr.find(cat=>cat.category.englishName==item.category?.englishName)
+    console.log(this.selecteCategory);
+    
+    // console.log(item);
     this.CurrentItem = item;
-    this.Form.setValue({id:item.id,loading:item.loading,premium:item.premium,categoryId: `${item.category.englishName} - ${item.category.arabicName}`,benfitsId: `${item.benfits.englishName} - ${item.benfits.arabicName}`, ageBandId: `${item.ageBand.from} - ${item.ageBand.to}`})
+    this.Form.setValue({
+      id: item.id,
+      netRiskPremium: item.netRiskPremium,
+      categoryId: item.category.id,
+      benfitsId: item.benfits.id,
+      ageBandId: item.ageBand.id
+    });
+    // this.Form.setValue({id:item.id,netRiskPremium:item.netRiskPremium,categoryId: `${this.selecteCategory.category.englishName} - ${this.selecteCategory.category.arabicName}`,benfitsId: `${item.benfits.englishName} - ${item.benfits.arabicName}`, ageBandId: `${item.ageBand.from} - ${item.ageBand.to}`})
   }
   saveCategoryEdit() {
-    this.isClicked = true
+    // this.isClicked = true
     if (this.CurrentItem) {
       const updatedCategory = {...this.CurrentItem,...this.Form.value };
       console.log(updatedCategory);
-      this._PricingToolService.EditBenfit(updatedCategory).subscribe((res) => {
+      this._PricingToolService.EditBenfitPricing(updatedCategory).subscribe((res) => {
         this.isClicked = false
   
         console.log(res);
-        $('#EditBenfit').modal('toggle'); 
+        $('#EditPricing').modal('toggle'); 
         this.getAllPricing();
         Swal.fire({ title: "Good job!", text: "Pricing Updated Successfully", icon: "success" })
       }, error => {
@@ -121,7 +134,7 @@ export class PricingComponent implements OnInit {
   }
   //Delete
   PricingId:any
-  deleteCategory(id:any){
+  deletePricing(id:any){
    
     this.PricingId = id;
 
@@ -200,7 +213,7 @@ export class PricingComponent implements OnInit {
   getAllBenfits(){
     this._PricingToolService.GetAllBenfits().subscribe((data:any)=>{
       console.log(data);
-      this.AllBenefits = data
+      this.AllBenefitss = data
       
     })
   }

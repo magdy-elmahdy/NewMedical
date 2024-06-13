@@ -89,6 +89,14 @@
                         <div class="formGroup">
                             <label>Benfit Name AR<span style="color: red;">*</span></label>
                             <input class="form-control mt-2" formControlName= "arabicName" type="text">
+                            <div *ngIf="arabicText?.invalid && (arabicText?.dirty || arabicText?.touched)">
+                                <!-- <div *ngIf="arabicText?.errors?.required">
+                                  This field is required.
+                                </div> -->
+                                <div *ngIf="arabicText?.errors?.arabicText" style="color: red;">
+                                  Please enter only Arabic text.
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">
@@ -167,7 +175,7 @@
       </div>
     </div>
   </div>
-  <!--------------------------------------- Add Benefit / benefits --------------------------->
+  <!--------------------------------------- Edit Benefit / benefits --------------------------->
 <div class="modal fade" id="EditBenfit" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -211,6 +219,14 @@
                         <div class="formGroup">
                             <label>Benfit Name AR<span style="color: red;">*</span></label>
                             <input class="form-control mt-2" formControlName= "arabicName" type="text">
+                            <div *ngIf="EditarabicText?.invalid && (EditarabicText?.dirty || EditarabicText?.touched)">
+                                <!-- <div *ngIf="arabicText?.errors?.required">
+                                  This field is required.
+                                </div> -->
+                                <div *ngIf="EditarabicText?.errors" style="color: red;">
+                                  Please enter only Arabic text.
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 mt-2">

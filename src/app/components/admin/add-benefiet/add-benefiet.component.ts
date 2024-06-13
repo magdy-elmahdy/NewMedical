@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
 import { ListsService } from 'src/app/services/lists.service';
 import { PricingToolService } from 'src/app/services/pricing-tool.service';
+import { arabicTextValidator } from 'src/app/services/arabic-text.validator';
 import Swal from 'sweetalert2';
 declare var $:any;
 @Component({
@@ -31,18 +32,24 @@ export class AddBenefietComponent implements OnInit {
   constructor(private _PricingToolService:PricingToolService, private _ToastrService:ToastrService){}
   
   Form:FormGroup =new FormGroup({
-    'arabicName':new FormControl('',[Validators.required]),
+    'arabicName':new FormControl('',[Validators.required,arabicTextValidator()]),
     'englishName':new FormControl('',[Validators.required]),
     'maxLimit':new FormControl('',[Validators.required]),
     'categoryId':new FormControl('',[Validators.required])
 });
 EditForm:FormGroup =new FormGroup({
   'benfitId':new FormControl(''),
-  'arabicName':new FormControl('',[Validators.required]),
+  'arabicName':new FormControl('',[Validators.required,arabicTextValidator()]),
   'englishName':new FormControl('',[Validators.required]),
   'maxLimit':new FormControl('',[Validators.required]),
   // 'categoryId':new FormControl('',[Validators.required])
 });
+get arabicText() {
+  return this.Form.get('arabicName');
+}
+get EditarabicText() {
+  return this.EditForm.get('arabicName');
+}
 
   WhenModalOpen(){
     this.Form.reset()

@@ -1,4 +1,4 @@
-#pricing{
+#Add_Category{
     min-height: 100vh;
 }
   .modal{
@@ -35,32 +35,28 @@ table {
 th, td {
   padding: 10px;
   border: 1px solid #CCCCCC;
-  color: black;
+  color: #000;
+
+  ;
 }
 .view{
-    // border: 1px solid #F3B900;
-    background: rgba(243, 185, 0, 0.85);  
-    // padding-right: 25px;
-    // padding-left: 25px;
-    color: white;
-    }
-    th{
-      text-decoration: underline;
-    }
-    .font_Coloered3:before{
-      content: '';
-      padding-left: 0.7rem;
-      border-left: solid 0.32rem gray;
-    }
-    label{
-      color: #2A2A2A;
-      font-family: "Nunito Sans";
-      font-size: 15px;
-      font-weight: 600;
-      }
-    .PlanHeader{
-      text-align: center;
-      font-family: "Nunito Sans";
-      font-size: 20px;
-      font-weight: 600;
+  // border: 1px solid #F3B900;
+  background: rgba(5, 4, 2, 0.85);  
+  // padding-right: 25px;
+  // padding-left: 25px;
+  color: white;
+  }
+  th{
+    text-decoration: underline;
+  }
+  .font_Coloered3:before{
+    content: '';
+    padding-left: 0.7rem;
+    border-left: solid 0.32rem gray;
+  }
+  label{
+    color: #2A2A2A;
+    font-family: "Nunito Sans";
+    font-size: 15px;
+    font-weight: 600;
     }

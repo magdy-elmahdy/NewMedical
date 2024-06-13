@@ -98,6 +98,8 @@ import { AddBenefietComponent } from './components/admin/add-benefiet/add-benefi
 import { EdgePandComponent } from './components/admin/edge-pand/edge-pand.component';
 import { PricingComponent } from './components/admin/pricing/pricing.component';
 import { PlanComponent } from './components/admin/plan/plan.component';
+import { RequestedProposalComponent } from './components/admin/requested-proposal/requested-proposal.component';
+import { NetworkComponent } from './components/admin/network/network.component';
 
 // , data:{
 //   role:['Ahmed',"Admin"],
@@ -159,6 +161,8 @@ const routes: Routes = [
    {path:'EdgePand',component:EdgePandComponent},
    {path:'Pricing',component:PricingComponent},
    {path:'Plan',component:PlanComponent},
+   {path:'RequestedProposal',component:RequestedProposalComponent},
+   {path:'Network',component:NetworkComponent},
   
   // Policy
   {path:'ConvertToPolicy/:id',canActivate:[HasRoleGuard],data:["Permissions.Offers.ConvertOfferToPolicy"],component:ConvertToPolicyComponent},

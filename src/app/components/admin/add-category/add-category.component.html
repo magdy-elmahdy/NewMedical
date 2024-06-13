@@ -56,23 +56,23 @@
           <form [formGroup]="Form" class="my-5">
               <div class="row">
                 <div class="col-md-6">
-                  <!-- <mat-form-field class="w-75">
-                    <mat-label>Category Name EN</mat-label>
-                    <input formControlName="arabicName" type="text" matInput>
-                  </mat-form-field> -->
                   <div class="formGroup">
                     <label>Category Name EN<span style="color: red;">*</span></label>
                     <input class="form-control mt-2" formControlName= "englishName" type="text">
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <!-- <mat-form-field class="w-75">
-                    <mat-label>Category Name AR</mat-label>
-                    <input formControlName="englishName" type="text" matInput>
-                  </mat-form-field> -->
                   <div class="formGroup">
                     <label>Category Name AR<span style="color: red;">*</span></label>
                     <input class="form-control mt-2" formControlName="arabicName" type="text">
+                    <div *ngIf="arabicText?.invalid && (arabicText?.dirty || arabicText?.touched)">
+                      <!-- <div *ngIf="arabicText?.errors?.required">
+                        This field is required.
+                      </div> -->
+                      <div *ngIf="arabicText?.errors?.arabicText" style="color: red;">
+                        Please enter only Arabic text.
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -122,58 +122,84 @@
       </div>
       
      <div class="container_custom">
-        <form [formGroup]="EDitForm" class="my-5">
-            <div class="row">
-              <div class="col-md-6">
-                <!-- <mat-form-field class="w-75">
-                  <mat-label>Category Name EN</mat-label>
-                  <input formControlName="arabicName" type="text" matInput>
-                </mat-form-field> -->
-                <div class="formGroup">
-                  <label>Category Name EN<span style="color: red;">*</span></label>
-                  <input class="form-control mt-2" formControlName="EnglishName" type="text">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <!-- <mat-form-field class="w-75">
-                  <mat-label>Category Name AR</mat-label>
-                  <input formControlName="englishName" type="text" matInput>
-                </mat-form-field> -->
-                <div class="formGroup">
-                  <label>Category Name AR<span style="color: red;">*</span></label>
-                  <input class="form-control mt-2" formControlName="ArabicName" type="text">
+      <form [formGroup]="Form" class="my-5">
+        <div class="row">
+          <div class="col-md-6">
+            <!-- <mat-form-field class="w-75">
+              <mat-label>Category Name EN</mat-label>
+              <input formControlName="arabicName" type="text" matInput>
+            </mat-form-field> -->
+            <div class="formGroup">
+              <label>Category Name EN<span style="color: red;">*</span></label>
+              <input class="form-control mt-2" formControlName= "englishName" type="text">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <!-- <mat-form-field class="w-75">
+              <mat-label>Category Name AR</mat-label>
+              <input formControlName="englishName" type="text" matInput>
+            </mat-form-field> -->
+            <div class="formGroup">
+              <label>Category Name AR<span style="color: red;">*</span></label>
+              <input class="form-control mt-2" formControlName="arabicName" type="text">
+              <div *ngIf="arabicText?.invalid && (arabicText?.dirty || arabicText?.touched)">
+                <!-- <div *ngIf="arabicText?.errors?.required">
+                  This field is required.
+                </div> -->
+                <div *ngIf="arabicText?.errors?.arabicText" style="color: red;">
+                  Please enter only Arabic text.
                 </div>
               </div>
             </div>
-            <!-- <div class="text-center">
-              <button (click)="view()" [disabled]="this.Form.status=='INVALID'"  class="btn view w-25 mt-4">Add</button>
-            </div> -->
-
-        </form>
-        <!-- Table -->
-        <!-- <div class="wrapper mt-5" *ngIf="this.arrCate.length>0">
+          </div>
+          <form [formGroup]="EDitForm">
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-4">
+                <div class="formGroup">
+                  <label>Benefit<span style="color: red;">*</span></label>
+                  <select class="form-select mt-2" formControlName="benfitId">
+                      <option *ngFor="let item of this.AllBenfitsArr" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <button (click)="AddBenfit()"  class="btn view w-25 mt-4">Add</button>
+              </div>
+            </div>
+          </form>
+        
+          </div>
+           <!-- Table -->
+        <div class="wrapper mt-5" *ngIf="this.categoryBenfitArr.length>0">
           <table  class="custom_table text-center bordered">
               <thead>
                   <th></th>
                   <th>Arabic Name</th>
                   <th>English Name</th>
+                  <th>MAx limit</th>
                   <th ></th>
               </thead>
               <tbody>
-                  <tr *ngFor="let item of arrCate;let index = index" style="vertical-align: middle;">
+                  <tr *ngFor="let item of categoryBenfitArr;let index = index" style="vertical-align: middle;">
                       <td>{{index+1}}</td>
                       <td>{{item.arabicName}}</td>
                       <td>{{item.englishName}}</td>
-                      <td><button color="warn" (click)="remove(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                      <td>{{item.maxLimit}}</td>
+                      <td><button color="warn" (click)="removeBenfit(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
                   </tr>
               </tbody>
 
           </table>
-          </div> -->
+          </div>
+        <!-- <div class="text-center">
+          <button (click)="view()" [disabled]="this.Form.status=='INVALID'"  class="btn view w-25 mt-4">Add</button>
+        </div> -->
+    </form>
      </div>
      <div class="modal-footer">
       <button id="EditForm" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
-      <button [disabled]="this.isClicked || this.EDitForm.status=='INVALID'" type="button" mat-raised-button color="primary"(click)="saveCategoryEdit()">
+      <button [disabled]="this.isClicked" type="button" mat-raised-button color="primary"(click)="saveCategoryEdit()">
         <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
         <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
       </button>

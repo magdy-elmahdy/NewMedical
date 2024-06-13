@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between mx-5">
             <div class="d-flex align-items-center">
                 <p class="font_Coloered3 text-center my-4 mx-3"  style="color: grey;">Add Plan</p>
-                <button data-bs-toggle="modal" data-bs-target="#AddPlan"  mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
+                <button (click)="WhenOpenModal()" data-bs-toggle="modal" data-bs-target="#AddPlan"  mat-raised-button color="primary">{{'Shared.AddNew'|translate}}</button>
             </div>
             <input class="form-control w-25 ml-auto mt-3" style="height: 3rem;"  placeholder="{{'Shared.SearchHere'|translate}}" />
         </div>
@@ -50,8 +50,8 @@
                         </td>
                         
                         <td class="align-middle">
-                            <i data-bs-toggle="modal" data-bs-target="#EddPlan" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
-                            <i class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
+                            <i (click)="openEditModal(item)" data-bs-toggle="modal" data-bs-target="#EditPlan" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
+                            <i (click)="deletePlan(item.planId)" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
                         </td>
                     </tr>
                 </tbody>
@@ -87,89 +87,518 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         
-       <div class="container_custom py-5">
-        <form [formGroup]="Form">
+        <div class="container_custom py-5">
+          <form [formGroup]="Form">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="formGroup">
-                    <label>Plan Name<span style="color: red;">*</span></label>
-                    <input class="form-control mt-2" formControlName="planName">
+                  <label>Plan Name<span style="color: red;">*</span></label>
+                  <input class="form-control mt-2" formControlName="planName">
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="formGroup">
-                    <label>Annual Max Limit<span style="color: red;">*</span></label>
-                    <input class="form-control mt-2" formControlName="annualMaxLimit" type="number">
+                  <label>Annual Max Limit<span style="color: red;">*</span></label>
+                  <input class="form-control mt-2" formControlName="annualMaxLimit" type="number">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="formGroup">
+                  <label>Network Name<span style="color: red;">*</span></label>
+                  <select class="form-select mt-2" formControlName="planNetworkId">
+                    <option *ngFor="let network of AllNetworkArr" [value]="network.id">{{network.name}}</option>
+                  </select>
                 </div>
               </div>
             </div>
-            <form [formGroup]="NewForm" class="mt-5">
+  
+            <div class="outerBorder outerItem shadow_5 table-responsive">
+              <h2 class="PlanHeader">Coverage Regions</h2>
+              <form [formGroup]="NewForm" class="mt-5">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="formGroup">
-                            <label>coverge Region<span style="color: red;">*</span></label>
-                            <select class="form-select mt-2" formControlName="covergeRegion">
-                                <option *ngFor="let region of this.AllcovergeRegion" [value]="region.name">{{region.name}}</option>
-                            </select>
-                        </div>
+                  <div class="col-md-4">
+                    <div class="formGroup">
+                      <label>Coverage Region<span style="color: red;">*</span></label>
+                      <select class="form-select mt-2" formControlName="covergeRegion">
+                        <option *ngFor="let region of AllcovergeRegion" [value]="region.name">{{region.name}}</option>
+                      </select>
                     </div>
-                    <div class="col-md-4">
-                        <div class="formGroup">
-                            <label>coverge Type<span style="color: red;">*</span></label>
-                            <select class="form-select mt-2" formControlName="coverageType">
-                                <option *ngFor="let type of this.AllcovergeType" [value]="type.name">{{type.name}}</option>
-                            </select>
-                        </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="formGroup">
+                      <label>Coverage Type<span style="color: red;">*</span></label>
+                      <select class="form-select mt-2" formControlName="coverageType" (change)="selectType()">
+                        <option *ngFor="let type of AllcovergeType" [value]="type.name">{{type.name}}</option>
+                      </select>
                     </div>
-                    <div class="col-md-4">
-                        <div class="formGroup">
-                            <label>Note</label>
-                            <input class="form-control mt-1" formControlName="note" type="text">
-                        </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="formGroup">
+                      <label>Note</label>
+                      <input class="form-control mt-1" formControlName="note" type="text">
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4 mt-2">
-                        <div class="formGroup">
-                            <label>partial Percantage<span style="color: red;">*</span></label>
-                            <input class="form-control mt-1" type="number" formControlName="partialPercantage">
-                        </div>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-4 mt-2">
+                    <div class="formGroup" *ngIf="NewForm.get('coverageType')?.value == 'Partial'">
+                      <label>Partial Percentage<span style="color: red;">*</span></label>
+                      <input class="form-control mt-1" type="number" formControlName="partialPercantage">
                     </div>
-                    <div class="col-md-4 d-flex align-items-center" style="padding-top: 28px;">
-                        <button (click)="view()" [disabled]="this.NewForm.status=='INVALID'" mat-raised-button color="accent" class="w-50">Add</button>
-                    </div>
+                  </div>
+                  <div class="col-md-4 d-flex align-items-center" style="padding-top: 28px;">
+                    <button (click)="view()" [disabled]="NewForm.status == 'INVALID'" mat-raised-button color="accent" class="w-50">Add</button>
+                  </div>
                 </div>
-            </form>
-               <!-- Table -->
-        <div class="wrapper mt-5" *ngIf="this.arrTest.length>0">
-            <table  class="custom_table text-center bordered">
-                <thead>
-                    <th></th>
-                    <th>covergeRegion</th>
-                    <th>coverageType</th>
-                    <th>note</th>
-                    <th>partialPercantage</th>
-                    <th></th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of arrTest;let index = index" style="vertical-align: middle;">
-                        <td>{{index+1}}</td>
-                        <td>{{item.covergeRegion}}</td>
-                        <td>{{item.coverageType}}</td>
-                        <td>{{item.note}}</td>
-                        <td>{{item.partialPercantage}}</td>
-                        <td><button color="warn" (click)="remove(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+              </form>
+              <div class="wrapper mt-5" *ngIf="arrTest.length > 0">
+                <table class="custom_table text-center bordered">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Coverage Region</th>
+                      <th>Coverage Type</th>
+                      <th>Note</th>
+                      <th>Partial Percentage</th>
+                      <th></th>
                     </tr>
-                </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of arrTest; let index = index" style="vertical-align: middle;">
+                      <td>{{index + 1}}</td>
+                      <td>{{item.covergeRegion}}</td>
+                      <td>{{item.coverageType}}</td>
+                      <td>{{item.note}}</td>
+                      <td>{{item.partialPercantage}}</td>
+                      <td>
+                        <button color="warn" (click)="remove(index)" mat-raised-button>
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+  
+            <!-- Plan Categories Button -->
+            <!-- <div class="d-flex justify-content-end mt-3">
+              <button type="button" (click)="toggleCategoryForm()" class="btn btn-primary">
+                Add New Benfits
+              </button>
+            </div> -->
+  
+            <!-- Plan Categories Form -->
+            <div class="outerBorder outerItem shadow_5 table-responsive mt-3">
+              <h2 class="PlanHeader">Plan Categories</h2>
+              <form [formGroup]="CategoryForm">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="formGroup">
+                      <label>Category Name</label>
+                      <select (change)="selecteCategory()" class="form-select mt-2" formControlName="categoryId">
+                        <option *ngFor="let item of AllCates" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <form [formGroup]="benfitsForm">
+                      <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-6">
+                          <div class="formGroup">
+                            <label>New Benefits</label>
+                            <select class="form-select mt-2" formControlName="benfitsIds">
+                              <option *ngFor="let item of AllBenefitss" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-2" style="padding-top: 28px;">
+                          <button (click)="AddNewBenfit()" mat-raised-button color="accent" class="w-50">Add</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </form>
+              <div class="wrapper mt-5" *ngIf="categoryBenfitArr.length > 0">
+                <table class="custom_table text-center bordered">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Arabic Name</th>
+                      <th>English Name</th>
+                      <th>Max Limit</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of categoryBenfitArr; let index = index" style="vertical-align: middle;">
+                      <td>{{index + 1}}</td>
+                      <td>{{item.arabicName}}</td>
+                      <td>{{item.englishName}}</td>
+                      <td>{{item.maxLimit}}</td>
+                      <td>
+                        <button color="warn" (click)="removeBenfit(index)" mat-raised-button>
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th colspan="4">Add To Main Table?</th>
+                      <th>
+                        <button (click)="AddNewCategory()" mat-raised-button color="accent" class="w-25">Add</button>
+                      </th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="wrapper mt-5" *ngIf="planCategories.length > 0">
+                    <table class="custom_table text-center bordered">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Category Name</th>
+                          <th>Benfits</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of planCategories; let index = index" style="vertical-align: middle;">
+                          <td>{{index + 1}}</td>
+                          <td>{{item.categoryNameEnglish}}</td>
+                          <td class="icon-cell d-flex align-items-center justify-content-center"><i (click)="ViewCoverageRegions(item)" class="fa-solid fa-eye fs-5 text-success py-2"></i></td>
+                          <td>
+                            <button color="warn" (click)="RemoveFromCategoriesTable(index)" mat-raised-button>
+                              <i class="fa-solid fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="wrapper mt-5" *ngIf="ShowProducts.length > 0">
+                    <table class="custom_table text-center bordered">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>English Name</th>
+                          <th>Arabic Name</th>
+                          <th>Mak Limit</th>
+                          <!-- <th></th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of ShowProducts; let index = index" style="vertical-align: middle;">
+                          <td>{{index + 1}}</td>
+                          <td>{{item.englishName}}</td>
+                          <td>{{item.arabicName}}</td>
+                          <td>{{item.maxLimit}}</td>
+                          <!-- <td>
+                            <button color="warn" (click)="removeBenfit(index)" mat-raised-button>
+                              <i class="fa-solid fa-trash"></i>
+                            </button>
+                          </td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-        <div class="text-center mt-2" style="padding-top: 28px;">
-            <button (click)="viewArr()" [disabled]="this.Form.status=='INVALID' || this.arrTest.length == 0" mat-raised-button color="accent" class="w-50">Add</button>
+        
+        <div class="modal-footer">
+          <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{ 'Shared.Close' | translate }}</button>
+          <button (click)="AddPlan()" class="mt-2 w-25" [disabled]="isClicked" type="button" mat-raised-button color="primary">
+            <span *ngIf="!isClicked">{{ 'Shared.Save' | translate }}</span>
+            <span *ngIf="isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
+          </button>
         </div>
-        </form>
-       </div>
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------- Products Model --------------------------->
+ <!-- <div class="modal fade" id="networkCoding" tabindex="-1" aria-labelledby="networkCoding" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">` 
+                <h1 class="modal-title fs-5" id="networkCoding">Coverage Regions</h1>
+            </div>
+            <div class="container_Custom my-5" style="padding: 0px 25px;">
+                <div class="wrapper mt-5" *ngIf="this.MainArr.length>0">
+                    <table  class="custom_table text-center bordered">
+                        <thead class="tableHead align-middle" style="background: #F3F2F2;height: 50px;">
+                            <th></th>
+                            <th>covergeRegion</th>
+                            <th>coverageType</th>
+                            <th>note</th>
+                            <th>partialPercantage</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of ShowProducts;let index = index" style="vertical-align: middle;">
+                                <td>{{index+1}}</td>
+                                <td>{{item.covergeRegion}}</td>
+                                <td>{{item.coverageType}}</td>
+                                <td>{{item.note}}</td>
+                                <td>{{item.partialPercantage}}</td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer py-3">
+                <button  id="close" type="button" mat-raised-button
+                    data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- Edit -->
+<div class="modal fade" id="EditPlan" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="edit">Add Plan</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="container_custom py-5">
+          <form [formGroup]="editForm">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="formGroup">
+                  <label>Plan Name<span style="color: red;">*</span></label>
+                  <input class="form-control mt-2" formControlName="planName">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="formGroup">
+                  <label>Annual Max Limit<span style="color: red;">*</span></label>
+                  <input class="form-control mt-2" formControlName="annualMaxLimit" type="number">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="formGroup">
+                  <label>Network Name<span style="color: red;">*</span></label>
+                  <select class="form-select mt-2" formControlName="planNetworkId">
+                    <option *ngFor="let network of AllNetworkArr" [value]="network.id">{{network.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+  
+            <div class="outerBorder outerItem shadow_5 table-responsive">
+              <h2 class="PlanHeader">Coverage Regions</h2>
+              <form [formGroup]="NewForm" class="mt-5">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="formGroup">
+                      <label>Coverage Region<span style="color: red;">*</span></label>
+                      <select class="form-select mt-2" formControlName="covergeRegion">
+                        <option *ngFor="let region of AllcovergeRegion" [value]="region.name">{{region.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="formGroup">
+                      <label>Coverage Type<span style="color: red;">*</span></label>
+                      <select class="form-select mt-2" formControlName="coverageType" (change)="selectType()">
+                        <option *ngFor="let type of AllcovergeType" [value]="type.name">{{type.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="formGroup">
+                      <label>Note</label>
+                      <input class="form-control mt-1" formControlName="note" type="text">
+                    </div>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-4 mt-2">
+                    <div class="formGroup" *ngIf="NewForm.get('coverageType')?.value == 'Partial'">
+                      <label>Partial Percentage<span style="color: red;">*</span></label>
+                      <input class="form-control mt-1" type="number" formControlName="partialPercantage">
+                    </div>
+                  </div>
+                  <div class="col-md-4 d-flex align-items-center" style="padding-top: 28px;">
+                    <button (click)="view()" [disabled]="NewForm.status == 'INVALID'" mat-raised-button color="accent" class="w-50">Add</button>
+                  </div>
+                </div>
+              </form>
+              <div class="wrapper mt-5" *ngIf="arrTest.length > 0">
+                <table class="custom_table text-center bordered">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Coverage Region</th>
+                      <th>Coverage Type</th>
+                      <th>Note</th>
+                      <th>Partial Percentage</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of arrTest; let index = index" style="vertical-align: middle;">
+                      <td>{{index + 1}}</td>
+                      <td>{{item.covergeRegion}}</td>
+                      <td>{{item.coverageType}}</td>
+                      <td>{{item.note}}</td>
+                      <td>{{item.partialPercantage}}</td>
+                      <td>
+                        <button color="warn" (click)="remove(index)" mat-raised-button>
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+  
+            <!-- Plan Categories Button -->
+            <!-- <div class="d-flex justify-content-end mt-3">
+              <button type="button" (click)="toggleCategoryForm()" class="btn btn-primary">
+                Add New Benfits
+              </button>
+            </div> -->
+  
+            <!-- Plan Categories Form -->
+            <div class="outerBorder outerItem shadow_5 table-responsive mt-3">
+              <h2 class="PlanHeader">Plan Categories</h2>
+              <form [formGroup]="CategoryForm">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="formGroup">
+                      <label>Category Name</label>
+                      <select (change)="selecteCategory()" class="form-select mt-2" formControlName="categoryId">
+                        <option *ngFor="let item of AllCates" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <form [formGroup]="benfitsForm">
+                      <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-6">
+                          <div class="formGroup">
+                            <label>New Benefits</label>
+                            <select class="form-select mt-2" formControlName="benfitsIds">
+                              <option *ngFor="let item of AllBenefitss" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-2" style="padding-top: 28px;">
+                          <button (click)="AddNewBenfit()" mat-raised-button color="accent" class="w-50">Add</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </form>
+              <div class="wrapper mt-5" *ngIf="categoryBenfitArr.length > 0">
+                <table class="custom_table text-center bordered">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Arabic Name</th>
+                      <th>English Name</th>
+                      <th>Max Limit</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of categoryBenfitArr; let index = index" style="vertical-align: middle;">
+                      <td>{{index + 1}}</td>
+                      <td>{{item.arabicName}}</td>
+                      <td>{{item.englishName}}</td>
+                      <td>{{item.maxLimit}}</td>
+                      <td>
+                        <button color="warn" (click)="removeBenfit(index)" mat-raised-button>
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th colspan="4">Add To Main Table?</th>
+                      <th>
+                        <button (click)="AddNewCategory()" mat-raised-button color="accent" class="w-25">Add</button>
+                      </th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="wrapper mt-5" *ngIf="planCategories.length > 0">
+                    <table class="custom_table text-center bordered">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Category Name</th>
+                          <th>Benfits</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of planCategories; let index = index" style="vertical-align: middle;">
+                          <td>{{index + 1}}</td>
+                          <td>{{item.categoryNameEnglish}}</td>
+                          <td class="icon-cell d-flex align-items-center justify-content-center"><i (click)="ViewCoverageRegions(item)" class="fa-solid fa-eye fs-5 text-success py-2"></i></td>
+                          <td>
+                            <button color="warn" (click)="RemoveFromCategoriesTable(index)" mat-raised-button>
+                              <i class="fa-solid fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="wrapper mt-5" *ngIf="ShowProducts.length > 0">
+                    <table class="custom_table text-center bordered">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>English Name</th>
+                          <th>Arabic Name</th>
+                          <th>Mak Limit</th>
+                          <!-- <th></th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of ShowProducts; let index = index" style="vertical-align: middle;">
+                          <td>{{index + 1}}</td>
+                          <td>{{item.englishName}}</td>
+                          <td>{{item.arabicName}}</td>
+                          <td>{{item.maxLimit}}</td>
+                          <!-- <td>
+                            <button color="warn" (click)="removeBenfit(index)" mat-raised-button>
+                              <i class="fa-solid fa-trash"></i>
+                            </button>
+                          </td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
        <div class="modal-footer">
         <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
-        <button (click)="AddPlan()" class="mt-2 w-25" [disabled]="this.isClicked" type="button" mat-raised-button color="primary">
+        <button (click)="EditPlan()" class="mt-2 w-25" [disabled]="this.isClicked || this.Form.status =='INVALID' || this.MainArr.length==0" type="button" mat-raised-button color="primary">
             <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
             <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
         </button>
