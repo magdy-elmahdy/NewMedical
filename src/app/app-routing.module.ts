@@ -142,7 +142,7 @@ const routes: Routes = [
   {path:'Forbidden',component:ForbiddenComponent},
   {path:'CustomPlan/:type/:customerId/:policyId',component:CustomPlanComponent},
   {path:'Plans&ItsBenfits/:customerId',component:PlansAndItesBenfitsComponent},
-  {path:'UploadPlansFile/:id',canActivate:[HasRoleGuard],data:["Permissions.Offers.Create"],component:UploadPlansFileComponent},
+  {path:'UploadPlansFile/:id/:type',canActivate:[HasRoleGuard],data:["Permissions.Offers.Create"],component:UploadPlansFileComponent},
   {path:'UploadGroupFile/:id',canActivate:[HasRoleGuard],data:["Permissions.Offers.Create"],component:UplaodGroupFileComponent},
   {path:'Calculations/:id',component:CalculationsOfPolicyComponent},
   {path:'PlansOfPolicy/:id',component:PlansOfPolicyComponent},

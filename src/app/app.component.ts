@@ -27,7 +27,6 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     const navLinkEls = document.querySelectorAll('.mainSideItem');
-    console.log(navLinkEls);
     AOS.init();
 
   }

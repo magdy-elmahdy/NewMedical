@@ -9,12 +9,117 @@
                 <button data-bs-toggle="modal" data-bs-target="#ViewPlans" mat-raised-button color="primary" class="mt-3">{{'Offer.CurrentPlans'|translate}}</button>
         </div>
         <div class="outerBorder shadow_5">
-            <!-- <h2 class="fs-4"><span class="text-muted">{{'Shared.AddOnlyExcelFile'|translate}}</span> </h2> -->
+            <!-- Pricing -->
+            <div class="w-100" style="display: none;" id="Pricing">
+                <!-- Select Plan -->
+                <div class="row mt-3 w-50">
+                    
+                    <div class="col-8">
+                        <!-- <label class="fs-6">Plan Name<span style="color: red;" class="mx-1">*</span></label> -->
+                        <select (change)="getSelectedPlan($event)" class="form-select">
+                            <option value="" selected disabled>Selet Plan</option>
+                            <option *ngFor="let Plan of ArrPlans" value="{{Plan.planId}}">{{Plan.planName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Categories -->
+                <div class="Boxes">
+                    <h2 class="mainTile mt-5" *ngIf="this.SelectedPlanPricing?.planName">{{this.SelectedPlanPricing?.planName}} Plan</h2>
+                    <div class="row mx-2">
+                        <div class="col-md-6" *ngFor="let category of SelectedPlanPricing?.Categories;let index= index">
+                            <p class="subTile mt-4" (click)="toggleItem($event,index,category)" style="cursor: pointer;">{{category.categoryName}}</p>
+                            
+                            <div class="planBox" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+                                
+                                <div style="padding-top:1rem;" id="{{index}}">
+                                    <!-- <div *ngFor="let benefit of category.benefits;let index= index">
+                                        <div class="row d-flex justify-content-between">
+                                            <div class="col-3">
+                                                <mat-checkbox (change)="getSelectedBenefit($event,status,category.categoryId,partial)" color="primary" [value]="benefit.id" #Check>{{benefit.name}}</mat-checkbox> 
+                                            </div>
+                                            <div class="col-6">
+                                                <select (change)="getSelectedStatus($event,benefit.id,Check,partial,category.categoryId,status)" class="form-select" #status>
+                                                    <option selected value="fully">Fully</option>
+                                                    <option value="Partial">Partial</option>
+                                                    <option value="Not">Not Coverd</option>
+                                                </select>
+                                            </div>
+                                            <div style="display: none;" class="col-3" id="partial{{benefit.id}}">
+                                                <input (keyup)="getPartialValue(partial,Check,category.categoryId,benefit.id,status)" type="numer" class="form-control" placeholder="%" #partial>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <table class="table table-striped">
+                               
+                                        <tbody>
+                                          <tr *ngFor="let benefit of category.benefits;let index= index">
+                                            <td>
+                                                <mat-checkbox (change)="getSelectedBenefit($event,status,category.categoryId,partial)" color="primary" [value]="benefit.id" #Check>{{benefit.name}}</mat-checkbox> 
+                                            </td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <select (change)="getSelectedStatus($event,benefit.id,Check,partial,category.categoryId,status)" class="form-select" #status>
+                                                        <option selected value="fully">Fully</option>
+                                                        <option value="Partial">Partial</option>
+                                                        <option value="Not">Not Coverd</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                                
+                                            </td>
+                                            <td style="display: none;width: 18%;margin-left: 1.5%;" id="partial{{benefit.id}}">
+                                                <input (keyup)="getPartialValue(partial,Check,category.categoryId,benefit.id,status)" type="numer" class="form-control" placeholder="%" #partial
+                                                >
+                                            </td>
+
+                                          </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-12">
+                          <button *ngIf="this.FinalArrPricing.length>0" (click)="ViewPricingPlans()" class="btn login w-25">Add</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <button (click)="ViewPricingPlans()" mat-raised-button color="accent" class="mx-3 mt-4 w-25"> </button> -->
+                <!-- Table Of Pricing Plans-->
+                <div class="wrapper mt-5" *ngIf="this.FinalArrPricing.length>0">
+                    <table  class="custom_table text-center bordered">
+                        <thead>
+                            <th></th>
+                            <th>Plan Name</th>
+                            <th>Categores</th>
+                            <th ></th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of FinalArrPricing;let index = index" style="vertical-align: middle;">
+                                <td>{{index+1}}</td>
+                                <td>{{item.planId}}</td>
+                                <td>
+                                    <i (click)="getCategoriesToView(item.Categories)" data-bs-toggle="modal" data-bs-target="#Categories" class="fa-regular fa-eye text-success fs-5 px-3 py-2"></i>
+                                </td>
+                                <td><button color="warn" (click)="removeFromPricingPlans(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+
+
+
             <!-- File Upload -->
-            <div class="row">
+            <div class="row" style="display: none;" id="NotUse">
                 <div class="col-md-8 d-flex align-items-center">
                     <div>
-                        <div *ngIf="this.AllOfferPlans.length!=0" >
+                        <div *ngIf="this.AllOfferPlans?.length!=0" >
                             <p class="fs-5">Current plans Are 
                                 <span *ngFor="let item of this.AllOfferPlans" class="mx-1 text-danger fs-4 fw-bold">{{item.planName}}</span>
                             </p>
@@ -184,6 +289,50 @@
                     <button type="button" mat-raised-button
                         data-bs-dismiss="modal"><th>{{'Shared.Close'|translate}}</th></button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--------------------------------------- Pricing Categories with Benefits Modal --------------------------->
+<div class="modal fade" id="Categories" tabindex="-1" aria-labelledby="Categories" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="Categories">Plan Categories and Benefits</h1>
+            </div>
+            <div class="container my-2">
+                <div class="row">
+                    <div *ngFor="let Category of CategoriesToView" class="col-md-6">
+                        <!-- Table Of Categories-->
+                        <div class="wrapper mt-5">
+                            <table  class="custom_table text-center bordered">
+                                <thead>
+                                    <th></th>
+                                    <th>Benefit</th>
+                                    <th>Status</th>
+                                    <th>Partial</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let benefit of Category.benefits;let index = index" style="vertical-align: middle;">
+                                        <td>{{index+1}}</td>
+                                        <td>{{benefit.id}}</td>
+                                        <td>{{benefit.status}}</td>
+                                        <td>{{benefit.partial}}</td> 
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal-footer py-3">
+                <button id="close" type="button" mat-raised-button
+                    data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

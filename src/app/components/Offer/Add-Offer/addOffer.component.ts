@@ -36,6 +36,7 @@ export class AddOfferComponent implements OnInit{
   AllBranches:any
   isClicked:boolean= false
   CashedInputs:any
+  DecisionWay:any
   constructor(private _AdminService:AdminService,private _ListsService:ListsService, private _router:Router,private _ActivatedRoute:ActivatedRoute, private _PolicyService:PolicyService){
     this.CustomerId = this._ActivatedRoute.snapshot.paramMap.get('id')
     this._ActivatedRoute.queryParams.subscribe((data:any)=>{
@@ -80,7 +81,7 @@ export class AddOfferComponent implements OnInit{
           customerName:Model.customerName,
           offerDate:Model.offerDate
         }})
-        this._router.navigate(['/UploadPlansFile/'+this.policyId])
+        this._router.navigate(['/UploadPlansFile/'+this.policyId,this.DecisionWay])
       },async error=>{
         this.isClicked=  false
         console.log(error);
@@ -229,6 +230,9 @@ export class AddOfferComponent implements OnInit{
       this.AllBranches = data
     })
   }
+  getSelectedOption(value:any){
+    this.DecisionWay=value
+  }
   ngOnInit(): void {
     this.getInsuraneClass();
     this.getAllBranches();
@@ -254,4 +258,6 @@ export class AddOfferComponent implements OnInit{
     }else if (this.CashedInputs.policySource=='1')
     $("#BrokerFiled").show(500)
   }
+
+  
 }
