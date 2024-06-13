@@ -58,7 +58,15 @@
                 <div class="col-md-6">
                   <div class="formGroup">
                     <label>Category Name EN<span style="color: red;">*</span></label>
-                    <input class="form-control mt-2" formControlName= "englishName" type="text">
+                    <input (change)="getText()" class="form-control mt-2" formControlName= "englishName" type="text">
+                    <div *ngIf="englishText?.invalid && (englishText?.dirty || englishText?.touched)">
+                      <!-- <div *ngIf="arabicText?.errors?.required">
+                        This field is required.
+                      </div> -->
+                      <div *ngIf="englishText?.errors" style="color: red;">
+                        Please enter only English text.
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -77,7 +85,7 @@
                 </div>
               </div>
               <div class="text-center">
-                <button (click)="view()" [disabled]="this.Form.status=='INVALID'"  class="btn view w-25 mt-4">Add</button>
+                <button (click)="view()" [disabled]="this.Form.status=='INVALID'" mat-raised-button color="accent" class="w-25 mt-4">Add</button>
               </div>
 
           </form>
@@ -132,6 +140,14 @@
             <div class="formGroup">
               <label>Category Name EN<span style="color: red;">*</span></label>
               <input class="form-control mt-2" formControlName= "englishName" type="text">
+              <div *ngIf="englishText?.invalid && (englishText?.dirty || englishText?.touched)">
+                <!-- <div *ngIf="arabicText?.errors?.required">
+                  This field is required.
+                </div> -->
+                <div *ngIf="englishText?.errors?.englishText" style="color: red;">
+                  Please enter only English text.
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-md-6">
@@ -164,7 +180,7 @@
                 </div>
               </div>
               <div class="col-md-4">
-                <button (click)="AddBenfit()"  class="btn view w-25 mt-4">Add</button>
+                <button (click)="AddBenfit()" mat-raised-button color="accent" class="w-25 mt-4">Add</button>
               </div>
             </div>
           </form>

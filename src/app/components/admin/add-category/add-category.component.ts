@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { arabicTextValidator } from 'src/app/services/arabic-text.validator';
+import { englishOnlyValidator, arabicTextValidator} from 'src/app/services/text-validators';
 import { PricingToolService } from 'src/app/services/pricing-tool.service';
 import Swal from 'sweetalert2';
 declare var $:any; 
@@ -32,14 +32,23 @@ export class AddCategoryComponent implements OnInit {
   Form:FormGroup =new FormGroup({
     'id': new FormControl(null),
     'arabicName':new FormControl('',[Validators.required,arabicTextValidator()]),
-    'englishName':new FormControl('',[Validators.required]),
+    'englishName':new FormControl('',[Validators.required,englishOnlyValidator()]),
 });
   
 EDitForm:FormGroup =new FormGroup({
     'benfitId':new FormControl('',[Validators.required]),
 });
 get arabicText() {
-  return this.Form.get('arabicName');
+  return this.Form.get('arabicName')
+}
+get englishText(){
+  return this.Form.get('englishName')
+}
+
+getText(){
+  if(this.Form.get('arabicName')?.status == 'INVALID'){
+    this._ToastrService.error('Text Shoud be arabic', " Well Done");
+  }
 }
 
 

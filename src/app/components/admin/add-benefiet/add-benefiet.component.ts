@@ -5,7 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AdminService } from 'src/app/services/admin.service';
 import { ListsService } from 'src/app/services/lists.service';
 import { PricingToolService } from 'src/app/services/pricing-tool.service';
-import { arabicTextValidator } from 'src/app/services/arabic-text.validator';
+// import { arabicTextValidator } from 'src/app/services/arabic-text.validator';
+import { englishOnlyValidator, arabicTextValidator} from 'src/app/services/text-validators';
+
 import Swal from 'sweetalert2';
 declare var $:any;
 @Component({
