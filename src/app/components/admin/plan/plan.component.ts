@@ -146,7 +146,10 @@ removeBenfit(index:number){
 
 AddNewBenfit(){
   const selectedCategoryId = this.CategoryForm.get('categoryId')?.value;
+  console.log(selectedCategoryId);
+  
   let benefitId = this.benfitsForm.value.benfitsIds;
+  console.log(benefitId);
   this._PricingToolService.AddBenfitToCategory(selectedCategoryId,benefitId).subscribe((data:any)=>{
     console.log(data);
   })
@@ -201,10 +204,15 @@ ViewCoverageRegions(item:any){
 
   AddPlan(){
     this.isClicked =true
-    let Model = Object.assign(this.Form.value,{coverageRegions:this.arrTest},{planCategories:this.planCategories})
+    const planNetworkId = Number(this.Form.get('planNetworkId')?.value);
+    const planName = this.Form.get('planName')?.value
+    const annualMaxLimit = this.Form.get('annualMaxLimit')?.value
+
+    let Model = Object.assign({planName:planName},{annualMaxLimit:annualMaxLimit},{planNetworkId:planNetworkId},{coverageRegions:this.arrTest},{planCategories:this.planCategories})
     // ,{planNetworkId:Number(this.Form.get('planNetworkId')?.value)}
     console.log(Model);
     this.MainArr.push(Model)
+    console.log(this.MainArr);
     this._PricingToolService.AddNewPlan(this.MainArr).subscribe((res:any)=>{
       this.isClicked = false;
       console.log(res);      
@@ -227,12 +235,16 @@ ViewCoverageRegions(item:any){
     
     this.editMode = true;
     this.currentPlanIndex = this.AllPlansArr.indexOf(plan);
-    this.networkitem = this.AllNetworkArr.find(item=>item.id==plan.planId)
-    this.editForm.patchValue({
+    this.networkitem = this.AllNetworkArr.find(item => item.id === plan.planNetwork.id);
+    console.log( this.networkitem);
+    // const networkName = this.networkitem ? this.networkitem?.name : '';
+
+    
+    this.editForm.setValue({
       id:plan.planId,
       planName: plan.planName,
       annualMaxLimit: plan.annualMaxLimit,
-      planNetworkId: this.networkitem.name
+      planNetworkId: this.networkitem.id
     });
     
     // Clear arrTest before adding new values
@@ -262,31 +274,41 @@ ViewCoverageRegions(item:any){
       annualMaxLimit: plan.annualMaxLimit,
       coverageRegions: plan.coverageRegions
     }];
-     // Set values for CategoryForm and benfitsForm
-  if (plan.categoryId) {
-    this.CategoryForm.patchValue({
-      categoryId: plan.categoryId
-    });
-  }
-  if (plan.benfitsIds) {
-    this.benfitsForm.patchValue({
-      benfitsIds: plan.benfitsIds
-    });
-  }
+ // Set values for CategoryForm and benfitsForm
+ if (plan.categoryWithBenfits.length > 0) {
+  this.CategoryForm.patchValue({
+    categoryId: plan.categoryWithBenfits[0].id
+  });
 
-  // this.MainArr = [{
-  //   planName: plan.planName,
-  //   annualMaxLimit: plan.annualMaxLimit,
-  //   coverageRegions: plan.coverageRegions
-  // }];
+  this.benfitsForm.patchValue({
+    benfitsIds: plan.categoryWithBenfits[0].benefits.map((benefit: { id: any; }) => benefit.id)
+  });
+    
+// Map the categories to include the category name
+this.planCategories = plan.categoryWithBenfits.map((category: { englishName: any; benefits: any; }) => ({
+  categoryNameEnglish: category.englishName,
+  benefits: category.benefits
+}));
+console.log(this.planCategories);
+//  this.ShowProducts = this.planCategories?.benefits ;
 
-  // Set values for category benefits array if any
-  this.categoryBenfitArr = plan.categoryBenfitArr || [];
 
-  this.planCategories = plan.planCategories || [];
-  this.ShowProducts = plan.ShowProducts || [];
+} else {
+  // Clear the forms if no category or benefits are provided
+  this.CategoryForm.patchValue({
+    categoryId: null
+  });
+}
+  this.categoryBenfitArr = plan.categoryWithBenfits.length > 0 ? plan.categoryWithBenfits[0].benefits : [];
   
-  }
+//  this.planCategories = plan.categoryWithBenfits || [];
+//  this.ShowProducts = planCategories.benefits > 0 ? plan.categoryWithBenfits[0].benefits : [];
+//  this.ShowProducts = this.planCategories?.benefits ;
+
+}
+// ViewCoverageRegion(item: any) {
+//   this.ShowProducts = item.benefits|| [];
+// }
   
   EditPlan() {
     this.isClicked =true
