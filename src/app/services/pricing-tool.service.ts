@@ -30,109 +30,109 @@ export class PricingToolService {
   }
    // All Network
    AddNetwork(Model:any){ 
-    return this._HttpClient.post(this.baseUrl+'Benfit/AddNewNetwork',Model,this.httpOptions)
+    return this._HttpClient.post(this.baseUrl+'PricingTool/AddNewNetwork',Model,this.httpOptions)
   }
   GetAllNetwork(){
-    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllNetworks',this.httpOptions)
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetAllNetworks',this.httpOptions)
   }
   GetNetworkById(id:any){
-    return this._HttpClient.get(this.baseUrl+'Benfit/GetNetworkById?id='+id,this.httpOptions)
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetNetworkById?id='+id,this.httpOptions)
   }
   EditNetwork(Body:any){
-    return this._HttpClient.put(this.baseUrl+'Benfit/UpdateNetwork',Body)
+    return this._HttpClient.put(this.baseUrl+'PricingTool/UpdateNetwork',Body)
   }
   DeleteNetwork(id:any){
-    return this._HttpClient.delete(this.baseUrl+'Benfit/DeleteNetwork?id='+id)
+    return this._HttpClient.delete(this.baseUrl+'PricingTool/DeleteNetwork?id='+id)
   }
    // All  Category
    AddCategory(Model:any){ 
-    return this._HttpClient.post(this.baseUrl+'Benfit/AddCategory',Model,this.httpOptions)
+    return this._HttpClient.post(this.baseUrl+'PricingTool/AddCategory',Model,this.httpOptions)
   }
   AddBenfitToCategory(BenfitId:any,CategoryId:any){
     const Model={
       benfitId:BenfitId,
       categoryId:CategoryId
     }
-    return this._HttpClient.post(this.baseUrl+'Benfit/AddBenfitToCategory',Model,this.httpOptions)
+    return this._HttpClient.post(this.baseUrl+'PricingTool/AddBenfitToCategory',Model,this.httpOptions)
 
   }
   GetAllCategories(){
-    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllCategories',this.httpOptions)
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetAllCategories',this.httpOptions)
   }
   GetAllCategoriesBenfits(id:any){
-    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllCategoryBenfits?categoryid='+id,this.httpOptions)
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetAllCategoryBenfits?categoryid='+id,this.httpOptions)
   }
   GetCategoryById(id:any){
-    return this._HttpClient.get(this.baseUrl+'Benfit/GetCategoryById?id='+id,this.httpOptions)
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetCategoryById?id='+id,this.httpOptions)
   }
   // EditCategory(Body:any){
   //   return this._HttpClient.put(this.baseUrl+'Benfit/EditCategory',Body)
   // }
   EditCategory(Body:any){
-    return this._HttpClient.put(this.baseUrl+'Benfit/EditCategoryWithBenfit',Body)
+    return this._HttpClient.put(this.baseUrl+'PricingTool/EditCategoryWithBenfit',Body)
   }
   DeleteCategory(id:any){
-    return this._HttpClient.delete(this.baseUrl+'Benfit/DeleteCategory?id='+id)
+    return this._HttpClient.delete(this.baseUrl+'PricingTool/DeleteCategory?id='+id)
   }
   //All Benfites
   GetAllBenfits(){
-    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllBenfits',this.httpOptions)
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetAllBenfits',this.httpOptions)
   }
   AddBenfit(Model:any){ 
-    return this._HttpClient.post(this.baseUrl+'Benfit/AddBenfit',Model,this.httpOptions)
+    return this._HttpClient.post(this.baseUrl+'PricingTool/AddBenfit',Model,this.httpOptions)
   }
   GetBenfiteById(id:any){
-    return this._HttpClient.get(this.baseUrl+'Benfit/GetBenfitById?id='+id,this.httpOptions)
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetBenfitById?id='+id,this.httpOptions)
   }
   EditBenfit(Body:any){
-    return this._HttpClient.put(this.baseUrl+'Benfit/EditBenfit',Body)
+    return this._HttpClient.put(this.baseUrl+'PricingTool/EditBenfit',Body)
   }
   DeleteBenfit(id:any){
-    return this._HttpClient.delete(this.baseUrl+'Benfit/DeleteBenfit?id='+id)
+    return this._HttpClient.delete(this.baseUrl+'PricingTool/DeleteBenfit?id='+id)
   }
   // All Age Band
   
   GetAllAgeBands(){
-    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllAgeBands',this.httpOptions)
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetAllAgeBands',this.httpOptions)
   }
    AddAgeBand(Model:any){ 
-    return this._HttpClient.post(this.baseUrl+'Benfit/AddAgeBand',Model,this.httpOptions)
+    return this._HttpClient.post(this.baseUrl+'PricingTool/AddAgeBand',Model,this.httpOptions)
   }
   GetAgeBandById(id:any){
-    return this._HttpClient.get(this.baseUrl+'Benfit/GetAgeBandById?id='+id,this.httpOptions)
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetAgeBandById?id='+id,this.httpOptions)
   }
   EditAgeBand(Body:any){
-    return this._HttpClient.put(this.baseUrl+'Benfit/EditAgeBand',Body)
+    return this._HttpClient.put(this.baseUrl+'PricingTool/EditAgeBand',Body)
   }
   DeleteAgeBand(id:any){
-    return this._HttpClient.delete(this.baseUrl+'Benfit/DeleteAgeBand?id='+id)
+    return this._HttpClient.delete(this.baseUrl+'PricingTool/DeleteAgeBand?id='+id)
   }
   // Pricing
   GetAllPricing(){
-    return this._HttpClient.get(this.baseUrl+'Benfit/GetAllPricing',this.httpOptions)
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetAllPricing',this.httpOptions)
   }
  AddBenfitPricing(Model:any){ 
-  return this._HttpClient.post(this.baseUrl+'Benfit/AddBenfitPricing',Model,this.httpOptions)
+  return this._HttpClient.post(this.baseUrl+'PricingTool/AddBenfitPricing',Model,this.httpOptions)
  }
  EditBenfitPricing(Model:any){
-  return this._HttpClient.put(this.baseUrl+'Benfit/UpdatePricing',Model)
+  return this._HttpClient.put(this.baseUrl+'PricingTool/UpdatePricing',Model)
  }
  deletpricing(id:any){
-  return this._HttpClient.delete(this.baseUrl+'Benfit/DeletePricing?id='+id)
+  return this._HttpClient.delete(this.baseUrl+'PricingTool/DeletePricing?id='+id)
 
  }
  // Plans
  getAllPlans(){
-  return this._HttpClient.get(this.baseUrl+'Benfit/GetAllPlans',this.httpOptions)
+  return this._HttpClient.get(this.baseUrl+'PricingTool/GetAllPlans',this.httpOptions)
  }
  AddNewPlan(Model:any){
-  return this._HttpClient.post(this.baseUrl+'Benfit/AddNewPlan',Model,this.httpOptions)
+  return this._HttpClient.post(this.baseUrl+'PricingTool/AddNewPlan',Model,this.httpOptions)
  }
  EditPlan(Model:any){
-  return this._HttpClient.put(this.baseUrl+'Benfit/UpdatePlan',Model)
+  return this._HttpClient.put(this.baseUrl+'PricingTool/UpdatePlan',Model)
  }
  deletplan(id:any){
-  return this._HttpClient.delete(this.baseUrl+'Benfit/DeletePlan?id='+id)
+  return this._HttpClient.delete(this.baseUrl+'PricingTool/DeletePlan?id='+id)
 
  }
 
@@ -144,7 +144,7 @@ export class PricingToolService {
     
     ///  Get Benfit Types By Id
     GetAllBenfitTypes(id:any){
-      return this._HttpClient.get(this.baseUrl+'Benfit/GetAllBenfitTypes?benfitId='+id,this.httpOptions)
+      return this._HttpClient.get(this.baseUrl+'PricingTool/GetAllBenfitTypes?benfitId='+id,this.httpOptions)
     }
     
    
