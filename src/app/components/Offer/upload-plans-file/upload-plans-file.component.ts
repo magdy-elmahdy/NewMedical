@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PolicyService } from 'src/app/services/policy.service';
+import { PricingToolService } from 'src/app/services/pricing-tool.service';
 import Swal from 'sweetalert2';
 declare var $:any
 @Component({
@@ -125,7 +126,7 @@ export class UploadPlansFileComponent implements OnInit{
 
     }
   ]
-  constructor(public _location: Location,private _ToastrService:ToastrService,
+  constructor(public _location: Location,private _ToastrService:ToastrService, private _PricingToolService:PricingToolService,
     private _PolicyService:PolicyService, private _ActivatedRoute:ActivatedRoute,private _Router:Router){
     this.OfferId = this._ActivatedRoute.snapshot.paramMap.get('id')
     this.Type = this._ActivatedRoute.snapshot.paramMap.get('type')
@@ -333,8 +334,6 @@ export class UploadPlansFileComponent implements OnInit{
       }
     }
     console.log(this.ArrCategories);
-    
-    
   }
   // Selected Benefit
   getSelectedBenefit(e:any,status:any,categoryId:any,partial:any){
@@ -431,18 +430,31 @@ export class UploadPlansFileComponent implements OnInit{
     
     
   }
+  // Add To Pricing Plan Arr
+  AddToPricingPlanArr(){
+
+  }
+  getAllPricingPlans(){
+    this._PricingToolService.getAllPlans().subscribe(data=>{
+      console.log(data);
+    },error=>{
+      console.log(error);
+    })
+  }
   ngOnInit(): void {
     this.getPlansOfOffer();
     if(this.Type=='1'){
       // Pricing
       $("#Pricing").show(300)
-      $("#NotUse").hide(500)
+      $(".NotUse").hide(500)
     }
     else if(this.Type=='2'){
       // Not Pricing
-      $("#NotUse").show(500)
+      $(".NotUse").show(500)
       $("#Pricing").hide(500)
     }
+    /// Pricing //
+    this.getAllPricingPlans()
   }
   
 }

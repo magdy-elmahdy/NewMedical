@@ -279,7 +279,7 @@
         <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item">
                 <h2 class="accordion-header head">
-                    <button  (click)="getActivee(item9)" #item9 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_10">
+                    <button (click)="getActivee(item9)" #item9 class="mainSideItem w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_10">
                         <span></span><i class="fa fa-file-alt"></i> Reports
                     </button>
                 </h2>
@@ -306,7 +306,7 @@
     <div class="accordion accordion-flush" id="accordionFlushExample">
         <div class="accordion-item">
             <h2 class="accordion-header head">
-                <button class="w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_6">
+                <button (click)="getActivee(item10)" #item10 class="w-100 collapsed px-2" type="button" data-bs-toggle="collapse" data-bs-target="#H_6">
                     <i class="fa-solid fa-retweet"></i> Reinsurance
                 </button>
             </h2>
@@ -314,6 +314,8 @@
                 <div class="accordion-body">
                     <div class="my-1" class="subMenue" routerLink="/ReInsuranceCompany" routerLinkActive="activee"><i class="fa-solid fa-building"></i> Reinsurance Comapany</div>
                     <div class="my-1"  class="subMenue" routerLink="/ReInsuranceBroker" routerLinkActive="activee"><i class="fa-solid fa-handshake"></i> Reinsurance Broker</div>
+                    <div class="my-1"routerLink="/MedicalTreatySetup" routerLinkActive="activee"><i class="fa-solid fa-repeat"></i> Medical Treaty Setup</div>
+                
                 </div>
             </div>
         </div>
