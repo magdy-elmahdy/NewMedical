@@ -246,5 +246,14 @@ export class PricingComponent implements OnInit {
     this.GetAllCategories()
     this.getAllEdgeBand()
     this.getAllBenfits()
+    // this.getAllCategoriesBenfits()
+  }
+  AllCategoriesBenfits:any[]=[]
+  getAllCategoriesBenfits(){
+    this._PricingToolService.GetAllCategoriesBenfits(this.Form.get('categoryId')?.value).subscribe((data:any)=>{
+      console.log(data);
+      this.AllCategoriesBenfits = data
+      
+    })
   }
 }
