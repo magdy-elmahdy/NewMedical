@@ -88,7 +88,7 @@
                     </mat-form-field> -->
                     <div class="formGroup">
                         <label>Category<span style="color: red;">*</span></label>
-                        <select (change)="selectedCategory()" class="form-select mt-2" formControlName="categoryId">
+                        <select (change)="this.getAllCategoriesBenfits()" class="form-select mt-2" formControlName="categoryId">
                             <option *ngFor="let item of this.AllCates" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
                         </select>
                     </div>
@@ -103,8 +103,8 @@
                     </mat-form-field> -->
                     <div class="formGroup">
                         <label>Benefit<span style="color: red;">*</span></label>
-                        <select class="form-select mt-2" formControlName="benfitsId">
-                            <option *ngFor="let item of this.AllBenefitss" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
+                        <select  class="form-select mt-2" formControlName="benfitsId">
+                            <option *ngFor="let item of this.AllCategoriesBenfits" [value]="item.id">{{item.englishName}} - {{item.arabicName}}</option>
                         </select>
                     </div>
                 </div>
