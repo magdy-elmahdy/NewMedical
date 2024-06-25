@@ -93,13 +93,11 @@ export class CalculationsOfPolicyComponent implements OnInit{
     })
   }
 
-  PricingTax:any=0.02
+  PricingTax:any=2
   // Offer Pricing Calcualtions
   getOfferPricingCalculations(){
     this.loading = true 
-    this.Model =this.Form.value
-    
-    this._PricingToolService.GetOfferCalculationById(this.OfferId,this.PricingTax).subscribe(data=>{
+    this._PricingToolService.GetOfferCalculationById(this.OfferId,this.PricingTax/100).subscribe(data=>{
       console.log(data);
       this.PolicyCaluculations = data
       this.loading = false
@@ -109,6 +107,9 @@ export class CalculationsOfPolicyComponent implements OnInit{
     })
   }
 
+  reCalculatePricing(){  ////////////////////////////////////////////
+    this.getOfferPricingCalculations()
+  }
   ngOnInit(): void {
     
     if(this.Type=='1'){

@@ -62,10 +62,10 @@
                                                 <div class="d-flex align-items-center">
                                                     <mat-form-field class="w-75">
                                                         <mat-label>{{'PolicyCalculatins.taxes'|translate}} <i class="fa-solid fa-percent"></i></mat-label>
-                                                        <input value="{{PolicyCaluculations?.taxes*100}}" [(ngModel)]="TaxValue" [ngModelOptions]="{standalone: true}" type="number" matInput>
+                                                        <input value="{{PolicyCaluculations?.taxes*100}}" [(ngModel)]="PricingTax" [ngModelOptions]="{standalone: true}" type="number" matInput>
                                                         <mat-icon matIconSuffix style="color: rgba(0, 0, 0, 0.6);"><i class="fa-solid fa-coins"></i></mat-icon>                                                
                                                     </mat-form-field>
-                                                    <button (click)="reCalculate()" mat-stroked-button class="w-25" color="primary">{{'Shared.Calculate'|translate}}</button>
+                                                    <button (click)="reCalculatePricing()" mat-stroked-button class="w-25" color="primary">{{'Shared.Calculate'|translate}}</button>
                                             
                                                 </div>
                                             </td>
