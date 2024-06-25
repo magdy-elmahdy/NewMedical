@@ -12,7 +12,7 @@
             <thead class="tableHead align-middle"  style="background: #F3F2F2;height: 50px;">
                 <th class="py-2">English Name</th>
                 <th class="py-2">Arabic Name</th>
-                <th class="py-2">Max Limit</th>
+                <!-- <th class="py-2">Max Limit</th> -->
                 <th >Settings</th>
             </thead>
             <tbody>
@@ -22,7 +22,7 @@
                     totalItems:count}; let i=index">
                     <td class="align-middle">{{item.englishName}}</td>
                     <td class="align-middle">{{item.arabicName}}</td>
-                    <td class="align-middle">{{item.maxLimit}}</td>
+                    <!-- <td class="align-middle">{{item.maxLimit}}</td> -->
                     <!-- <td class="align-middle">{{item.to}}</td> -->
                     <td>
                         <i (click)="openEditModal(item)" data-bs-toggle="modal" data-bs-target="#EditBenfit" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
@@ -99,12 +99,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mt-2">
+                    <!-- <div class="col-md-6 mt-2">
                         <div class="formGroup">
                             <label>Max Limit<span style="color: red;">*</span></label>
                             <input class="form-control mt-2" formControlName= "maxLimit" type="number">
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-6" style="margin-top: 28px;">
                         <button (click)="addbenfitinarray()" [disabled]="this.Form.status == 'INVALID'" mat-raised-button color="accent" class="mt-2" style="width: 35%;margin-left: 3%;">Add</button>
                     <!-- </div>
@@ -140,7 +140,7 @@
                             <th></th>
                             <th>Arabic Name</th>
                             <th>English Name</th>
-                            <th>Max Limt</th>
+                            <!-- <th>Max Limt</th> -->
                             <th>Category</th>
                         </thead>
                         <tbody>
@@ -148,7 +148,7 @@
                                 <td>{{index+1}}</td>
                                 <td>{{item.arabicName}}</td>
                                 <td>{{item.englishName}}</td>
-                                <td>{{item.maxLimit}}</td>
+                                <!-- <td>{{item.maxLimit}}</td> -->
                                 <td>{{item.categoryId}}</td>
                                 <!-- <td>
                                     <i (click)="ViewBenefitTypes(item)" class="fa-regular fa-eye text-success fs-5 px-3 py-2"></i>
@@ -229,12 +229,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mt-2">
+                    <!-- <div class="col-md-6 mt-2">
                         <div class="formGroup">
                             <label>Max Limit<span style="color: red;">*</span></label>
                             <input class="form-control mt-2" formControlName= "maxLimit" type="number">
                         </div>
-                    </div>
+                    </div> -->
                     <!-- <div class="col-md-6" style="margin-top: 28px;"> -->
                         <!-- <button (click)="addbenfitinarray()" [disabled]="this.Form.status == 'INVALID'" mat-raised-button color="accent" class="mt-2" style="width: 35%;margin-left: 3%;">Add</button> -->
                     <!-- </div>

@@ -36,14 +36,14 @@ export class AddBenefietComponent implements OnInit {
   Form:FormGroup =new FormGroup({
     'arabicName':new FormControl('',[Validators.required,arabicTextValidator()]),
     'englishName':new FormControl('',[Validators.required]),
-    'maxLimit':new FormControl('',[Validators.required]),
+    'maxLimit':new FormControl(''),
     'categoryId':new FormControl('',[Validators.required])
 });
 EditForm:FormGroup =new FormGroup({
   'benfitId':new FormControl(''),
   'arabicName':new FormControl('',[Validators.required,arabicTextValidator()]),
   'englishName':new FormControl('',[Validators.required]),
-  'maxLimit':new FormControl('',[Validators.required]),
+  'maxLimit':new FormControl('0'),
   // 'categoryId':new FormControl('',[Validators.required])
 });
 get arabicText() {

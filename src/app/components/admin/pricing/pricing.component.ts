@@ -56,6 +56,7 @@ export class PricingComponent implements OnInit {
       // this.getAllItems()
       Swal.fire({title:'Pricing Added Successfully',timer:3000, timerProgressBar: true})
       this.arrTest =[];
+      this.getAllPricing()
     },error=>{
       this.isClicked = false;
       console.log(error);
@@ -76,18 +77,9 @@ export class PricingComponent implements OnInit {
 
   // Add Accounts Numbers
   view(){
-    // var category = this.AllCates.find(item=>this.Form.get('categoryId')?.value == item.categoryId)
-    // console.log(category);
-
     let Model = Object.assign(this.Form.value)
     this.arrTest.push(Model);
-      this.Form.reset()
-    // if(exixs==undefined){
-    //   this.arrTest.push(this.Form.value);
-    //   this.Form.reset()
-    // }else{
-    //   this._ToastrService.show('This item already existed')
-    // }
+    this.Form.reset()
     console.log(this.arrTest);
   }
   remove(index:number){
@@ -250,6 +242,7 @@ export class PricingComponent implements OnInit {
   }
   AllCategoriesBenfits:any[]=[]
   getAllCategoriesBenfits(){
+    this.AllCategoriesBenfits = []
     this._PricingToolService.GetAllCategoriesBenfits(this.Form.get('categoryId')?.value).subscribe((data:any)=>{
       console.log(data);
       this.AllCategoriesBenfits = data
