@@ -106,8 +106,6 @@ export class PolicyService {
   }
 
 
-
-
       // get Calcualtion of Offer
   getOfferCalculations(id:any){
     return this._HttpClient.get(this.baseUrl+'Offer/GetOfferCalculations?offerId='+id,this.httpOptions)

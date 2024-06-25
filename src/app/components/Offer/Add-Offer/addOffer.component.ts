@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 import { ListsService } from 'src/app/services/lists.service';
 import { PolicyService } from 'src/app/services/policy.service';
+import { PricingToolService } from 'src/app/services/pricing-tool.service';
 import Swal from 'sweetalert2';
 declare var $:any
 @Component({
@@ -36,8 +37,10 @@ export class AddOfferComponent implements OnInit{
   AllBranches:any
   isClicked:boolean= false
   CashedInputs:any
-  DecisionWay:any
-  constructor(private _AdminService:AdminService,private _ListsService:ListsService, private _router:Router,private _ActivatedRoute:ActivatedRoute, private _PolicyService:PolicyService){
+  DecisionWay:any=''
+  constructor(private _AdminService:AdminService,private _ListsService:ListsService, private _router:Router,
+    private _ActivatedRoute:ActivatedRoute, private _PolicyService:PolicyService,
+    private _PricingToolService:PricingToolService){
     this.CustomerId = this._ActivatedRoute.snapshot.paramMap.get('id')
     this._ActivatedRoute.queryParams.subscribe((data:any)=>{
       this.CashedInputs = data
@@ -69,28 +72,51 @@ export class AddOfferComponent implements OnInit{
       {brokerId:this.BrokerValue},
       {businessType:Number(this.BusinessTypeValue)}, 
       )
-      console.log(Model);
-      this._PolicyService.AddOffer(Model).subscribe(async (res:any)=>{
-        this.isClicked=  false
-        Swal.fire('Good job!','Offer Added Successfully','success')
-        console.log(res);
-        this.policyId = res.id
-        await this._router.navigate(['/Offer'],{queryParams:{
-          brokerId:this.BrokerValue,BranchId:Model.BranchId,
-          tpaId:Model.tpaId,policySource:Model.policySource,
-          customerName:Model.customerName,
-          offerDate:Model.offerDate
-        }})
-        this._router.navigate(['/UploadPlansFile/'+this.policyId,this.DecisionWay])
-      },async error=>{
-        this.isClicked=  false
-        console.log(error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: error.error,
+      // console.log(Model);
+      // Pricing
+      if(this.DecisionWay==1){
+        // console.log("pricing");
+        Model = Object.assign(Model,{insuredName:this.OfferForm.get('customerName')?.value})
+        console.log(Model);
+        this._PricingToolService.AddNewOffer(Model).subscribe(async (res:any)=>{
+          this.isClicked=  false
+          Swal.fire('Good job!','Offer Added Successfully','success')
+          // console.log(res);
+          this.policyId = res.id;
+          await this._router.navigate(['/Offer'],{queryParams:{
+            brokerId:this.BrokerValue,BranchId:Model.BranchId,
+            tpaId:Model.tpaId,policySource:Model.policySource,
+            customerName:Model.customerName,
+            offerDate:Model.offerDate
+          }})
+          this._router.navigate(['/UploadPlansFile/'+this.policyId,this.DecisionWay])
+        },async error=>{
+          this.isClicked=  false
+          console.log(error);
+          Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
         })
-      })
+      }
+      // Not Pricing
+      else if(this.DecisionWay==2){
+        // console.log("Not pricing");
+        this._PolicyService.AddOffer(Model).subscribe(async (res:any)=>{
+          this.isClicked=  false
+          Swal.fire('Good job!','Offer Added Successfully','success')
+          console.log(res);
+          this.policyId = res.id
+          await this._router.navigate(['/Offer'],{queryParams:{
+            brokerId:this.BrokerValue,BranchId:Model.BranchId,
+            tpaId:Model.tpaId,policySource:Model.policySource,
+            customerName:Model.customerName,
+            offerDate:Model.offerDate
+          }})
+          this._router.navigate(['/UploadPlansFile/'+this.policyId,this.DecisionWay])
+        },async error=>{
+          this.isClicked=  false
+          console.log(error);
+          Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
+        })
+      }
     this.BrokerValue=String(this.BrokerValue)
   }
 

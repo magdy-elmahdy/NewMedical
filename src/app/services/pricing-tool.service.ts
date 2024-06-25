@@ -141,12 +141,44 @@ export class PricingToolService {
    
     
    
-    
+  
     ///  Get Benfit Types By Id
     GetAllBenfitTypes(id:any){
       return this._HttpClient.get(this.baseUrl+'PricingTool/GetAllBenfitTypes?benfitId='+id,this.httpOptions)
     }
+    ///  Get Coverage Types
+    GetCoverageTypes(){
+      return this._HttpClient.get(this.baseUrl+'Lists/GetCoverageTypes',this.httpOptions)
+    }
     
-   
+    
+
+
+
+   /////////////////////////////// Offer ////////////////////
+   AddNewOffer(Model:any){
+    return this._HttpClient.post(this.baseUrl+'PricingTool/AddNewOffer',Model,this.httpOptions)
+   }
+  AddPlansToOffer(Model:any){
+    return this._HttpClient.post(this.baseUrl+'PricingTool/AddPlansToOffer',Model ,this.httpOptions)
+  }
+
+        // Upload Group File
+  AddEmployeesGroupFile(FormData:any){
+    return this._HttpClient.post(this.baseUrl+'PricingTool/AddEmployeesGroupFile',FormData,{responseType: 'text',
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' +this.t
+      }).set("ngrok-skip-browser-warning", "true")
+  })
+  }
+
+  UpdateOfferWithLossRatio(Body:any,offerId:any){
+    return this._HttpClient.put(this.baseUrl+'PricingTool/UpdateOfferWithLossRatio?offerId='+offerId+
+      '&lossRatio='+Body.lossRatio+'&targetLossRatio='+Body.targetLossRatio,Body)
+  }
+  /// 
+  GetOfferCalculationById(OfferId:any, Taxes:any){
+    return this._HttpClient.get(this.baseUrl+'PricingTool/GetOfferCalculationById?offerId='+OfferId+'&taxes='+Taxes,this.httpOptions)
+  }
 
 }

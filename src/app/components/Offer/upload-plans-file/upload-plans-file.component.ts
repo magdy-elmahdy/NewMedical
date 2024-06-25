@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PolicyService } from 'src/app/services/policy.service';
 import { PricingToolService } from 'src/app/services/pricing-tool.service';
+import { arabicTextValidator } from 'src/app/services/text-validators';
 import Swal from 'sweetalert2';
 declare var $:any
 @Component({
@@ -27,105 +28,9 @@ export class UploadPlansFileComponent implements OnInit{
   Benefits:any[]=[]
   SelectedPlanPricing:any
   CategoriesToView:any
-  AllPlans:any[]=[
-    {
-      planName:'Gold',
-      planId:'1',
-      Anuual:'6000',
-      benefits:[
-        {id:1,name:'Eye'},
-        {id:2,name:'Teeth'},
-        {id:3,name:'Hand'},
-        {id:4,name:'Liver'},
-      ]
-    },
-    {
-      planName:'Premium',
-      planId:'2',
-      Anuual:'8000',
-      benefits:[
-        {id:5,name:'Cancer'},
-        {id:6,name:'Tongue'},
-        {id:7,name:'Hidech'},
-      ]
-    },
-    {
-      planName:'Math',
-      planId:'3',
-      Anuual:'10000',
-      benefits:[
-        {id:8,name:'Eye'},
-        {id:9,name:'Teeth'},
-        {id:10,name:'Liver'},
-      ]
-    },
-  ]
-  ArrPlans:any[]=[
-    {
-      planName:'Gold',
-      planId:6,
-      Categories:[
-        {
-          categoryName:'In Patient',
-          categoryId:10,
-          benefits:[
-            {name:'Eye',id:1,sum:2000},
-            {name:'Teeth',id:2,sum:4000},
-            {name:'Stomic',id:3,sum:6000},
-            {name:'Diabit',id:4,sum:5000},
-          ]
-        },
-        {
-          categoryName:'Out Patient',
-          categoryId:20,
-          benefits:[
-            {name:'Eye',id:5,sum:3000},
-            {name:'Headaches',id:6,sum:4000},
-            {name:'Stomic',id:7,sum:6000},
-            {name:'Diabit',id:8,sum:7000},
-          ]
-        },
-      ]
-
-    },
-    {
-      planName:'Platinum',
-      planId:12,
-      Categories:[
-        {
-          categoryName:'InSide',
-          categoryId:30,
-          benefits:[
-            {name:'Diarrhea',id:9,sum:2000},
-            {name:'Teeth',id:10,sum:4000},
-            {name:'Allergies',id:11,sum:6000},
-            {name:'Diabit',id:12,sum:5000},
-          ]
-        },
-        {
-          categoryName:'OutSide',
-          categoryId:40,
-          benefits:[
-            {name:'Eye',id:13,sum:3000},
-            {name:'Headaches',id:14,sum:4000},
-            {name:'Mononucleosis',id:15,sum:6000},
-            {name:'Diabit',id:16,sum:7000},
-          ]
-        },
-        {
-          categoryName:'Mix',
-          categoryId:50,
-          benefits:[
-            {name:'COVID-19',id:16,sum:3000},
-            {name:'Headaches',id:17,sum:4000},
-            {name:'Stomic',id:18,sum:6000},
-            {name:'Monkeypox',id:19,sum:7000},
-          ]
-        },
-      ]
-
-    }
-  ]
+  AllPlans:any[]=[]
+  ArrPlans:any[]=[]
+  AllAdditionalBenefits:any[]=[]
   constructor(public _location: Location,private _ToastrService:ToastrService, private _PricingToolService:PricingToolService,
     private _PolicyService:PolicyService, private _ActivatedRoute:ActivatedRoute,private _Router:Router){
     this.OfferId = this._ActivatedRoute.snapshot.paramMap.get('id')
@@ -139,7 +44,13 @@ export class UploadPlansFileComponent implements OnInit{
     AnnualMaxLimit :new FormControl('',[Validators.required]),
     NetPremium :new FormControl('',[Validators.required]),
   })
-
+  AddtionalBenefitForm:FormGroup =new FormGroup({
+    'arabicName':new FormControl('',[Validators.required,arabicTextValidator()]),
+    'englishName':new FormControl('',[Validators.required]),
+    'maxLimit':new FormControl('',[Validators.required]),
+    'coverageType':new FormControl('',[Validators.required]),
+    'partialPct':new FormControl('')
+});
   uploadFile(event: any){
     // Get File Object
     this.selectedFile = event.target.files[0] ?? null;
@@ -183,7 +94,7 @@ export class UploadPlansFileComponent implements OnInit{
       this.clearFormData()
       this.getPlansOfOffer()
     },error=>{
-      Swal.fire({icon: 'error',title:error.error,text:''}  )
+      Swal.fire({icon: 'error',title:error.error,text:''})
       this.isClickedDocumnet=false
       console.log(error);
       this.clearFormData()
@@ -243,25 +154,21 @@ export class UploadPlansFileComponent implements OnInit{
   // TemArrBenefits:any[]=[]
   ArrCategories:any[]=[]
   FinalArrPricing:any[]=[]
-  // Toggle
-  toggleItem(e:any,i:any, item:any){
-    $('#'+i).toggle(600)
-  }
   TemArr:any[]=[]
  
   getSelectedPlan(e:any){
     $(".Boxes").hide(300)
     $(".Boxes").show(300)
     this.ArrCategories= [];
-    let Plan = this.ArrPlans.find(item=>item.planId==e.target.value)
-    this.SelectedPlanPricing=Plan
+    let Plan = this.ArrPlans.find(item=>item.planId==e.target.value);
+    this.SelectedPlanPricing=Plan;
   }
   // Status
-  getSelectedStatus(e:any,benefitId:any,Check:any,partial:any,categoryId:any,status:any){
-    let CategoryId =categoryId
+  getSelectedStatus(e:any,benefitId:any,Check:any,partial:any,Cateid:any,status:any,benefitName:any,CateName:any){
+    let id =Cateid
     let Status = status.value
     var Partial =partial.value
-    let ExistCategory = this.ArrCategories.find(item=>item.categoryId == CategoryId)
+    let ExistCategory = this.ArrCategories.find(item=>item.id == id)
     if(e.target.value=='Partial'){
       $("#partial"+benefitId).show(300)
     }else{
@@ -269,151 +176,135 @@ export class UploadPlansFileComponent implements OnInit{
       Partial =partial.value=''
     }
     if(Check.checked){
-      let ExistBenefit =  ExistCategory.benefits.find((item:any)=>item.id==benefitId);
-      let Index = ExistCategory.benefits.indexOf(ExistBenefit)
-      ExistCategory.benefits.splice(Index,1)
+      let ExistBenefit =  ExistCategory.benfits.find((item:any)=>item?.benefitId==benefitId);
+      let Index = ExistCategory.benfits.indexOf(ExistBenefit)
+      ExistCategory.benfits.splice(Index,1)
       if(ExistCategory==undefined){
         let Model ={
-          categoryId:CategoryId,
-          benefits:[
+          id:id,
+          name:CateName,
+          benfits:[
             {
-              id:benefitId,
-              status:Status,
-              partial:Partial
+              name:benefitName,
+              benfitId:benefitId,
+              coverageType:Status,
+              partialPct:Partial
             }
           ]
         }
         this.ArrCategories.push(Model)
       }else{
         let BenefitModel ={
-          id:benefitId,
-          status:Status,
-          partial:Partial
+          name:benefitName,
+          benfitId:benefitId,
+          coverageType:Status,
+          partialPct:Partial
         }
-        ExistCategory.benefits.push(BenefitModel)
+        ExistCategory.benfits.push(BenefitModel)
       }
     }
     console.log(this.ArrCategories);
   }
 
   ////////////// Partial /////////
-  getPartialValue(Partial:any,Check:any,categoryId:any,benefitId:any,status:any){
+  getPartialValue(Partial:any,Check:any,categoryId:any,benefitId:any,status:any,benefitName:any,CateName:any){
     let CategoryId =categoryId
     let Status = status.value
-    console.log(Partial.value);
-    
-    let ExistCategory = this.ArrCategories.find(item=>item.categoryId == CategoryId)
+    let ExistCategory = this.ArrCategories.find(item=>item.id == CategoryId)
+    console.log(ExistCategory);
     if(Number(Partial.value)<=0||Number(Partial.value)>100){
       Partial.value=''
       console.log("not valid");
       this._ToastrService.show('Plase Enter number between 1 : 100')
     }
     if(Check.checked){
-      let ExistBenefit =  ExistCategory.benefits.find((item:any)=>item.id==benefitId);
-      let Index = ExistCategory.benefits.indexOf(ExistBenefit)
-      ExistCategory.benefits.splice(Index,1)
+      let ExistBenefit = ExistCategory?.benfits.find((item:any)=>item.benfitId==benefitId);
+      
+      
+      let Index = ExistCategory.benfits.indexOf(ExistBenefit)
+      ExistCategory.benfits.splice(Index,1)
       if(ExistCategory==undefined){
         let Model ={
-          categoryId:CategoryId,
-          benefits:[
+          name:CateName,
+          id:CategoryId,
+          benfits:[
             {
-              id:benefitId,
-              status:Status,
-              partial:Partial.value
+              name:benefitName,
+              benfitId:benefitId,
+              coverageType:Status,
+              partialPct:Partial.value
             }
           ]
         }
         this.ArrCategories.push(Model)
       }else{
         let BenefitModel ={
-          id:benefitId,
-          status:Status,
-          partial:Partial.value
+          name:benefitName,
+          benfitId:benefitId,
+          coverageType:Status,
+          partialPct:Partial.value
         }
-        ExistCategory.benefits.push(BenefitModel)
+        ExistCategory.benfits.push(BenefitModel)
       }
     }
     console.log(this.ArrCategories);
   }
   // Selected Benefit
-  getSelectedBenefit(e:any,status:any,categoryId:any,partial:any){
+  getSelectedBenefit(e:any,status:any,categoryId:any,partial:any,benefitName:any,CateName:any){
     let Checked = e.checked
     let BenefitId = e.source.value
     let Status = status.value
     let CategoryId =categoryId
     let Partial =partial.value
-
-    let ExistCategory = this.ArrCategories.find(item=>item.categoryId == CategoryId)
+    let ExistCategory = this.ArrCategories.find(item=>item.id == CategoryId)
     // True
     if(Checked){
       if(ExistCategory==undefined){
         let Model ={
-          categoryId:CategoryId,
-          benefits:[
+          name:CateName,
+          id:CategoryId,
+          benfits:[
             {
-              id:BenefitId,
-              status:Status,
-              partial:Partial
+              name:benefitName,
+              benfitId:BenefitId,
+              coverageType:Status,
+              partialPct:Partial
             }
           ]
         }
         this.ArrCategories.push(Model)
       }else{
         let BenefitModel ={
-          id:BenefitId,
-          status:Status,
-          partial:Partial
+          name:benefitName,
+          benfitId:BenefitId,
+          coverageType:Status,
+          partialPct:Partial
         }
-        ExistCategory.benefits.push(BenefitModel)
+        ExistCategory.benfits.push(BenefitModel)
       }
     }
     // False
     else{
-      let ExistBenefit =  ExistCategory.benefits.find((item:any)=>item.id==BenefitId);
-      let Index = ExistCategory.benefits.indexOf(ExistBenefit)
-      ExistCategory.benefits.splice(Index,1)
+      let ExistBenefit =  ExistCategory.benfits.find((item:any)=>item.benfitId==BenefitId);
+      let Index = ExistCategory.benfits.indexOf(ExistBenefit)
+      ExistCategory.benfits.splice(Index,1)
+      console.log(ExistCategory);
+      if(ExistCategory.benfits.length==0){
+        console.log('Empty');
+        let I = this.ArrCategories.indexOf(ExistCategory);
+        this.ArrCategories.splice(I,1)
+      }
     }
     console.log(this.ArrCategories);
-    
-    
-    
-    
-    // let item = this.AllPlans[MainIndex]
-    // if(e.checked==true){
-    //   // let Exist =this.ArrPricing.find(item=>item.planId ==planId);
-    //   // let ExistBenefit=Exist.benefits.find((item:any)=>item.id==e.source.value)
-    //   // console.log(ExistBenefit);
-    //   // let Model = Object.assign(Exist,{ExistBenefit})
-    //   // this.ArrPricing.push(Model);
-    //   // console.log(this.ArrPricing);
-    // }else{
-    //   // let Exist =this.AllPlans.find(item=>item.planId ==planId);
-    //   // let ExistBenefit=Exist.benefits.find((item:any)=>item.id==e.source.value);
-    //   // let Index = this.ArrPricing[MainIndex].benefitss.indexOf(Benefit)
-    //   // console.log(Index);
-      
-    //   // this.ArrPricing = this.ArrPricing[MainIndex].benefitss.splice(Index,1)  
-    //   for(let i=0;i<item.benefits.length;i++){
-    //     if(item.benefits.id!=e.source.value){
-    //       let m ={
-    //         id:item.benefits.id,
-    //         name:item.benefits.name
-    //       }
-    //       this.TemArr.push(m)
-    //     }
-    //   }
-    //   let Model =  Object.assign(item,{benefits:this.TemArr})
-    //   this.ArrPricing
-      
-    // }
-    // console.log(this.ArrPricing);
-    
+
   }
   
   ViewPricingPlans(){
+    $("#mainBoxes").hide(300)
     let Model ={
+      planName:this.SelectedPlanPricing.planName,
       planId:this.SelectedPlanPricing.planId,
-      Categories:this.ArrCategories
+      categories:this.ArrCategories
     }
     this.FinalArrPricing.push(Model)
     console.log(this.FinalArrPricing);
@@ -424,37 +315,77 @@ export class UploadPlansFileComponent implements OnInit{
     this.FinalArrPricing.splice(index, 1)
   }
 
-  getCategoriesToView(Categories:any){
-    console.log(Categories);
-    this.CategoriesToView= Categories
+  getCategoriesToView(categories:any){
+    console.log(categories);
     
-    
+    this.CategoriesToView= categories
   }
   // Add To Pricing Plan Arr
   AddToPricingPlanArr(){
 
   }
   getAllPricingPlans(){
-    this._PricingToolService.getAllPlans().subscribe(data=>{
+    this._PricingToolService.getAllPlans().subscribe((data:any)=>{
       console.log(data);
+      this.ArrPlans = data;
     },error=>{
       console.log(error);
     })
   }
+  deleteBenfit(i:any){
+    this.AllAdditionalBenefits.splice(i,1)
+  }
+  AddAdditinalBenefit(){
+    $("#AdditionalForm").toggle(300);
+  }
+  addbenfitinarray(){
+    this.AllAdditionalBenefits.push(this.AddtionalBenefitForm.value)
+  }
+  ////////// Submit Pricing /////////////
+  SavePricingPlans(){
+    this.isClickedDocumnet = true;
+    let Model = {
+      offerId:this.OfferId,
+      additionalBenfits:this.AllAdditionalBenefits,
+      plansToAdd:this.FinalArrPricing
+    }
+    console.log(Model);
+    this._PricingToolService.AddPlansToOffer(Model).subscribe(res=>{
+      this.isClickedDocumnet = false;
+      console.log(res);
+      this._Router.navigate(['/UploadGroupFile',this.OfferId,1])
+      Swal.fire('Plans Added Successfully','','success');
+    },error=>{
+      this.isClickedDocumnet = false;
+      console.log(error);
+      Swal.fire({icon: 'error',title:error.error,text:''})
+    })
+    
+  }
+  // get Coverage 
+  // GetCoverageTypes(){
+  //   this._PricingToolService.GetCoverageTypes().subscribe(data=>{
+  //     console.log(data);
+  //     this.CoverageTypes = data;
+  //   })
+  // }
   ngOnInit(): void {
-    this.getPlansOfOffer();
+    
     if(this.Type=='1'){
       // Pricing
       $("#Pricing").show(300)
       $(".NotUse").hide(500)
+      this.getAllPricingPlans()
+      // this.GetCoverageTypes()
     }
     else if(this.Type=='2'){
       // Not Pricing
+      this.getPlansOfOffer();
       $(".NotUse").show(500)
       $("#Pricing").hide(500)
     }
-    /// Pricing //
-    this.getAllPricingPlans()
+    //////// Pricing ///////
+    
   }
   
 }

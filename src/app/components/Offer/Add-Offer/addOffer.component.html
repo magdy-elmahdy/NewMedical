@@ -189,7 +189,7 @@
                     </div>    
                     <div class="d-flex justify-content-center mt-5">
                         <!-- [disabled]="this.OfferForm.get('insuranceClass')?.value==0||OfferForm.status=='INVALID'||!BusinessTypeValue||brokerInputValidation||this.isClicked" -->
-                        <button [disabled]="this.OfferForm.get('insuranceClass')?.value==0||OfferForm.status=='INVALID'||!BusinessTypeValue||brokerInputValidation||this.isClicked" class="w-25" (click)="SubmitOffer()"   mat-raised-button color="primary"><span *ngIf="this.isClicked">Waiting..</span><span *ngIf="!this.isClicked">{{'Shared.Submit'|translate}}</span></button>
+                        <button [disabled]="this.DecisionWay==''||this.OfferForm.get('insuranceClass')?.value==0||OfferForm.status=='INVALID'||!BusinessTypeValue||brokerInputValidation||this.isClicked" class="w-25" (click)="SubmitOffer()"   mat-raised-button color="primary"><span *ngIf="this.isClicked">Waiting..</span><span *ngIf="!this.isClicked">{{'Shared.Submit'|translate}}</span></button>
                     </div>     
                 </div> 
             

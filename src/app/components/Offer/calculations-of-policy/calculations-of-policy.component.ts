@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PolicyService } from 'src/app/services/policy.service';
+import { PricingToolService } from 'src/app/services/pricing-tool.service';
 
 @Component({
   selector: 'app-calculations-of-policy',
@@ -17,8 +18,12 @@ export class CalculationsOfPolicyComponent implements OnInit{
   PolicyGroup:any
   OfferDetails:any
   PolicyDetails: any;
-  constructor(private _PolicyService:PolicyService,private _ActivatedRoute:ActivatedRoute, private _Router:Router){
+  Type: any;
+  constructor(private _PolicyService:PolicyService,private _ActivatedRoute:ActivatedRoute, private _Router:Router,
+    private _PricingToolService:PricingToolService
+  ){
     this.OfferId = this._ActivatedRoute.snapshot.paramMap.get('id');
+    this.Type = this._ActivatedRoute.snapshot.paramMap.get('type')
   }
   Form:FormGroup=new FormGroup({
     'supervisionAndOversight':new FormControl('',[Validators.required]),
@@ -87,9 +92,35 @@ export class CalculationsOfPolicyComponent implements OnInit{
       
     })
   }
-  
+
+  PricingTax:any=0.02
+  // Offer Pricing Calcualtions
+  getOfferPricingCalculations(){
+    this.loading = true 
+    this.Model =this.Form.value
+    
+    this._PricingToolService.GetOfferCalculationById(this.OfferId,this.PricingTax).subscribe(data=>{
+      console.log(data);
+      this.PolicyCaluculations = data
+      this.loading = false
+    },error=>{
+      console.log(error);
+      this.loading = true
+    })
+  }
+
   ngOnInit(): void {
-    this.getPolicyCalculations();
-    this.getOfferById();
+    
+    if(this.Type=='1'){
+      // Pricing
+      this.getOfferPricingCalculations()
+    }
+    else if(this.Type=='2'){
+      // Not Pricing
+      this.getPolicyCalculations();
+      this.getOfferById();
+    }
   }
 }
+  
+

@@ -9,7 +9,7 @@
                 <button data-bs-toggle="modal" data-bs-target="#ViewPlans" mat-raised-button color="primary" class="mt-3 NotUse" style="display: none;">{{'Offer.CurrentPlans'|translate}}</button>
         </div>
         <div class="outerBorder shadow_5">
-            <!---------------------- Pricing ---------------->
+        <!--------------------------------- Pricing ---------------------------->
             <div class="w-100" style="display: none;" id="Pricing">
                 <!-- Select Plan -->
                 <div class="row mt-3 w-50">
@@ -23,53 +23,41 @@
                     </div>
                 </div>
                 <!-- Categories -->
-                <div class="Boxes">
-                    <h2 class="mainTile mt-5" *ngIf="this.SelectedPlanPricing?.planName">{{this.SelectedPlanPricing?.planName}} Plan</h2>
+                <div class="Boxes" id="mainBoxes">
+                    <h2 class="mainTile mt-5" *ngIf="this.SelectedPlanPricing?.planName">
+                        {{this.SelectedPlanPricing?.planName}} Plan
+                        <br>
+                        Annual Max Limit : <span class="text-success">{{this.SelectedPlanPricing?.annualMaxLimit}}</span>
+                        <br>
+                        NetWork <span class="text-success">{{this.SelectedPlanPricing?.planNetwork.name}}</span>
+                    </h2>
                     <div class="row mx-2">
-                        <div class="col-md-6" *ngFor="let category of SelectedPlanPricing?.Categories;let index= index">
-                            <p class="subTile mt-4" (click)="toggleItem($event,index,category)" style="cursor: pointer;">{{category.categoryName}}</p>
+                        <div class="col-md-6" *ngFor="let category of SelectedPlanPricing?.categoryWithBenfits;let index= index">
+                            <p class="subTile mt-4">{{category.englishName}}</p>
                             
                             <div class="planBox" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
                                 
                                 <div style="padding-top:1rem;" id="{{index}}">
-                                    <!-- <div *ngFor="let benefit of category.benefits;let index= index">
-                                        <div class="row d-flex justify-content-between">
-                                            <div class="col-3">
-                                                <mat-checkbox (change)="getSelectedBenefit($event,status,category.categoryId,partial)" color="primary" [value]="benefit.id" #Check>{{benefit.name}}</mat-checkbox> 
-                                            </div>
-                                            <div class="col-6">
-                                                <select (change)="getSelectedStatus($event,benefit.id,Check,partial,category.categoryId,status)" class="form-select" #status>
-                                                    <option selected value="fully">Fully</option>
-                                                    <option value="Partial">Partial</option>
-                                                    <option value="Not">Not Coverd</option>
-                                                </select>
-                                            </div>
-                                            <div style="display: none;" class="col-3" id="partial{{benefit.id}}">
-                                                <input (keyup)="getPartialValue(partial,Check,category.categoryId,benefit.id,status)" type="numer" class="form-control" placeholder="%" #partial>
-                                            </div>
-                                        </div>
-                                    </div> -->
-
                                     <table class="table table-striped">
                                
                                         <tbody>
                                           <tr *ngFor="let benefit of category.benefits;let index= index">
                                             <td>
-                                                <mat-checkbox (change)="getSelectedBenefit($event,status,category.categoryId,partial)" color="primary" [value]="benefit.id" #Check>{{benefit.name}}</mat-checkbox> 
+                                                <mat-checkbox (change)="getSelectedBenefit($event,status,category.id,partial,benefit.englishName,category.englishName)" color="primary" [value]="benefit.id" #Check>{{benefit.englishName}}</mat-checkbox> 
                                             </td>
                                             <td>
                                                 <div class="d-flex">
-                                                    <select (change)="getSelectedStatus($event,benefit.id,Check,partial,category.categoryId,status)" class="form-select" #status>
-                                                        <option selected value="fully">Fully</option>
+                                                    <select (change)="getSelectedStatus($event,benefit.id,Check,partial,category.id,status,benefit.englishName,category.englishName)" class="form-select" #status>
+                                                        <option selected value="Full">Full</option>
                                                         <option value="Partial">Partial</option>
-                                                        <option value="Not">Not Coverd</option>
+                                                        <option value="UnCovered">UnCovered</option>
                                                     </select>
                                                     
                                                 </div>
                                                 
                                             </td>
                                             <td style="display: none;width: 18%;margin-left: 1.5%;" id="partial{{benefit.id}}">
-                                                <input (keyup)="getPartialValue(partial,Check,category.categoryId,benefit.id,status)" type="numer" class="form-control" placeholder="%" #partial
+                                                <input (keyup)="getPartialValue(partial,Check,category.id,benefit.id,status,benefit.englishName,category.englishName)" type="numer" class="form-control" placeholder="%" #partial
                                                 >
                                             </td>
 
@@ -83,13 +71,11 @@
                             
                         </div>
                         <div class="col-md-12">
-                          <button *ngIf="this.ArrCategories[0]?.benefits?.length>0" (click)="ViewPricingPlans()" class="btn login w-25">Add</button>
+                          <button *ngIf="this.ArrCategories[0]?.benfits?.length>0" (click)="ViewPricingPlans()" class="btn login w-25">Add</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- <button (click)="ViewPricingPlans()" mat-raised-button color="accent" class="mx-3 mt-4 w-25"> </button> -->
-                <!-- Table Of Pricing Plans-->
                 <div class="wrapper mt-5" *ngIf="this.FinalArrPricing.length>0">
                     <table  class="custom_table text-center bordered">
                         <thead>
@@ -101,9 +87,9 @@
                         <tbody>
                             <tr *ngFor="let item of FinalArrPricing;let index = index" style="vertical-align: middle;">
                                 <td>{{index+1}}</td>
-                                <td>{{item.planId}}</td>
+                                <td>{{item.planName}}</td>
                                 <td>
-                                    <i (click)="getCategoriesToView(item.Categories)" data-bs-toggle="modal" data-bs-target="#Categories" class="fa-regular fa-eye text-success fs-5 px-3 py-2"></i>
+                                    <i (click)="getCategoriesToView(item.categories)" data-bs-toggle="modal" data-bs-target="#Categories" class="fa-regular fa-eye text-success fs-5 px-3 py-2"></i>
                                 </td>
                                 <td><button color="warn" (click)="removeFromPricingPlans(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
                             </tr>
@@ -111,15 +97,116 @@
 
                     </table>
                 </div>
-                <div class="col-md-12 d-flex justify-content-end">
-                    <!-- <button *ngIf="this.FinalArrPricing.length>0" class="btn login w-25">Proceed</button> -->
-                    <button *ngIf="this.FinalArrPricing.length>0" class="w-25 my-2" routerLink="/UploadGroupFile/{{this.OfferId}}"  mat-raised-button color="accent">{{'Shared.Next'|translate}}</button>
+                <div class="shadow_5 my-3" style="border-radius: 0.6rem;">
+                    
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <!-- Additional benfits Form-->
+                                <form [formGroup]="AddtionalBenefitForm" class="my-5" style="display: none;" id="AdditionalForm">
+                                    <div class="row">
+                                        
+                                        <div class="col-md-6 mt-2">
+                                            <div class="formGroup">
+                                                <label>Benfit Name EN<span style="color: red;">*</span></label>
+                                                <input class="form-control mt-2" formControlName="englishName" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mt-2">
+                                            <div class="formGroup">
+                                                <label>Benfit Name AR<span style="color: red;">*</span></label>
+                                                <input class="form-control mt-2" formControlName="arabicName" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mt-2">
+                                            <div class="formGroup">
+                                                <label>Max Limit<span style="color: red;">*</span></label>
+                                                <input class="form-control mt-2" formControlName="maxLimit" type="number">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mt-2">
+                                            <div class="formGroup">
+                                                <label>Coverage Type<span style="color: red;">*</span></label>
+                                                <select formControlName="coverageType" class="form-select mt-2">
+                                                    <option selected value="Full">Full</option>
+                                                    <option value="Partial">Partial</option>
+                                                    <option value="UnCovered">UnCovered</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mt-2">
+                                            <div class="formGroup">
+                                                <label>Partial %<span style="color: red;">*</span></label>
+                                                <input class="form-control mt-2" formControlName="partialPct" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 mt-3">
+                                            <button (click)="addbenfitinarray()" [disabled]="this.AddtionalBenefitForm.status == 'INVALID'" mat-raised-button color="accent" class="mt-2" style="width: 35%;margin-left: 3%;">Add</button>
+
+                                        </div>
+                                        
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-5">
+                                <!-- Additional benfits Table-->
+                                <div class="wrapper mt-5" *ngIf="this.AllAdditionalBenefits.length>0">
+                                    <table  class="custom_table text-center bordered">
+                                        <thead>
+                                            <th class="py-2">English Name</th>
+                                            <th class="py-2">Arabic Name</th>
+                                            <th class="py-2">Max Limit</th>
+                                            <th class="py-2">Coverage Type</th>
+                                            <th class="py-2">Partial %</th>
+                                            <th >Settings</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of AllAdditionalBenefits;let index = index" style="vertical-align: middle;">
+                                                <td class="align-middle">{{item.englishName}}</td>
+                                                <td class="align-middle">{{item.arabicName}}</td>
+                                                <td class="align-middle">{{item.maxLimit}}</td>
+                                                <td class="align-middle">{{item.coverageType}}</td>
+                                                <td class="align-middle">{{item.partialPct}}</td>
+                                                <td>
+                                                    <i (click)="deleteBenfit(index)" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="col-md-12 d-flex justify-content-between">
+                    <button  (click)="AddAdditinalBenefit()" *ngIf="this.FinalArrPricing.length>0" class="w-25 my-2"  mat-raised-button color="primary">
+                        Additional Benefit <i class="fa-solid fa-pizza-slice"></i>
+                    </button>
+                    <button [disabled]="this.isClickedDocumnet" (click)="SavePricingPlans()" *ngIf="this.FinalArrPricing.length>0" class="w-25 my-2"  mat-raised-button color="accent">
+                        <span *ngIf="!this.isClickedDocumnet">Save & Proceed <i class="fa-solid fa-arrow-right"></i></span>
+                        <span *ngIf="this.isClickedDocumnet"><i class="fa fa-solid fa-fan fa-spin"></i></span>
+                    </button>
                 </div>
             </div>
 
 
 
-            <!-- File Upload -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!------------------------------------ Old Way ------------------- -->
             <div class="row NotUse" style="display: none;" id="NotUse">
                 <div class="col-md-8 d-flex align-items-center">
                     <div>
@@ -247,7 +334,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <button [disabled]="this.arrTest.length==0||this.isClickedDocumnet||this.selectedFile==''" (click)="SavePlans()" class="w-25 my-2" mat-raised-button color="primary"><span *ngIf="this.isClickedDocumnet">Uploading <i class="fa-solid fa-spinner fa-spin"></i></span><span *ngIf="!this.isClickedDocumnet">{{'Shared.Submit'|translate}} <i class="fa-solid fa-floppy-disk"></i></span></button>
-                    <button style="display: none;" id="proceesButton" class="w-25 my-2" routerLink="/UploadGroupFile/{{this.OfferId}}"  mat-raised-button color="accent">{{'Shared.Next'|translate}}</button>
+                    <button style="display: none;" id="proceesButton" class="w-25 my-2" routerLink="/UploadGroupFile/{{this.OfferId}}/2"  mat-raised-button color="accent">{{'Shared.Next'|translate}}</button>
                 </div>
             </div>
             <!-- Table Of All Currently Plans Of The Policy -->
@@ -304,13 +391,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="Categories">Plan Categories and Benefits</h1>
+                <h1 class="modal-title fs-5" id="Categories">Plan Categories and Benfits</h1>
             </div>
             <div class="container my-2">
                 <div class="row">
                     <div *ngFor="let Category of CategoriesToView" class="col-md-6">
+                        
                         <!-- Table Of Categories-->
-                        <div class="wrapper mt-5">
+                        <p class="mainTile fs-5">{{Category.name}}</p>
+                        <div class="wrapper mt-1">
                             <table  class="custom_table text-center bordered">
                                 <thead>
                                     <th></th>
@@ -319,11 +408,11 @@
                                     <th>Partial</th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let benefit of Category.benefits;let index = index" style="vertical-align: middle;">
+                                    <tr *ngFor="let benefit of Category.benfits;let index = index" style="vertical-align: middle;">
                                         <td>{{index+1}}</td>
-                                        <td>{{benefit.id}}</td>
-                                        <td>{{benefit.status}}</td>
-                                        <td>{{benefit.partial}}</td> 
+                                        <td>{{benefit.name}}</td>
+                                        <td>{{benefit.coverageType}}</td>
+                                        <td>{{benefit.partialPct}}</td> 
                                     </tr>
                                 </tbody>
 
