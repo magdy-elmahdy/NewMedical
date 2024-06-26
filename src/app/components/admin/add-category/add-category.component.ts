@@ -163,13 +163,30 @@ getText(){
   }
   formData:any = new FormData();
   AddBenfit(){
+    const selectedCategoryId = this.Form.get('id')?.value;
+    console.log(selectedCategoryId);
     let benefitId = this.EDitForm.value.benfitId;
+    console.log(benefitId);
+    // let selectedBenefit = this.AllBenfitsArr.find((benfit:any) => benfit.id == benefitId);
+    // console.log(selectedBenefit);
+    // if (selectedBenefit) {
+    //   this.categoryBenfitArr.push(selectedBenefit);
+    // }
+    
+  this._PricingToolService.AddBenfitToCategory(benefitId,selectedCategoryId).subscribe((data:any)=>{
+    console.log(data);
     console.log(benefitId);
     let selectedBenefit = this.AllBenfitsArr.find((benfit:any) => benfit.id == benefitId);
     console.log(selectedBenefit);
     if (selectedBenefit) {
       this.categoryBenfitArr.push(selectedBenefit);
     }
+    console.log( this.categoryBenfitArr);
+    Swal.fire({title:'Benfit Added Successfully',timer:3000, timerProgressBar: true})
+  },error=>{
+    console.log(error);
+    Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
+  })
   }
 
   saveCategoryEdit(){
@@ -242,12 +259,18 @@ getText(){
   }
 
     // Get All
-  getAllItems(){
+    getAllItems(){
     this.loading=true;
     this._PricingToolService.GetAllCategories().subscribe((data:any)=>{
-      this.AllItems =data;
       this.loading=false;
-      console.log(this.AllItems);
+      // console.log(this.AllItems);
+      if(data.length>0){
+        
+        this.AllItems =data;
+      }else{
+        this.AllItems ='';
+      }
+      
     },error=>{
       console.log(error);
       this.loading=false;
