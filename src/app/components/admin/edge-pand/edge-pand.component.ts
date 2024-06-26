@@ -118,11 +118,13 @@ deleteAgeBand(id:any){
         },
         (error) => {
           // Show error message if delete operation fails
-          Swal.fire(
-            'Error!',
-            'There was an error deleting the Age Band. Please try again.',
-            'error'
-          );
+          Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
+
+          // Swal.fire(
+          //   'Error!',
+          //   'There was an error deleting the Age Band. Please try again.',
+          //   'error'
+          // );
         }
       );
     } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -211,18 +213,23 @@ saveCategoryEdit(){
 
     // Get All
   getAllItems(){
-    this.loading=true;
     this._PricingToolService.GetAllAgeBands().subscribe((data:any)=>{
       this.AllItems =data;
       this.AllArr = data
-      this.loading=false;
       console.log(this.AllItems);
     },error=>{
       console.log(error);
-      this.loading=false;
     })
   }
+  loadData() {
+    this.loading = true;
+  
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000); 
+  }
   ngOnInit(){
+    this.loadData()
     this.getAllItems() 
   }
 }

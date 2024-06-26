@@ -118,11 +118,13 @@ get EditarabicText() {
           },
          (error) => {
            // Show error message if delete operation fails
-           Swal.fire(
-             'Error!',
-             'There was an error deleting the Benfit. Please try again.',
-             'error'
-           );
+           Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
+
+          //  Swal.fire(
+          //    'Error!',
+          //    'There was an error deleting the Benfit. Please try again.',
+          //    'error'
+          //  );
          }
        );
      } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -227,14 +229,11 @@ get EditarabicText() {
 
     // Get All
   getAllItems(){
-    this.loading=true;
     this._PricingToolService.GetAllBenfits().subscribe((data:any)=>{
       this.AllItems =data;
-      this.loading=false;
       console.log(this.AllItems);
     },error=>{
       console.log(error);
-      this.loading=false;
     })
   }
     // Get All
@@ -246,7 +245,15 @@ get EditarabicText() {
       console.log(error);
     })
   }
+  loadData() {
+    this.loading = true;
+  
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000); 
+  }
   ngOnInit(){
+    this.loadData()
     this.getAllItems() 
     this.getAllCates() 
   }

@@ -74,8 +74,16 @@ export class AddBenefitComponent implements OnInit{
     })
     
   }
-
+  loading:boolean=false
+  loadData() {
+    this.loading = true;
+  
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000); 
+  }
 ngOnInit(): void {
+  this.loadData()
     this.getBenefitsTypes();
   }
 }

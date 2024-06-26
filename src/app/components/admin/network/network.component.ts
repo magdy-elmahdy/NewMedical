@@ -20,6 +20,7 @@ export class NetworkComponent implements OnInit {
   isClicked:boolean =false;
   AllNetworkArr:any[]=[]
   arrnetwork:any[]=[]
+  checkDelet:any[]=[]
   constructor(private _PricingToolService:PricingToolService){}
   Form:FormGroup =new FormGroup({
     'name':new FormControl('',[Validators.required]),
@@ -100,11 +101,13 @@ remove(index:number){
             console.log(error);
             
             // Show error message if delete operation fails
-            Swal.fire(
-              'Error!',
-              'There was an error deleting the Network. Please try again.',
-              'error'
-            );
+            Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
+
+            // Swal.fire(
+            //   'Error!',
+            //   'There was an error deleting the Network. Please try again.',
+            //   'error'
+            // );
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -154,14 +157,24 @@ onTableSizeChange(event:any){
   this.page=1;
   this.getAllNetwork();
 }
+  aaa:any[]=[]
   getAllNetwork(){
     this._PricingToolService.GetAllNetwork().subscribe((data:any)=>{
       console.log(data);
       this.AllNetworkArr = data
+      this.checkDelet = data.plans
+      console.log(this.checkDelet);
     })
   }
+  loadData() {
+    this.loading = true;
+  
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000); 
+  }
   ngOnInit(): void {
+    this.loadData()
     this.getAllNetwork()
   }
-
 }

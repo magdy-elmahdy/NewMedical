@@ -9,7 +9,7 @@
         </div>
 
         <div class="outerBorder outerItem shadow_5 table-responsive">
-          <table class="text-center table">
+          <table class="text-center table" *ngIf="AllNetworkArr.length > 0">
             <thead class="tableHead align-middle" style="background: #F3F2F2;height: 50px;">
                 <th class="py-2">Network Name </th>
                 <th >Settings</th>
@@ -22,11 +22,21 @@
                     <td class="align-middle">{{item.name}}</td>
                     <td>
                         <i (click)="openEditModal(item)" data-bs-toggle="modal" data-bs-target="#EditForm" class="fa-solid fa-pencil fs-5 px-3 py-2 mx-1" style="color:#3F51B5;"></i>
-                        <i (click)="deleteNetwork(item.id)" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
+                        <i *ngIf="item.plans.length === 0" (click)="deleteNetwork(item.id)" class="fa-regular fa-trash-can fs-5 px-3 py-2" style="color:#FF4081"></i>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div *ngIf="AllNetworkArr?.length === 0 && !loading" class="text-center d-flex align-items-center justify-content-center">
+          <div class="alert alert-warning  w-50 mt-5" role="alert">
+            <span>No networks found</span>
+          </div>
+        </div>
+        <!-- <div *ngIf="AllNetworkArr?.length === 0 && loading" class="d-flex justify-content-center align-items-center" style="height: 200px;">
+          <div  role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div> -->
         <div class="d-flex justify-content-end mt-4">
             <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
             </pagination-controls>

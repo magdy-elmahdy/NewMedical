@@ -240,11 +240,13 @@ getText(){
           },
           (error) => {
             // Show error message if delete operation fails
-            Swal.fire(
-              'Error!',
-              'There was an error deleting the Category. Please try again.',
-              'error'
-            );
+            Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
+
+            // Swal.fire(
+            //   'Error!',
+            //   'There was an error deleting the Category. Please try again.',
+            //   'error'
+            // );
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -260,27 +262,25 @@ getText(){
 
     // Get All
     getAllItems(){
-    this.loading=true;
     this._PricingToolService.GetAllCategories().subscribe((data:any)=>{
-      this.loading=false;
-      // console.log(this.AllItems);
-      if(data.length>0){
-        
-        this.AllItems =data;
-      }else{
-        this.AllItems ='';
-      }
-      
+      this.AllItems =data;
+      console.log(this.AllItems);
     },error=>{
       console.log(error);
-      this.loading=false;
     })
   }
- 
+  loadData() {
+    this.loading = true;
+  
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000); 
+  }
 
   ngOnInit(){
     // this.getCategoryBenfit()
     this.getAllItems()
     this.getAllBenfits()
+    this.loadData()
   }
 }

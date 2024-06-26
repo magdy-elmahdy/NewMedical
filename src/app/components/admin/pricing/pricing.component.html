@@ -12,7 +12,7 @@
                 <app-spinner></app-spinner>
             </div>
         <ng-container>
-            <table class="text-center table">
+            <table class="text-center table" *ngIf="AllPricingArr.length > 0 ">
                 <thead class="tableHead align-middle" style="background: #F3F2F2;height: 50px;">
                     <th class="py-2">Category</th>
                     <th class="py-2">Benefit</th>
@@ -38,12 +38,11 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="d-flex justify-content-center align-items-center" *ngIf="AllPricingArr?.length == 0">
-                <div class="alert alert-info fs-5 text-center w-50">
-                    <span>No Pricing yet</span>
-                    <!-- <app-spinner></app-spinner> -->
+            <div *ngIf="AllPricingArr?.length === 0 && !loading" class="text-center d-flex align-items-center justify-content-center">
+                <div class="alert alert-warning  w-50 mt-5" role="alert">
+                  <span>No pricing benfits found</span>
                 </div>
-            </div>
+              </div>
         </ng-container>
         
 

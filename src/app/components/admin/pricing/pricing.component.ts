@@ -155,11 +155,13 @@ export class PricingComponent implements OnInit {
           },
           (error) => {
             // Show error message if delete operation fails
-            Swal.fire(
-              'Error!',
-              'There was an error deleting the pricing. Please try again.',
-              'error'
-            );
+            Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
+
+            // Swal.fire(
+            //   'Error!',
+            //   'There was an error deleting the pricing. Please try again.',
+            //   'error'
+            // );
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -232,12 +234,19 @@ export class PricingComponent implements OnInit {
       this.AllPricingArr=data
     })
   }
-
+  loadData() {
+    this.loading = true;
+  
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000); 
+  }
   ngOnInit(){
     this.getAllPricing()
     this.GetAllCategories()
     this.getAllEdgeBand()
     this.getAllBenfits()
+    this.loadData()
     // this.getAllCategoriesBenfits()
   }
   AllCategoriesBenfits:any[]=[]

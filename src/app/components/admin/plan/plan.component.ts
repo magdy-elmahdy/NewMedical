@@ -130,7 +130,7 @@ getCategoryBenfit(categoryid:any) {
   const categoryIdNumber = Number(categoryid);
 this._PricingToolService.GetAllCategoriesBenfits(categoryIdNumber).subscribe((data: any) => {
   // console.log(data);
-  this.categoryBenfitArr = data;
+  this.categoryBenfitArr = data
   console.log(this.categoryBenfitArr);
   
 });
@@ -262,7 +262,7 @@ ViewCoverageRegions(item:any){
         partialPercantage: region.partialPercantage
       });
     });
-    
+    // set data in inputs of coverageRegions Form
     // Optionally, you can set NewForm with the first region's data (if any)
     if (plan.coverageRegions.length > 0) {
       this.NewForm.patchValue({
@@ -292,7 +292,7 @@ this.planCategories = plan.categoryWithBenfits.map((category: { englishName: any
   categoryNameEnglish: category.englishName,
   benefits: category.benefits
 }));
-console.log(this.planCategories);
+console.log(this.planCategories)
 //  this.ShowProducts = this.planCategories?.benefits ;
 
 
@@ -371,11 +371,13 @@ ViewCoverageRegion(item: any) {
           },
           (error) => {
             // Show error message if delete operation fails
-            Swal.fire(
-              'Error!',
-              'There was an error deleting the Plan. Please try again.',
-              'error'
-            );
+            // Swal.fire(
+            //   'Error!',
+            //   'There was an error deleting the Plan. Please try again.',
+            //   'error'
+            // );
+            Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
+
           }
         );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -424,11 +426,19 @@ getAllNetwork(){
     this.AllNetworkArr = data
   })
 }
+loadData() {
+  this.loading = true;
+
+  setTimeout(() => {
+    this.loading = false;
+  }, 2000); 
+}
   ngOnInit(): void {
     this.getAllPlans();
     this.GetAllCategories();
     this.getAllBenfits()
     this.getAllNetwork()
+    this.loadData()
   }
 
 }
