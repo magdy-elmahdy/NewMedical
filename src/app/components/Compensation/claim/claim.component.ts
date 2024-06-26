@@ -33,7 +33,9 @@ export class ClaimComponent {
   isFirstClicked:boolean = false;
   ClaimAmount:any
   ClaimPaid:any
-  itemId:any                       
+  itemId:any
+  GrossAmountVal:any                       
+  DiscountVal:any=0                      
   // Claim1Date:any = ''
   ExcelFileId:any=''
   CurrentDate:any = new Date();
@@ -46,10 +48,9 @@ export class ClaimComponent {
   ClaimForm:FormGroup = new FormGroup({
     'DateOfEntryOfClaim':new FormControl(this.CurrentDate,[Validators.required]),
     'DateOfReceiptOfTheClaim':new FormControl('',[Validators.required]),
-    'GrossAmount':new FormControl('',[Validators.required]),
     'paymentDate':new FormControl('',[Validators.required]),
     'ClaimForMonth':new FormControl('',[Validators.required]),
-    'Discount':new FormControl(''),
+    
   })
   
   constructor(private _ClaimsService:ClaimsService,
@@ -80,8 +81,6 @@ export class ClaimComponent {
   /////////////////////// Save Main File //////////////
   EnableFinalBtn:boolean=false
   SubmitClaim(){
-    // const targetValue = 'pending';
-    // const targetKey = 'status';
     this.isFirstClicked = true;
     const hasValue = this.AllFiles.some(item => item['status'] === 'pending');
     if (hasValue) {
@@ -94,7 +93,6 @@ export class ClaimComponent {
     this.formData.append('ExcelFile',this.selectedMainFile);
     
     this.Model = Object.assign(this.ClaimForm.value,
-      {Discount:this.ClaimForm.get('Discount')?.value==null?'':this.ClaimForm.get('Discount')?.value},  
       {DateOfEntryOfClaim:this._DatePipe.transform(this.ClaimForm.get('DateOfEntryOfClaim')?.value,'yyyy-MM-dd')},
       {DateOfReceiptOfTheClaim:this._DatePipe.transform(this.ClaimForm.get('DateOfReceiptOfTheClaim')?.value,'yyyy-MM-dd')==null?'':this._DatePipe.transform(this.ClaimForm.get('DateOfReceiptOfTheClaim')?.value,'yyyy-MM-dd')},
       {paymentDate:this._DatePipe.transform(this.ClaimForm.get('paymentDate')?.value,'yyyy-MM-dd')==null?'':this._DatePipe.transform(this.ClaimForm.get('paymentDate')?.value,'yyyy-MM-dd')},
@@ -111,16 +109,19 @@ export class ClaimComponent {
       }
     
     this._ClaimsService.AddClaim(this.formData).subscribe((res:any)=>{
+      console.log(res);
+      this.GrossAmountVal=res.claimedAmount;
+      $(".AddtialData").show(300)
       this.isFirstClicked = false;
       $("#AddClaimBtn").hide(500);
       $("#FinalBtns").show(500);
       $("#uploadFilesTap").show(500);
-      this.FileNamee= res[0].fileName
-      this.AllFiles = res
+      this.FileNamee= res.claims[0].fileName
+      this.AllFiles = res.claims
       this._Router.navigate(['/Claim',this.PolicyId],{
         queryParams:{excelFileId:res.excelFileId}
       })
-      console.log(res);
+      
       $('#claimTable').show(500)
       this.isClicked=false
       this.ExcelFileId = res.excelFileId
@@ -177,7 +178,7 @@ export class ClaimComponent {
   values2:any[]=[]
   ArrTest:any[]=[]
 
-  // Select All
+  /// Select All ///////
   SelectAll(){
     // for(let i=0;i<this.AllFiles;i++){
 
@@ -185,7 +186,7 @@ export class ClaimComponent {
     this.ArrTest = []
     this.IndexesArr = []
     for(let i=0; i< this.AllFiles.length;i++){
-      if(this.AllFiles[i].status!="Reject"||this.AllFiles[i].status!="rejected"){
+      if(this.AllFiles[i].status!="Reject"&&this.AllFiles[i].status!="Confirm"){
         this.values[i]=true;
         this.IndexesArr.push(i)
       }
@@ -235,6 +236,7 @@ export class ClaimComponent {
     }else{
       this.IndexesArr.forEach(element => {
         this.AllFiles[element].status = 'Reject'
+        this.DiscountVal += this.AllFiles[element].claimedAmount
       })
     }
     this.IndexesArr= []      
@@ -289,15 +291,17 @@ finalSave(){
   for (var pair of this.formData2.entries()) {
     console.log(pair[0]+ ', ' + pair[1]); 
   }
-  this._ClaimsService.UpdateSatus(this.formData2).subscribe(data=>{
+  this._ClaimsService.UpdateSatus(this.formData2).subscribe((data:any)=>{
     console.log(data);
-    this.ExcelFileId = data;
+    this.ExcelFileId = data.claimCode;
+    this.DiscountVal = data.rejectAmount;
     $(".remove").hide(500)
     $("#FinalBtns").hide(500)
     $("#AddClaimBtn").hide(500)
     $("#uploadFilesTap").hide(500)
     $("#newClaimBtn").show(500)
-    Swal.fire('Process Completed Successfully','File Code is:' + data , 'success')
+    Swal.fire('Process Completed Successfully','File Code is: ' + data.claimCode , 'success')
+    this.formData2 = new FormData()
   },error=>{
     console.log(error);
     Swal.fire({icon: 'error',title:error.error,text:'Enter Date Again'})
@@ -313,8 +317,8 @@ finalSave(){
     this.selectedMainFile = ''
     this.Model = ''
     this.EnableFinalBtn = false;
-  })
   this.formData2 = new FormData()
+  })
   this.IndexesArr = []
 }
 
@@ -329,8 +333,10 @@ NewClaim(){
   this.selectedMainFile = ''
   this.Model = ''
   $("#newClaimBtn").hide(500)
+  $(".AddtialData").hide(300)
   $("#AddClaimBtn").show(500)
   $(".remove").show(500)
+  this.DiscountVal = 0
 }
 
   ngOnInit(){

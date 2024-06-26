@@ -45,7 +45,7 @@ export class ClaimsService {
     return this._HttpClient.post(this.baseUrl+'FileClaims/SaveClaimAndFileClaim',formData,
       {headers: new HttpHeaders({
         'Authorization': 'Bearer ' +this.t
-      }).set("ngrok-skip-browser-warning", "true"),responseType: 'text'}
+      }).set("ngrok-skip-browser-warning", "true")}
     )
   }
 }
