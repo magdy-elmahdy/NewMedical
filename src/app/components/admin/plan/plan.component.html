@@ -315,8 +315,8 @@
         </div>
         
         <div class="modal-footer">
-          <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{ 'Shared.Close' | translate }}</button>
-          <button (click)="AddPlan()" class="mt-2 w-25" [disabled]="isClicked" type="button" mat-raised-button color="primary">
+          <button  id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal" (click)="AddPlan()">{{ 'Shared.Close' | translate }}</button>
+          <button (click)="AddPlan()" [disabled]="this.isClicked || this.arrTest.length == 0 ||  this.Form.status =='INVALID'|| this.planCategories.length == 0" class="mt-2 w-25" type="button" mat-raised-button color="primary">
             <span *ngIf="!isClicked">{{ 'Shared.Save' | translate }}</span>
             <span *ngIf="isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>
           </button>
@@ -366,7 +366,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="edit">Add Plan</h1>
+          <h1 class="modal-title fs-5" id="edit">Edit Plan</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         
@@ -531,7 +531,7 @@
                     <tr>
                       <th colspan="4">Add To Category table?</th>
                       <th>
-                        <button (click)="AddNewCategory()" mat-raised-button color="accent" class="w-25">Add</button>
+                        <button (click)="AddNeweditCategory()" mat-raised-button color="accent" class="w-25">Add</button>
                       </th>
                     </tr>
                   </tfoot>
@@ -553,7 +553,7 @@
                         <tr *ngFor="let item of planCategories; let index = index" style="vertical-align: middle;">
                           <td>{{index + 1}}</td>
                           <td>{{item.categoryNameEnglish}}</td>
-                          <td class="icon-cell d-flex align-items-center justify-content-center"><i (click)="ViewCoverageRegion(item)" class="fa-solid fa-eye fs-5 text-success py-2"></i></td>
+                          <td class="icon-cell d-flex align-items-center justify-content-center"><i (click)="ViewCoverageRegio(item.benefits)" class="fa-solid fa-eye fs-5 text-success py-2"></i></td>
                           <td>
                             <button color="warn" (click)="RemoveFromCategoriesTable(index)" mat-raised-button>
                               <i class="fa-solid fa-trash"></i>
@@ -564,8 +564,8 @@
                     </table>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="wrapper mt-5" *ngIf="ShowProducts.length > 0">
+                <div class="col-md-6" *ngIf="editModalOpen">
+                  <div class="wrapper mt-5" *ngIf="editandaddBenfitsArr.length > 0">
                     <table class="custom_table text-center bordered">
                       <thead>
                         <tr>
@@ -577,7 +577,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let item of ShowProducts; let index = index" style="vertical-align: middle;">
+                        <tr *ngFor="let item of editandaddBenfitsArr; let index = index" style="vertical-align: middle;">
                           <td>{{index + 1}}</td>
                           <td>{{item.englishName}}</td>
                           <td>{{item.arabicName}}</td>

@@ -184,11 +184,10 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of arrTest;let index = index" style="vertical-align: middle;">
-                        <td>{{index+1}}</td>
-                        <td>{{item.categoryId}}</td>
-                        <td>{{item.ageBandId}}</td>
-                        <td>{{item.benfitsId}}</td>
-                        <!-- <td>{{item.loading}}</td> -->
+                        <td>{{index + 1}}</td>
+                        <td>{{getCategoryName(item.categoryId)}}</td>
+                        <td>{{getAgeBandName(item.ageBandId)}}</td>
+                        <td>{{getBenefitName(item.benfitsId)}}</td>
                         <td>{{item.netRiskPremium}}</td>
                         <td><button color="warn" (click)="remove(index)" mat-raised-button><i class="fa-solid fa-trash"></i></button></td>
                     </tr>

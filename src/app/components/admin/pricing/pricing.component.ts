@@ -85,6 +85,30 @@ export class PricingComponent implements OnInit {
   remove(index:number){
     this.arrTest.splice(index, 1)
   }
+  getCategoryName(id: string) {
+    console.log(id);
+    const category = this.AllCates.find(item => item.id == id);
+    console.log(category);
+    return category ? `${category.englishName} - ${category.arabicName}` : 'Unknown';
+  }
+
+  getAgeBandName(id: string) {
+    console.log(id);
+
+    const ageBand = this.AllAgeBand.find((item: { id: string; }) => item.id == id);
+    console.log(ageBand);
+
+    return ageBand ? `${ageBand.from} - ${ageBand.to}` : 'Unknown';
+  }
+
+  getBenefitName(id: string) {
+    console.log(id);
+
+    const benefit = this.AllCategoriesBenfits.find(item => item.id == id);
+    console.log(benefit);
+
+    return benefit ? `${benefit.englishName} - ${benefit.arabicName}` : 'Unknown';
+  }
 
 
   // Edit

@@ -10,6 +10,7 @@ declare var $:any;
   styleUrls: ['./plan.component.scss']
 })
 export class PlanComponent implements OnInit {
+  editModalOpen: boolean = true;
   page:number=1;
   count:number=0;
   tableSize:number=5;
@@ -36,6 +37,7 @@ export class PlanComponent implements OnInit {
   AllNetworkArr:any[]=[]
   isTableVisible = false;
   isthisTableVisible = true;
+  item: any;
   constructor(private _PricingToolService:PricingToolService){}
   Form:FormGroup =new FormGroup({
     'planName':new FormControl('',[Validators.required]),
@@ -73,7 +75,7 @@ editForm:FormGroup =new FormGroup({
     this.getAllPlans();
   }
   selectType(){
-    if(this.NewForm.get('coverageType')?.value === 'Partial'){
+    if(this.NewForm.get('coverageType')?.value == 'Partial'){
       this.NewForm.get('partialPercantage')?.setValidators([Validators.required])
       this.NewForm.get('partialPercantage')?.updateValueAndValidity
     }else{
@@ -88,8 +90,10 @@ editForm:FormGroup =new FormGroup({
     this.NewForm.reset()
     this.arrTest=[]
     this.MainArr=[]
+    this.planCategories = []
     this.categoryBenfitArr=[]
     this.ShowProducts=[]
+    this.editModalOpen = false
 
   }
   view(){
@@ -234,6 +238,8 @@ ViewCoverageRegions(item:any){
   currentPlanIndex: number | null = null;
   networkitem:any
   openEditModal(plan: any) {
+    this.editModalOpen = false
+
     console.log(plan);
     
     this.editMode = true;
@@ -277,40 +283,71 @@ ViewCoverageRegions(item:any){
       annualMaxLimit: plan.annualMaxLimit,
       coverageRegions: plan.coverageRegions
     }];
- // Set values for CategoryForm and benfitsForm
+ // Update CategoryForm and benfitsForm with the first category's data (if any)
  if (plan.categoryWithBenfits.length > 0) {
   this.CategoryForm.patchValue({
     categoryId: plan.categoryWithBenfits[0].id
   });
 
   this.benfitsForm.patchValue({
-    benfitsIds: plan.categoryWithBenfits[0].benefits.map((benefit: { id: any; }) => benefit.id)
+    benfitsIds: plan.categoryWithBenfits[0].benefits.map((benefit: any) => benefit.id)
   });
-    
-// Map the categories to include the category name
-this.planCategories = plan.categoryWithBenfits.map((category: { englishName: any; benefits: any; }) => ({
-  categoryNameEnglish: category.englishName,
-  benefits: category.benefits
-}));
-console.log(this.planCategories)
-//  this.ShowProducts = this.planCategories?.benefits ;
-
-
 } else {
   // Clear the forms if no category or benefits are provided
   this.CategoryForm.patchValue({
     categoryId: null
   });
 }
-  this.categoryBenfitArr = plan.categoryWithBenfits.length > 0 ? plan.categoryWithBenfits[0].benefits : [];
-  
-//  this.planCategories = plan.categoryWithBenfits || [];
-//  this.ShowProducts = planCategories.benefits > 0 ? plan.categoryWithBenfits[0].benefits : [];
-//  this.ShowProducts = this.planCategories?.benefits ;
+
+// Transform the plan categories data
+this.planCategories = plan.categoryWithBenfits.map((category: any) => ({
+  categoryId: category.id,
+  categoryNameEnglish: this.AllCates.find(cat => cat.id === category.id)?.englishName || 'Unknown',
+  benfitsIds: category.benefits.map((benefit: any) => benefit.id),
+  benefits: category.benefits.map((benefit: any) => ({
+    englishName: benefit.englishName,
+    arabicName: benefit.arabicName,
+    maxLimit: benefit.maxLimit // Assuming this is needed too
+  }))
+}));
 
 }
+
+
+
 ViewCoverageRegion(item: any) {
   this.ShowProducts = item.benefits|| [];
+}
+editandaddBenfitsArr:any[]=[]
+ViewCoverageRegio(item:any){
+  console.log(item);
+  this.editandaddBenfitsArr=item
+}
+AddNeweditCategory() {
+  this.editModalOpen = true 
+
+  const categoryId = Number(this.CategoryForm.get('categoryId')?.value);
+  const benfitsIds = this.categoryBenfitArr.map(benefit => benefit.id);
+  const selectedCategory = this.AllCates.find(category => category.id === categoryId);
+  const categoryNameEnglish = selectedCategory ? selectedCategory.englishName : 'Unknown Category';
+  // const categoryNames = this.categoryBenfitArr.map(benefit => {
+  //   const benefitDetail = this.AllBenefitss.find(ben => ben.id === benefit.id);
+  //   return benefitDetail ? benefitDetail.englishName : 'Unknown Benefit';
+  // });
+  const Model = {
+    categoryId: categoryId,
+    benfitsIds: benfitsIds,
+    benefits: this.categoryBenfitArr,
+    categoryNameEnglish: categoryNameEnglish
+
+    // benfitsNames: benfitsNames,
+    // benfitsNamesinArabic:benfitsNamesinArabic,
+  };
+  console.log(Model);
+  this.planCategories.push(Model);
+  // this.categoryBenfitArr=[]
+  // this.CategoryForm.reset()
+  // this.benfitsForm.reset()
 }
   
   EditPlan() {
@@ -321,7 +358,11 @@ ViewCoverageRegion(item: any) {
       annualMaxLimit: this.editForm.get('annualMaxLimit')?.value,
       planNetworkId: this.editForm.get('planNetworkId')?.value,
       coverageRegions: this.arrTest,
-      planCategories:this.planCategories 
+      // planCategories:this.planCategories 
+      planCategories: this.planCategories.map((category: any) => ({
+        categoryId: category.categoryId !== undefined ? category.categoryId : null,
+        benfitsIds: Array.isArray(category.benfitsIds) ? category.benfitsIds : []
+      }))
     };
     console.log(updatedPlan);
     
