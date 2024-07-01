@@ -52,6 +52,9 @@ get arabicText() {
 get EditarabicText() {
   return this.EditForm.get('arabicName');
 }
+get englishText(){
+  return this.Form.get('englishName')
+}
 
   WhenModalOpen(){
     this.Form.reset()

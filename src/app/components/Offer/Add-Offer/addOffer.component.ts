@@ -45,6 +45,8 @@ export class AddOfferComponent implements OnInit{
     this._ActivatedRoute.queryParams.subscribe((data:any)=>{
       this.CashedInputs = data
       console.log(data);
+      console.log(this.date);
+      
       // this.SearchForm.get('Code')?.setValue(data?.Code)
       // this.SearchForm.get('InsuredName')?.setValue(data?.InsuredName)
       // this.SearchForm.get('BrokerId')?.setValue(data?.BrokerId==null?'':Number(data?.BrokerId)||data?.BrokerId==0?'':Number(data?.BrokerId))
@@ -56,7 +58,7 @@ export class AddOfferComponent implements OnInit{
   ///////////////// Star Pricing indivual Form ////////////// 
   OfferForm:FormGroup = new FormGroup({
     'BranchId':new FormControl('',[Validators.required]),
-    'offerDate':new FormControl(this.date,[Validators.required]),
+    'offerDate':new FormControl('this.formattedDate',[Validators.required]),
     'tpaId':new FormControl(''),
     'insuranceClass':new FormControl(1,[Validators.required]),
     'policySource':new FormControl('',[Validators.required]),
@@ -259,7 +261,13 @@ export class AddOfferComponent implements OnInit{
   getSelectedOption(value:any){
     this.DecisionWay=value
   }
+  formattedDate:any
   ngOnInit(): void {
+    const today = new Date();
+    this.formattedDate = this.formatDate(today); // format as 'YYYY-MM-DD'
+    // this.formattedDate = today.toISOString().substring(0, 10); // format as 'YYYY-MM-DD'
+    console.log(this.formattedDate);
+    
     this.getInsuraneClass();
     this.getAllBranches();
     this.getBusinessTypes();
@@ -284,6 +292,11 @@ export class AddOfferComponent implements OnInit{
     }else if (this.CashedInputs.policySource=='1')
     $("#BrokerFiled").show(500)
   }
-
+  private formatDate(date: Date): string {
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  }
   
 }
