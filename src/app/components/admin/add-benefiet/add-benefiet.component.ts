@@ -35,14 +35,14 @@ export class AddBenefietComponent implements OnInit {
   
   Form:FormGroup =new FormGroup({
     'arabicName':new FormControl('',[Validators.required,arabicTextValidator()]),
-    'englishName':new FormControl('',[Validators.required]),
+    'englishName':new FormControl('',[Validators.required,englishOnlyValidator()]),
     'maxLimit':new FormControl(''),
     'categoryId':new FormControl('',[Validators.required])
 });
 EditForm:FormGroup =new FormGroup({
   'benfitId':new FormControl(''),
   'arabicName':new FormControl('',[Validators.required,arabicTextValidator()]),
-  'englishName':new FormControl('',[Validators.required]),
+  'englishName':new FormControl('',[Validators.required,englishOnlyValidator()]),
   'maxLimit':new FormControl('0'),
   // 'categoryId':new FormControl('',[Validators.required])
 });
@@ -54,6 +54,9 @@ get EditarabicText() {
 }
 get englishText(){
   return this.Form.get('englishName')
+}
+get EditenglishText() {
+  return this.EditForm.get('arabicName');
 }
 
   WhenModalOpen(){
@@ -70,6 +73,16 @@ get englishText(){
   }
   RemoveBenfit(index:number){
     this.arrCate.splice(index, 1)
+  }
+  // getCategoryNameById(id: number): string {
+  //   const category = this.AllCates.find(cate => cate.id === id);
+  //   return category ? category.englishName : '';
+  // }
+  getCategoryName(id: string) {
+    console.log(id);
+    const category = this.AllCates.find(item => item.id == id);
+    console.log(category);
+    return category ? `${category.englishName} - ${category.arabicName}` : 'Unknown';
   }
   AddBenfit(){
     console.log(this.arrCate);
