@@ -165,7 +165,7 @@ export class PricingToolService {
 
         // Upload Group File
   AddEmployeesGroupFile(FormData:any){
-    return this._HttpClient.post(this.baseUrl+'PricingTool/AddEmployeesGroupFile',FormData,{responseType: 'text',
+    return this._HttpClient.post(this.baseUrl+'PricingTool/AddEmployeesGroupFile',FormData,{responseType: 'json',
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' +this.t
       }).set("ngrok-skip-browser-warning", "true")

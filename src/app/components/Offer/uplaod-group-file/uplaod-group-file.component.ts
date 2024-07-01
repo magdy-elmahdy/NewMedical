@@ -12,6 +12,7 @@ declare var $:any
   styleUrls: ['./uplaod-group-file.component.scss']
 })
 export class UplaodGroupFileComponent implements OnInit{
+  showAppearButton: boolean = false;
 
   FileName:any
   selectedFile:any
@@ -20,6 +21,7 @@ export class UplaodGroupFileComponent implements OnInit{
   Type:any
   AllPolicyGroup:any
   loading:boolean = false;
+  pricingData: any[] = [];
   constructor(public _location:Location,private _PolicyService:PolicyService ,
     private _PricingToolService:PricingToolService,
      private _Router:Router, private _ActivatedRoute:ActivatedRoute){
@@ -55,9 +57,10 @@ export class UplaodGroupFileComponent implements OnInit{
       // Pricing
       this.FormData1.append('offerId',this.OfferId)
       this.FormData1.append('file',this.selectedFile)
-      this._PricingToolService.AddEmployeesGroupFile(this.FormData1).subscribe(res=>{
+      this._PricingToolService.AddEmployeesGroupFile(this.FormData1).subscribe((res:any)=>{
         this.isClickedDocumnet=false
         console.log(res);
+        this.pricingData = res;
         this.FormData1 = new FormData()
         $("#afterUpload").show(400)
       },error=>{
@@ -111,8 +114,26 @@ export class UplaodGroupFileComponent implements OnInit{
     console.log(value);
     if(value=='true'){
       $("#HaveLoseRatio").show(400)
+      this.HaveLoseForm.get('targetLossRatio')?.setValidators([Validators.required])
+      this.HaveLoseForm.get('targetLossRatio')?.updateValueAndValidity()
+
+      this.HaveLoseForm.get('lossRatio')?.setValidators([Validators.required])
+      this.HaveLoseForm.get('lossRatio')?.updateValueAndValidity()
+      this.showAppearButton = true
     }else{
       $("#HaveLoseRatio").hide(400)
+      this.HaveLoseForm.get('targetLossRatio')?.setValidators(null);
+      this.HaveLoseForm.get('targetLossRatio')?.updateValueAndValidity()
+      this.HaveLoseForm.get('targetLossRatio')?.setValue('')
+      this.HaveLoseForm.get('targetLossRatio')?.clearValidators();  
+      
+      this.HaveLoseForm.get('lossRatio')?.setValidators(null);
+      this.HaveLoseForm.get('lossRatio')?.updateValueAndValidity()
+      this.HaveLoseForm.get('lossRatio')?.setValue('')
+      this.HaveLoseForm.get('lossRatio')?.clearValidators(); 
+      this.showAppearButton = true
+
+
     }
   }
   ngOnInit(): void {

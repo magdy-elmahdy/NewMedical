@@ -51,26 +51,23 @@
                             <div class="wrapper mt-5" >
                                 <table  class="custom_table text-center bordered">
                                     <thead>
-                                        <th>Plan</th>
-                                        <th>Edge Band</th>
-                                        <th>No.</th>
-                                        <th>NRP</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr style="vertical-align: middle;">
-                                            <td>B</td>
-                                            <td>0-17</td>
-                                            <td>1</td>
-                                            <td>500</td>
+                                        <tr>
+                                          <th>Plan</th>
+                                          <th>Number of Customers</th>
+                                          <th>From</th>
+                                          <th>To</th>
+                                          <th>Net Risky Premium</th>
                                         </tr>
-                                        <tr style="vertical-align: middle;">
-                                            <td>B</td>
-                                            <td>18-25</td>
-                                            <td>2</td>
-                                            <td>1000</td>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let item of pricingData">
+                                          <td>{{ item.planeName }}</td>
+                                          <td>{{ item.numberOfCustomers }}</td>
+                                          <td>{{ item.from }}</td>
+                                          <td>{{ item.to }}</td>
+                                          <td>{{ item.netRiskyPremium }}</td>
                                         </tr>
-                                        
-                                    </tbody>
+                                      </tbody>
             
                                 </table>
                             </div>
@@ -97,6 +94,12 @@
                                         </div>
                                     </div>
                                 </form>
+                                <!-- <button [disabled]="isClicked||this.HaveLoseForm.status=='INVALID'" (click)="FinalSavePricing()" mat-raised-button color="primary" class="mt-2">
+                                    <span *ngIf="!isClicked">Save & Proceed</span>
+                                    <span *ngIf="isClicked"><i class="fa fa-soild fa-fan fa-spin"></i></span>
+                                </button> -->
+                            </div>
+                            <div id="Appear" *ngIf="showAppearButton">
                                 <button [disabled]="isClicked||this.HaveLoseForm.status=='INVALID'" (click)="FinalSavePricing()" mat-raised-button color="primary" class="mt-2">
                                     <span *ngIf="!isClicked">Save & Proceed</span>
                                     <span *ngIf="isClicked"><i class="fa fa-soild fa-fan fa-spin"></i></span>

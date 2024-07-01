@@ -45,7 +45,8 @@ export class AddOfferComponent implements OnInit{
     this._ActivatedRoute.queryParams.subscribe((data:any)=>{
       this.CashedInputs = data
       console.log(data);
-      console.log(this.date);
+      // console.log(this.date);
+      
       
       // this.SearchForm.get('Code')?.setValue(data?.Code)
       // this.SearchForm.get('InsuredName')?.setValue(data?.InsuredName)
@@ -58,12 +59,18 @@ export class AddOfferComponent implements OnInit{
   ///////////////// Star Pricing indivual Form ////////////// 
   OfferForm:FormGroup = new FormGroup({
     'BranchId':new FormControl('',[Validators.required]),
-    'offerDate':new FormControl('this.formattedDate',[Validators.required]),
+    'offerDate':new FormControl('',[Validators.required]),
     'tpaId':new FormControl(''),
     'insuranceClass':new FormControl(1,[Validators.required]),
     'policySource':new FormControl('',[Validators.required]),
     'customerName':new FormControl('',[Validators.required]),
   })
+  formatDate(date: Date): string {
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  }
   
   SubmitOffer(){
     this.isClicked=  true
@@ -262,11 +269,28 @@ export class AddOfferComponent implements OnInit{
     this.DecisionWay=value
   }
   formattedDate:any
+  dateString: any;
+
   ngOnInit(): void {
     const today = new Date();
+    console.log(today);
+    
     this.formattedDate = this.formatDate(today); // format as 'YYYY-MM-DD'
     // this.formattedDate = today.toISOString().substring(0, 10); // format as 'YYYY-MM-DD'
     console.log(this.formattedDate);
+
+
+    // this.formattedDate = this.formatDate(new Date());
+    // console.log(this.formattedDate);
+
+//     const date = new Date();
+// const dateString = date.toISOString();
+// console.log(dateString);
+
+// const date = new Date();
+// const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+// this.dateString = date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+// console.log(this.dateString);
     
     this.getInsuraneClass();
     this.getAllBranches();
@@ -279,7 +303,7 @@ export class AddOfferComponent implements OnInit{
     this.OfferForm.get('BranchId')?.setValue(this.CashedInputs.BranchId==null?'': Number(this.CashedInputs.BranchId))
     this.OfferForm.get('tpaId')?.setValue(this.CashedInputs.tpaId==null?'': Number(this.CashedInputs.tpaId))
     this.OfferForm.get('policySource')?.setValue(this.CashedInputs.policySource==null?'':Number(this.CashedInputs.policySource))
-    this.OfferForm.get('offerDate')?.setValue(this.CashedInputs.offerDate)
+    this.OfferForm.get('offerDate')?.setValue(this.formattedDate)
     if(Number(this.CashedInputs.brokerId)>0){
       this.BrokerValue =Number(this.CashedInputs.brokerId)
     }else{
@@ -292,11 +316,6 @@ export class AddOfferComponent implements OnInit{
     }else if (this.CashedInputs.policySource=='1')
     $("#BrokerFiled").show(500)
   }
-  private formatDate(date: Date): string {
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-  }
+ 
   
 }
