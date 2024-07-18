@@ -44,12 +44,17 @@ get arabicText() {
 get englishText(){
   return this.Form.get('englishName')
 }
-
-getText(){
+CheckEngilshText(){
+  if(this.Form.get('englishName')?.status == 'INVALID'){
+    this._ToastrService.error('Text Shoud be english', " Well Done")
+  }
+}
+CheckArabicText(){
   if(this.Form.get('arabicName')?.status == 'INVALID'){
     this._ToastrService.error('Text Shoud be arabic', " Well Done");
   }
 }
+getText(){}
 
 
   WhenModalOpen(){
@@ -57,21 +62,25 @@ getText(){
     this.arrCate=[]
   }
   // Add Accounts Numbers
-  view(){
-    // var exixs = this.arrCate.find(item=>this.Form.value.arabicName == item.arabicName)
-    // console.log(exixs);
-    let Model = Object.assign(this.Form.value)
-    console.log(Model);
-    
-    
-    // if(exixs==undefined){
-      this.arrCate.push(Model);
+  view() {
+    const englishName = this.Form.get('englishName')?.value;
+    const arabicName = this.Form.get('arabicName')?.value;
+  
+    const exists = this.arrCate.find(item => 
+      item.englishName == englishName || item.arabicName == arabicName
+    );
+  
+    console.log(exists);
+  
+    if (exists == undefined) {
+      let model = Object.assign(this.Form.value);
+      console.log(model);
+      this.arrCate.push(model);
       console.log(this.arrCate);
-      this.Form.reset()
-    // }else{
-    //   this._ToastrService.show('This Category already existed')
-    // }
-    // console.log(this.arrCate);
+      this.Form.reset();
+    } else {
+      this._ToastrService.show('This Category already exists');
+    }
   }
   // Add Bank
   AddCategory(){
@@ -132,7 +141,7 @@ getText(){
   getCategoryBenfit() {
     if (this.CurrentActivity && this.CurrentActivity.id) {
       this._PricingToolService.GetAllCategoriesBenfits(this.CurrentActivity.id).subscribe((data: any) => {
-        // console.log(data);
+        console.log(data);
         this.categoryBenfitArr = data;
       });
     }
@@ -172,21 +181,28 @@ getText(){
     // if (selectedBenefit) {
     //   this.categoryBenfitArr.push(selectedBenefit);
     // }
-    
-  this._PricingToolService.AddBenfitToCategory(benefitId,selectedCategoryId).subscribe((data:any)=>{
-    console.log(data);
-    console.log(benefitId);
-    let selectedBenefit = this.AllBenfitsArr.find((benfit:any) => benfit.id == benefitId);
-    console.log(selectedBenefit);
-    if (selectedBenefit) {
-      this.categoryBenfitArr.push(selectedBenefit);
+    const exists = this.categoryBenfitArr.find(item => 
+      item.id == benefitId
+    );
+    if(exists == undefined){  
+      this._PricingToolService.AddBenfitToCategory(benefitId,selectedCategoryId).subscribe((data:any)=>{
+        console.log(data);
+        console.log(benefitId);
+        let selectedBenefit = this.AllBenfitsArr.find((benfit:any) => benfit.id == benefitId);
+        console.log(selectedBenefit);
+        if (selectedBenefit) {
+          this.categoryBenfitArr.push(selectedBenefit);
+        }
+        console.log( this.categoryBenfitArr);
+        Swal.fire({title:'Benfit Added Successfully',timer:3000, timerProgressBar: true})
+      },error=>{
+        console.log(error);
+        Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
+      })
+    }else{
+      this._ToastrService.error('This benfit already exist in this category')
     }
-    console.log( this.categoryBenfitArr);
-    Swal.fire({title:'Benfit Added Successfully',timer:3000, timerProgressBar: true})
-  },error=>{
-    console.log(error);
-    Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
-  })
+
   }
 
   saveCategoryEdit(){

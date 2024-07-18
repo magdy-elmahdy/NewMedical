@@ -39,7 +39,7 @@
               <span class="sr-only">Loading...</span>
             </div>
           </div> -->
-        <div class="d-flex justify-content-end mt-4">
+        <div class="d-flex justify-content-end mt-4" *ngIf="AllItems?.length > 5">
             <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
             </pagination-controls>
             <select (change)="onTableSizeChange($event)" class="tableSize rounded-pill px-1">
@@ -68,7 +68,7 @@
                 <div class="col-md-6">
                   <div class="formGroup">
                     <label>Category Name EN<span style="color: red;">*</span></label>
-                    <input (change)="getText()" class="form-control mt-2" formControlName= "englishName" type="text">
+                    <input (change)="CheckEngilshText()" class="form-control mt-2" formControlName= "englishName" type="text">
                     <div *ngIf="englishText?.invalid && (englishText?.dirty || englishText?.touched)">
                       <!-- <div *ngIf="arabicText?.errors?.required">
                         This field is required.
@@ -82,7 +82,7 @@
                 <div class="col-md-6">
                   <div class="formGroup">
                     <label>Category Name AR<span style="color: red;">*</span></label>
-                    <input class="form-control mt-2" formControlName="arabicName" type="text">
+                    <input (change)="CheckArabicText()" class="form-control mt-2" formControlName="arabicName" type="text">
                     <div *ngIf="arabicText?.invalid && (arabicText?.dirty || arabicText?.touched)">
                       <!-- <div *ngIf="arabicText?.errors?.required">
                         This field is required.
@@ -149,12 +149,12 @@
             </mat-form-field> -->
             <div class="formGroup">
               <label>Category Name EN<span style="color: red;">*</span></label>
-              <input class="form-control mt-2" formControlName= "englishName" type="text">
+              <input (change)="CheckEngilshText()" class="form-control mt-2" formControlName= "englishName" type="text">
               <div *ngIf="englishText?.invalid && (englishText?.dirty || englishText?.touched)">
                 <!-- <div *ngIf="arabicText?.errors?.required">
                   This field is required.
                 </div> -->
-                <div *ngIf="englishText?.errors?.englishText" style="color: red;">
+                <div *ngIf="englishText?.errors" style="color: red;">
                   Please enter only English text.
                 </div>
               </div>
@@ -167,7 +167,7 @@
             </mat-form-field> -->
             <div class="formGroup">
               <label>Category Name AR<span style="color: red;">*</span></label>
-              <input class="form-control mt-2" formControlName="arabicName" type="text">
+              <input (change)="CheckArabicText()" class="form-control mt-2" formControlName="arabicName" type="text">
               <div *ngIf="arabicText?.invalid && (arabicText?.dirty || arabicText?.touched)">
                 <!-- <div *ngIf="arabicText?.errors?.required">
                   This field is required.
@@ -198,7 +198,7 @@
           </div>
            <!-- Table -->
         <div class="wrapper mt-5">
-          <table  class="custom_table text-center bordered">
+          <table  class="custom_table text-center bordered" *ngIf="this.categoryBenfitArr.length > 0">
               <thead>
                   <th></th>
                   <th>Arabic Name</th>

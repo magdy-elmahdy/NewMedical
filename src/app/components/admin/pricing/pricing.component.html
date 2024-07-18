@@ -42,7 +42,7 @@
                 <div class="alert alert-warning  w-50 mt-5" role="alert">
                   <span>No pricing benfits found</span>
                 </div>
-              </div>
+            </div>
         </ng-container>
         
 
@@ -50,7 +50,7 @@
             <span>No Pricing yet</span>
             <app-spinner class="d-flex justify-content-center m-auto"></app-spinner>
         </div> -->
-        <div class="d-flex justify-content-end mt-4">
+        <div class="d-flex justify-content-end mt-4" *ngIf="AllPricingArr.length > 5 ">
             <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
             </pagination-controls>
             <select (change)="onTableSizeChange($event)" class="tableSize rounded-pill px-1">
@@ -108,7 +108,7 @@
                     </div>
                 </div>
                 <!-- Age Band -->
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2">
                     <!-- <mat-form-field class="w-100" >
                         <mat-label>Age Band</mat-label>
                         <mat-select formControlName="ageBandId">
@@ -123,14 +123,14 @@
                     </div>
                 </div>
                    <!-- premium -->
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2">
                     <!-- <mat-form-field class="w-100">
                         <mat-label><span class="text-danger mx-1">*</span>Premium</mat-label>
                         <input class="form-control" formControlName="premium" type="number">
                     </mat-form-field> -->
                     <div class="formGroup">
                         <label>Net Risk Premium<span style="color: red;">*</span></label>
-                        <input class="form-control mt-2" formControlName="netRiskPremium" type="number">
+                        <input class="form-control mt-2" formControlName="netRiskPremium" type="number" min="0">
                     </div>
                 </div>
                  <!-- loading -->
@@ -175,11 +175,11 @@
             <table  class="custom_table text-center bordered">
                 <thead>
                     <th></th>
-                    <th>category</th>
-                    <th>ageBandId</th>
-                    <th>benfitsId</th>
+                    <th>Category</th>
+                    <th>Age Band</th>
+                    <th>Benfits</th>
                     <!-- <th>Loading</th> -->
-                    <th>netRiskPremium</th>
+                    <th>Net Risk Premium</th>
                     <th ></th>
                 </thead>
                 <tbody>
@@ -248,7 +248,7 @@
                     </div>
                 </div>
                 <!-- Age Band -->
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2">
                     <!-- <mat-form-field class="w-100" >
                         <mat-label>Age Band</mat-label>
                         <mat-select formControlName="ageBandId">
@@ -263,14 +263,14 @@
                     </div>
                 </div>
                    <!-- premium -->
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2">
                     <!-- <mat-form-field class="w-100">
                         <mat-label><span class="text-danger mx-1">*</span>Premium</mat-label>
                         <input class="form-control" formControlName="premium" type="number">
                     </mat-form-field> -->
                     <div class="formGroup">
-                        <label>Premium<span style="color: red;">*</span></label>
-                        <input class="form-control mt-2" formControlName="netRiskPremium" type="number">
+                        <label>Net Risk Premium<span style="color: red;">*</span></label>
+                        <input class="form-control mt-2" formControlName="netRiskPremium" type="number" min="0">
                     </div>
                 </div>
                  <!-- loading -->

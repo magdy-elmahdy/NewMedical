@@ -71,6 +71,14 @@ EditFrom:FormGroup = new FormGroup({
         alert('Please fill all required fields.');
       }
   }
+   // Remove
+   remove(index:number){
+    if(this.arrCate.length > 0){
+      this.arrCate.splice(index, 1)
+      this.maxValue = Math.max(...this.arrCate.map(obj => obj.to));
+      this.Form.get('from')?.setValue( this.maxValue+1)
+    }
+  }
   // Add age
   AddAgeBand(){
     this.isClicked =true
@@ -199,10 +207,7 @@ saveCategoryEdit(){
     }
     console.log(this.arrCate);
   }
-  // Remove
-  remove(index:number){
-    this.arrCate.splice(index, 1)
-  }
+ 
   getTo(){
     console.log(this.Form.get('to')?.value);
     if(this.Form.get('from')?.value>=this.Form.get('to')?.value){

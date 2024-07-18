@@ -56,7 +56,17 @@ get englishText(){
   return this.Form.get('englishName')
 }
 get EditenglishText() {
-  return this.EditForm.get('arabicName');
+  return this.EditForm.get('englishName');
+}
+CheckEngilshText(){
+  if(this.Form.get('englishName')?.status == 'INVALID' || this.EditForm.get('englishName')?.status == 'INVALID'){
+    this._ToastrService.error('Text Shoud be english', " Well Done")
+  }
+}
+CheckArabicText(){
+  if(this.Form.get('arabicName')?.status == 'INVALID' || this.EditForm.get('arabicName')?.status == 'INVALID'){
+    this._ToastrService.error('Text Shoud be arabic', " Well Done");
+  }
 }
 
   WhenModalOpen(){

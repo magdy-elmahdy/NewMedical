@@ -38,7 +38,7 @@ export class PlanComponent implements OnInit {
   isTableVisible = false;
   isthisTableVisible = true;
   item: any;
-  constructor(private _PricingToolService:PricingToolService){}
+  constructor(private _PricingToolService:PricingToolService, private _ToastrService:ToastrService){}
   Form:FormGroup =new FormGroup({
     'planName':new FormControl('',[Validators.required]),
     'annualMaxLimit':new FormControl('',[Validators.required]),
@@ -184,20 +184,23 @@ AddNewCategory() {
   //   const benefitDetail = this.AllBenefitss.find(ben => ben.id === benefit.id);
   //   return benefitDetail ? benefitDetail.englishName : 'Unknown Benefit';
   // });
-  const Model = {
-    categoryId: categoryId,
-    benfitsIds: benfitsIds,
-    benfitdata: this.categoryBenfitArr,
-    categoryNameEnglish: categoryNameEnglish
-
-    // benfitsNames: benfitsNames,
-    // benfitsNamesinArabic:benfitsNamesinArabic,
-  };
-  console.log(Model);
-  this.planCategories.push(Model);
-  this.categoryBenfitArr=[]
-  this.CategoryForm.reset()
-  this.benfitsForm.reset()
+  var exist = this.planCategories.find(item=>item.categoryNameEnglish == categoryNameEnglish)
+  console.log(exist);
+  if(exist == undefined){
+    const Model = {
+      categoryId: categoryId,
+      benfitsIds: benfitsIds,
+      benfitdata: this.categoryBenfitArr,
+      categoryNameEnglish: categoryNameEnglish
+    };
+    console.log(Model);
+    this.planCategories.push(Model);
+    this.categoryBenfitArr=[]
+    this.CategoryForm.reset()
+    this.benfitsForm.reset()
+  }else{
+    this._ToastrService.error('This category already exists')
+  }
 }
 RemoveFromCategoriesTable(index:number){
   this.planCategories.splice(index, 1)
@@ -209,31 +212,31 @@ ViewCoverageRegions(item:any){
 }
 
 
-  AddPlan(){
-    this.isClicked =true
-    const planNetworkId = Number(this.Form.get('planNetworkId')?.value);
-    const planName = this.Form.get('planName')?.value
-    const annualMaxLimit = this.Form.get('annualMaxLimit')?.value
+AddPlan(){
+  this.isClicked =true
+  const planNetworkId = Number(this.Form.get('planNetworkId')?.value);
+  const planName = this.Form.get('planName')?.value
+  const annualMaxLimit = this.Form.get('annualMaxLimit')?.value
 
-    let Model = Object.assign({planName:planName},{annualMaxLimit:annualMaxLimit},{planNetworkId:planNetworkId},{coverageRegions:this.arrTest},{planCategories:this.planCategories})
-    // ,{planNetworkId:Number(this.Form.get('planNetworkId')?.value)}
-    console.log(Model);
-    this.MainArr.push(Model)
-    console.log(this.MainArr);
-    this._PricingToolService.AddNewPlan(this.MainArr).subscribe((res:any)=>{
-      this.isClicked = false;
-      console.log(res);      
-      Swal.fire({title:'Plan Added Successfully',timer:3000, timerProgressBar: true})
-      this.getAllPlans()
-      $("#AddPlan").modal('toggle')
-      this.arrTest =[];
-    },error=>{
-      this.isClicked = false;
-      console.log(error);
-      Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
-      this.arrTest =[];
-    })
-  }
+  let Model = Object.assign({planName:planName},{annualMaxLimit:annualMaxLimit},{planNetworkId:planNetworkId},{coverageRegions:this.arrTest},{planCategories:this.planCategories})
+  // ,{planNetworkId:Number(this.Form.get('planNetworkId')?.value)}
+  console.log(Model);
+  this.MainArr.push(Model)
+  console.log(this.MainArr);
+  this._PricingToolService.AddNewPlan(this.MainArr).subscribe((res:any)=>{
+    this.isClicked = false;
+    console.log(res);      
+    Swal.fire({title:'Plan Added Successfully',timer:3000, timerProgressBar: true})
+    this.getAllPlans()
+    $("#AddPlan").modal('toggle')
+    this.arrTest =[];
+  },error=>{
+    this.isClicked = false;
+    console.log(error);
+    Swal.fire({icon: 'error',title: 'Oops...',text: error.error,})
+    this.arrTest =[];
+  })
+}
   editMode = false;
   currentPlanIndex: number | null = null;
   networkitem:any
@@ -283,33 +286,33 @@ ViewCoverageRegions(item:any){
       annualMaxLimit: plan.annualMaxLimit,
       coverageRegions: plan.coverageRegions
     }];
- // Update CategoryForm and benfitsForm with the first category's data (if any)
- if (plan.categoryWithBenfits.length > 0) {
-  this.CategoryForm.patchValue({
-    categoryId: plan.categoryWithBenfits[0].id
-  });
+    // Update CategoryForm and benfitsForm with the first category's data (if any)
+    if (plan.categoryWithBenfits.length > 0) {
+      this.CategoryForm.patchValue({
+        categoryId: plan.categoryWithBenfits[0].id
+      });
 
-  this.benfitsForm.patchValue({
-    benfitsIds: plan.categoryWithBenfits[0].benefits.map((benefit: any) => benefit.id)
-  });
-} else {
-  // Clear the forms if no category or benefits are provided
-  this.CategoryForm.patchValue({
-    categoryId: null
-  });
-}
+      this.benfitsForm.patchValue({
+        benfitsIds: plan.categoryWithBenfits[0].benefits.map((benefit: any) => benefit.id)
+      });
+    } else {
+      // Clear the forms if no category or benefits are provided
+      this.CategoryForm.patchValue({
+        categoryId: null
+      });
+    }
 
-// Transform the plan categories data
-this.planCategories = plan.categoryWithBenfits.map((category: any) => ({
-  categoryId: category.id,
-  categoryNameEnglish: this.AllCates.find(cat => cat.id === category.id)?.englishName || 'Unknown',
-  benfitsIds: category.benefits.map((benefit: any) => benefit.id),
-  benefits: category.benefits.map((benefit: any) => ({
-    englishName: benefit.englishName,
-    arabicName: benefit.arabicName,
-    maxLimit: benefit.maxLimit // Assuming this is needed too
-  }))
-}));
+    // Transform the plan categories data
+    this.planCategories = plan.categoryWithBenfits.map((category: any) => ({
+      categoryId: category.id,
+      categoryNameEnglish: this.AllCates.find(cat => cat.id === category.id)?.englishName || 'Unknown',
+      benfitsIds: category.benefits.map((benefit: any) => benefit.id),
+      benefits: category.benefits.map((benefit: any) => ({
+        englishName: benefit.englishName,
+        arabicName: benefit.arabicName,
+        maxLimit: benefit.maxLimit 
+      }))
+    }));
 
 }
 
@@ -334,20 +337,26 @@ AddNeweditCategory() {
   //   const benefitDetail = this.AllBenefitss.find(ben => ben.id === benefit.id);
   //   return benefitDetail ? benefitDetail.englishName : 'Unknown Benefit';
   // });
-  const Model = {
-    categoryId: categoryId,
-    benfitsIds: benfitsIds,
-    benefits: this.categoryBenfitArr,
-    categoryNameEnglish: categoryNameEnglish
+  var exist = this.planCategories.find(item=>item.categoryNameEnglish == categoryNameEnglish)
+  if(exist == undefined){
+    const Model = {
+      categoryId: categoryId,
+      benfitsIds: benfitsIds,
+      benefits: this.categoryBenfitArr,
+      categoryNameEnglish: categoryNameEnglish
+      // benfitsNames: benfitsNames,
+      // benfitsNamesinArabic:benfitsNamesinArabic,
+    };
+    console.log(Model);
+    this.planCategories.push(Model);
+    this.categoryBenfitArr=[]
+    this.CategoryForm.reset()
+    this.benfitsForm.reset()
+  }else{
+    this._ToastrService.error('This category already exists')
 
-    // benfitsNames: benfitsNames,
-    // benfitsNamesinArabic:benfitsNamesinArabic,
-  };
-  console.log(Model);
-  this.planCategories.push(Model);
-  // this.categoryBenfitArr=[]
-  // this.CategoryForm.reset()
-  // this.benfitsForm.reset()
+  }
+ 
 }
   
   EditPlan() {
