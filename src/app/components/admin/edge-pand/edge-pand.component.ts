@@ -158,6 +158,8 @@ formData:any = new FormData();
 saveCategoryEdit(){
   this.isClicked = true
   if (this.AgeBandItem) {
+    this.formData = new FormData();
+
     this.formData.append('id', this.EditFrom.get('id')?.value);
     this.formData.append('From', this.EditFrom.get('From')?.value);
     this.formData.append('To', this.EditFrom.get('To')?.value);
@@ -172,7 +174,7 @@ saveCategoryEdit(){
       console.log(data);
       $('#EditForm').modal('toggle'); 
       this.getAllItems();
-      Swal.fire({ title: "Good job!", text: "Category Updated Successfully", icon: "success" })
+      Swal.fire({ title: "Good job!", text: "Age Band Updated Successfully", icon: "success" })
       this.formData=[]
                   // Close modal EditNewExposer
     }, error => {
