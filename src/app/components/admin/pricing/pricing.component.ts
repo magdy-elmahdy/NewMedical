@@ -64,6 +64,10 @@ export class PricingComponent implements OnInit {
       this.arrTest =[];
     })
   }
+  close(){
+    this.arrTest=[]
+    this.Form.reset()
+  }
                //Pagination Methods
   onTableDataChange(event:any){
     this.page=event;
@@ -79,7 +83,10 @@ export class PricingComponent implements OnInit {
   view(){
     let Model = Object.assign(this.Form.value)
     this.arrTest.push(Model);
-    this.Form.reset()
+    this.Form.get('ageBandId')?.setValue('')
+    this.Form.get('benfitsId')?.setValue('')
+    this.Form.get('benfitsId')?.setValue('')
+    // this.Form.reset()
     console.log(this.arrTest);
   }
   remove(index:number){

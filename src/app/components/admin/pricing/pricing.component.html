@@ -196,7 +196,7 @@
         </div>
        </div>
        <div class="modal-footer">
-        <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal">{{'Shared.Close'|translate}}</button>
+        <button id="clodeEditModal" type="button" mat-raised-button data-bs-dismiss="modal" (click)="close()">{{'Shared.Close'|translate}}</button>
         <button (click)="AddBenfitPricing()" *ngIf="this.arrTest.length>0" class="mt-2 w-25" [disabled]="this.isClicked" type="button" mat-raised-button color="primary">
             <span *ngIf="!this.isClicked">{{'Shared.Save'|translate}}</span>
             <span *ngIf="this.isClicked"><i class="fa-solid fa-fan fa-5 fa-spin"></i></span>

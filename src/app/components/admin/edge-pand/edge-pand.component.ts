@@ -173,10 +173,12 @@ saveCategoryEdit(){
       $('#EditForm').modal('toggle'); 
       this.getAllItems();
       Swal.fire({ title: "Good job!", text: "Category Updated Successfully", icon: "success" })
+      this.formData=[]
                   // Close modal EditNewExposer
     }, error => {
       console.log(error);
       this.isClicked = false
+      this.formData=[]
 
       Swal.fire({ icon: "error", title: "Oops...", text: error.error });
     });
